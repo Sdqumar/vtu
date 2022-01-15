@@ -2,7 +2,7 @@ import Button from "../global/Button";
 
 const SingUp = () => {
     return (
-        <div>
+        <div className="">
             <div>
                 <Button title="Sign In" />
                 <Button title="Sign Up" />

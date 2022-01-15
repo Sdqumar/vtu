@@ -1,10 +1,10 @@
 import type { NextPage } from 'next'
-import SignUp from "../compoments/Home/SignUp"
+import SignUp from "../components/Home/SignUp"
 
 const Home: NextPage = () => {
   return (
     <div>
-     <h1 className='bg-red-200 text-2xl'>Homepage</h1>
+     <h1 className=''>Homepage</h1>
      <SignUp/>
 
     </div>
