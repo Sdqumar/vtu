@@ -8,7 +8,7 @@ type buttonProps = {
 export default function Button({title, active,onClick}: buttonProps) {
     return (
         <button
-            className={`px-5 py-2 whitespace-nowrap  ease-in-out  duration-700 font-medium  rounded-3xl   ${active &&`bg-primary-600  text-white mx-2`}`}
+            className={`rounded-3xl mx-2 mt-0 ${!active &&`bg-primary-100  -mx-2 text-black `}`}
             onClick={onClick}
             >
             {title}

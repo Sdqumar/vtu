@@ -10,7 +10,7 @@ type form = {
     phoneNumber: number;
 }
 
-const SignUp = () => {
+const SignIn = () => {
     const [loading, setLoading] = useState(false);
 
     const {
@@ -22,23 +22,6 @@ const SignUp = () => {
 
     return (
         <section className="transition-all duration-700">
-            <div className="grid grid-cols-2 gap-2 justify-between">
-                <Input
-                    register={register}
-                    name="firstName"
-                    label="First name"
-                    errors={errors} />
-                <Input
-                    register={register}
-                    name="lastName"
-                    label="Last name"
-                    errors={errors} />
-            </div>
-            <Input
-                register={register}
-                name="phoneNumber"
-                label="Phone number"
-                errors={errors} />
             <Input
                 register={register}
                 name="email"
@@ -56,4 +39,4 @@ const SignUp = () => {
         </section>
     );
 };
-export default SignUp;
+export default SignIn;

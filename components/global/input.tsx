@@ -12,7 +12,7 @@ type signup ={
 type inputProp ={
     register:UseFormRegister<signup>;
     name:"firstName" | "lastName" | "email" | "password" | "phoneNumber";
-    label:"First Name" | "Last Name" | "Email" | "Password" | "Phone Number";
+    label:"First name" | "Last name" | "Email" | "Password" | "Phone number";
     required?:boolean;
     errors:any;
     type?:string;
@@ -24,13 +24,13 @@ export default function Input({ register, name, label, required = true, errors, 
 
 
   return (
-    <div className={containerStyle}>
-      <label>{label}</label>
+    <div className='my-2'>
+      <label className="">{label}</label>
       <input
         {...register(name, { required: required })}
         type={type}
         {...rest}
-        className={`${style} ${errors[name] && "border-red-600"}`}
+        className={` ${style} ${errors[name] && "border-red-600"}`}
 
       />
       {errors[name] && <Errror message={`${label} is required`} />}

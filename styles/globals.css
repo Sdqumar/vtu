@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
+
 @tailwind utilities;
+
+@layer base {
+    label{
+        @apply block mb-2 text-lg
+    }
+  input {
+    @apply border py-2 w-full px-4 rounded-md border-gray-400 focus:outline-none focus:border-2 focus:border-primary-500  ;
+  }
+  button{
+      @apply bg-primary-600 px-5 py-2 whitespace-nowrap ease-in-out duration-700 font-medium text-white rounded-lg w-full mt-3 
+  }
+}
