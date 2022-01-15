@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import Button from "../global/Button";
 import Input from "../global/input";
 
 type form = {
@@ -45,14 +46,13 @@ const SignUp = () => {
                 label="Email"
                 type="email"
                 errors={errors} />
-            <Input
-                register={register}
-                name="password"
-                label="Password"
-                type="password"
-                errors={errors} />
-
-            <button>Regiser</button>
+                <Input
+                    register={register}
+                    name="password"
+                    label="Password"
+                    type="password"
+                    errors={errors} />
+            <Button label="Sign Up" loading={loading} />
         </section>
     );
 };
