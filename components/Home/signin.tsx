@@ -2,17 +2,12 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import Button from "../global/Button";
 import Input from "../global/input";
+import { form, submitForm } from "./utils";
 
-type form = {
-    firstName: string;
-    lastName: string;
-    email: string;
-    password: string;
-    phoneNumber: number;
-}
 
 const SignIn = () => {
     const [loading, setLoading] = useState(false);
+
 
     const {
         handleSubmit,
@@ -22,7 +17,9 @@ const SignIn = () => {
     } = useForm<form>();
 
     return (
-        <section className="transition-all duration-700">
+        <form
+        onSubmit={handleSubmit((formValues) => submitForm(formValues))}
+        className="transition-all duration-700">
             <Input
                 register={register}
                 name="email"
@@ -38,7 +35,7 @@ const SignIn = () => {
 
             <Button label="sign In" loading={loading} />
 
-        </section>
+        </form>
     );
 };
 export default SignIn;

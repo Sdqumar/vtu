@@ -6,7 +6,6 @@ import SignUp from "./signup";
 
 const Form = () => {
     const [active, setActive] = useState(false);
-
     
     return (
         <main className="w-[23rem] m-5">
