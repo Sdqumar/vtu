@@ -10,7 +10,7 @@ export const PriceTable = () => {
                     return(
                     <section className="flex mx-3 mb-10 flex-wrap justify-center items-center flex-col shadow-xl p-10 rounded-lg bg-white" key={network.network}>
 
-                        <Image src={network.img } height={80} width={85} />
+                        <Image src={network.img } priority={true} height={80} width={85} />
                         <h5 className="text-gray-800 mt-2 font-bold">{network.network}</h5>
 
                         <table className="mt-5 w-52 ">
