@@ -1,7 +1,5 @@
 import type { NextPage } from 'next'
 import Sidebar from '../components/dashboard/sidebar'
-import Form from "../components/Home/form"
-import { PriceTable } from '../components/Home/PriceTable'
 
 const Dashboard: NextPage = () => {
   return (

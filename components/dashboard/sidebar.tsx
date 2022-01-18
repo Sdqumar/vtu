@@ -26,11 +26,12 @@ const Sidebar = () => {
             <section className="my-6">
                 {
                     nav.map(_item => {
-                        const isActive = path === _item.label.toLocaleLowerCase()
+
+                        const isActive = path === _item.label.split(" ")[0].toLocaleLowerCase()
 
                         return (
                             <Link
-                                href={`/${_item.label.toLowerCase()}`}
+                                href={`/${_item.label.toLowerCase().split(" ")[0]}`}
                                 passHref
                                 key={_item.label}
                             >
