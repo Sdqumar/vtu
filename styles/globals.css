@@ -4,13 +4,13 @@
 @tailwind utilities;
 
 @layer base {
-    label{
-        @apply block mb-2 text-lg font-medium
-    }
-  input {
-    @apply border py-2 w-full px-4 rounded-md border-gray-400 focus:outline-primary-500 focus:border-2 focus:border-primary-500  ;
+  label {
+    @apply block mb-2 text-lg font-medium;
   }
-  button{
-      @apply flex justify-center bg-primary-600 px-5 py-2 whitespace-nowrap ease-in-out duration-700 font-medium focus:outline-primary-500 text-white rounded-lg w-full mt-3 
+  input {
+    @apply border py-2 w-full px-4 rounded-md border-gray-400 focus:outline-primary focus:border-2 focus:border-primary;
+  }
+  button {
+    @apply flex justify-center bg-primary px-5 py-2 whitespace-nowrap ease-in-out duration-700 font-medium focus:outline-primary text-white rounded-lg w-full mt-3;
   }
 }

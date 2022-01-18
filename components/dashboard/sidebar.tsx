@@ -1,52 +1,61 @@
 import Image from "next/image"
+import Link from "next/link"
+import { useRouter } from "next/router"
+import { nav } from "./utils"
 
-const nav = [
-    {
-        icon: '',
-        label: 'Dashboard'
-    },
-    {
-        icon: '',
-        label: 'Fund Wallet'
-    },
-    {
-        icon: '',
-        label: 'Transactions'
-    },
-    {
-        icon: '',
-        label: 'Agent'
-    },
-    {
-        icon: '',
-        label: 'Referrel'
-    },
-]
 
 const Sidebar = () => {
-    return (
-        <main className="w-64 ml-2 border-r">
+    const router = useRouter()
+    const path = router.pathname.slice(1)
 
-            <section className="flex bg-primary-700 items-center justify-center w-60 rounded-lg mt-10 py-3 cursor-pointer 
-            hover:bg-primary-600
+    return (
+        <main className="w-64 ml-2 border-r h-[90vh] relative">
+
+            <section className="flex bg-primary items-center justify-center w-60 rounded-lg mt-10 py-3 cursor-pointer 
+            hover:bg-primary
             ">
 
                 <Image src="/avatar.jpg" priority={true} width={40} height={40} className="rounded-full " />
 
-                <h4 className="font-semibold text-lg text-white px-5">Sadeeq Umar</h4>
+                <div>
+                    <h4 className="font-semibold text-lg text-white px-5">Sadeeq Umar</h4>
+                    <span className="  text-yellow-200 px-5">₦1,500</span>
+                </div>
             </section>
 
-            <section className="my-5">
+            <section className="my-6">
                 {
-                    nav.map(item => (
-                        <div className="py-2 cursor-pointer flex items-center mx-10">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
-                            </svg>
-                            <h3 className="font-medium text-gray-700 text-lg">{item.label}</h3>
-                        </div>
-                    ))
+                    nav.map(_item => {
+                        const isActive = path === _item.label.toLocaleLowerCase()
+
+                        return (
+                            <Link
+                                href={`/${_item.label.toLowerCase()}`}
+                                passHref
+                                key={_item.label}
+                            >
+                                <div className={`py-3 cursor-pointer flex items-center px-5 hover:bg-slate-100 ${isActive && " border-r-2 border-r-primary"}`} >
+
+                                    <svg className={`h-6 w-6   text-primary ${!isActive && " text-gray-700"}`} viewBox="0 0 20 20" fill="currentColor">
+                                        <path d={_item.icon} />
+                                    </svg>
+
+                                    <h3 className={`font-medium text-primary ml-5 text-lg ${!isActive && "text-gray-700"}`}>
+                                        <a>{_item.label}</a>
+
+                                    </h3>
+                                </div>
+                            </Link>
+                        )
+                    })
                 }
+            </section>
+
+            <section className="flex items-center ml-5 absolute bottom-1 cursor-pointer hover:text-red-600">
+                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                </svg>
+                <h3 className="font-medium  text-lg ml-1 ">Log Out</h3>
             </section>
 
         </main>

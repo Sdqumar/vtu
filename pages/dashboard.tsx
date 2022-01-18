@@ -5,13 +5,13 @@ import { PriceTable } from '../components/Home/PriceTable'
 
 const Dashboard: NextPage = () => {
   return (
-    <div>
-        <Sidebar/>
+    <div className='flex'>
+      <Sidebar />
 
-     {/* <section className='text-3xl font-semibold text-gray-800'>
-         <span className='text-primary-700'>Hi,</span> Sadeeq
-         </section>
-    */}
+      {/* <section className='text-3xl font-semibold text-gray-800'>
+        <span className='text-primary'>Hi,</span> Sadeeq
+      </section> */}
+
     </div>
 
   )
