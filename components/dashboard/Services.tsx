@@ -42,7 +42,7 @@ export default function Services() {
             {
                 services.map(item => (
                     <div className="shadow-xl bg-white p-10 m-3 transition-all hover:shadow-2xl cursor-pointer hover:text-primary">
-                        <Image src={`/${item.img}.png`} priority={true} width={120} height={100} />
+                        <Image src={`/${item.img}.png`} priority={true} width={100} height={90} />
                         <h4 className="font-medium text-center ">{item.name}</h4>
                     </div>
                 ))
