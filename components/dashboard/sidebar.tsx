@@ -35,7 +35,8 @@ const Sidebar = () => {
                                 passHref
                                 key={_item.label}
                             >
-                                <div className={`py-3 cursor-pointer flex items-center px-5 hover:bg-slate-100 ${isActive && " border-r-2 border-r-primary"}`} >
+                                <div className={`py-3 cursor-pointer flex items-center px-5 hover:bg-slate-100
+                                ${isActive && " bg-gray-100 border-l-4 border-l-primary"}`} >
 
                                     <svg className={`h-6 w-6   text-primary ${!isActive && " text-gray-700"}`} viewBox="0 0 20 20" fill="currentColor">
                                         <path d={_item.icon} />

@@ -7,6 +7,9 @@ const Fund: NextPage = () => {
             <Sidebar />
 
 
+            <section className='text-3xl m-10 font-semibold text-gray-800'>
+                Fund Wallet
+            </section>
 
         </div>
 
