@@ -20,36 +20,9 @@ const account = [
 
 export default function AccountHistory() {
   return (
-    <section className="mt-10 flex flex-col">
-      <div className=" flex flex-wrap ">
-        {account.map((item) => (
-          <div
-            className="flex py-5 justify-center  w-[23vw] items-center border-r border-t border-b last:border-r-0"
-            key={item.name}
-          >
-            <Image
-              src={`/${item.icon}.svg`}
-              priority={true}
-              width={40}
-              height={40}
-              className="fill-red-700"
-              alt={item.name}
-            />
-
-            <div className="ml-8">
-              <h3 className="text-base uppercase  text-gray-500 font-medium">
-                {item.name}
-              </h3>
-              <h5 className="text-2xl  text-gray-700 font-medium">
-                ₦{item.amount}
-              </h5>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <div
-        className="py-3 my-4 mr-40  bg-gray-100 self-end rounded-lg w-fit 
+    <section className="mt-10 mx-4 flex w-fit flex-col  border-red-400 ">
+         <div
+        className="py-3 my-4   bg-gray-100 self-end rounded-lg w-fit 
           font-medium px-3 flex items-center cursor-pointer hover:bg-green-100"
       >
         <svg
@@ -67,8 +40,36 @@ export default function AccountHistory() {
         </svg>
         Add fund
       </div>
+      <div className=" flex  flex-col md:flex-row">
+        {account.map((item) => (
+          <div
+            className="flex h-[5rem] items-center px-2 justify-center  md:w-[20vw] w-[90vw] m-auto border"
+            key={item.name}
+          >
+            <Image
+              src={`/${item.icon}.svg`}
+              priority={true}
+              width={40}
+              height={40}
+              className="fill-red-700"
+              alt={item.name}
+            />
+
+            <div className="ml-8">
+              <h3 className="text-base uppercase sm:text-sm  text-gray-500 font-medium">
+                {item.name}
+              </h3>
+              <h5 className="text-2xl sm:text-sm  text-gray-700 font-medium">
+                ₦{item.amount}
+              </h5>
+            </div>
+          </div>
+        ))}
+      </div>
+
+   
     </section>
   );
 }
 
-// <svg className="w-8 h-8 text-gray-400" viewBox="0 0 24 24" fill="currentColor" ><path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"></path></svg>
+

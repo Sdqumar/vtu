@@ -8,9 +8,9 @@ const Dashboard: NextPage = () => {
   return (
     <div className='flex'>
       <Sidebar />
-      <main className='ml-10 mt-10'>
+      <main className='md:ml-10  maxW-[10rem]'>
 
-        <section className='text-3xl  font-bold text-gray-800'>
+        <section className='text-3xl  ml-14 mt-3  font-bold text-gray-800'>
           Hello, Sadeeq Umar
         </section>
         <AccountHistory />

@@ -37,10 +37,10 @@ const services = [
 
 export default function Services() {
   return (
-    <section className="flex flex-wrap mx-auto">
+    <section className="flex flex-wrap justify-center">
       {services.map((item) => (
         <div
-          className="shadow-xl bg-white p-10 m-3 transition-all hover:shadow-2xl cursor-pointer hover:text-primary"
+          className="shadow-xl bg-white w-44 h-40  flex flex-col  items-center justify-center  m-3 transition-all hover:shadow-2xl cursor-pointer hover:text-primary"
           key={item.name}
         >
           <Image
