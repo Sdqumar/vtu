@@ -2,15 +2,15 @@ import { UseFormRegister } from "react-hook-form";
 import Errror from "./error";
 
 type form = {
-  network: string;
-  PhoneNumber: number;
-  amount: number;
-  pin: number;
+  name?: string;
+  PhoneNumber?: number;
+  amount?: number;
+  pin?: number;
 };
 
 type inputProp = {
   register: UseFormRegister<form>;
-  name: "PhoneNumber" | "network" | "amount" | "pin";
+  name: "PhoneNumber" | "amount" | "pin"|"name";
   label: string;
   required?: boolean;
   errors: any;
@@ -37,6 +37,7 @@ export default function Input({
         <input
           {...register(name, { required: required })}
           type={type}
+          placeholder={label}
           {...rest}
           className={` ${style} ${errors[name] && "border-red-600"}`}
         />

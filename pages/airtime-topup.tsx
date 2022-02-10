@@ -2,14 +2,18 @@ import Input from "../components/global/Input";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import Button from "../components/global/Button";
+import Select from "../components/global/select";
 
 export default function AirtimeTopUp() {
   const [loading, setLoading] = useState(false);
+  const [list, setList] = useState([]);
+  const [showForm, setShowForm] = useState(false);
+
   type form = {
-    network: string;
-    PhoneNumber: number;
-    amount: number;
-    pin: number;
+    network?: string;
+    PhoneNumber?: number;
+    amount?: number;
+    pin?: number;
   };
 
   const {
@@ -18,24 +22,29 @@ export default function AirtimeTopUp() {
     getValues,
     formState: { errors },
   } = useForm<form>();
-
+  const network = ["MTN", "Airtel", "9mobile", "GLO"];
   const submitForm = (values: form) => {};
+
+  const handleShowForm = () => {
+    showForm? setShowForm(false):setShowForm(true)
+  };
+
   return (
-    <div>
-      <section className="text-3xl ml-4  mt-10  font-bold text-gray-800">
+    <div className=" md:ml-20 mb-40">
+      <section className="text-3xl ml-4 mt-16  font-bold text-gray-800">
         Buy Airtime
       </section>
 
-      <main>
+      <main className="  mt-5 ">
         <form
           onSubmit={handleSubmit((formValues) => submitForm(formValues))}
-          className="transition-all duration-700"
+          className="transition-all duration-700 w-96 shadow-lg rounded-md p-8"
         >
-          <Input
+          <Select
             register={register}
             name="network"
+            data={network}
             label="Network"
-            type="text"
             errors={errors}
           />
           <Input
@@ -43,6 +52,13 @@ export default function AirtimeTopUp() {
             name="PhoneNumber"
             label="Phone Number"
             type="number"
+            errors={errors}
+          />
+          <Select
+            register={register}
+            name="network"
+            data={list}
+            label="Choose from beneficiary"
             errors={errors}
           />
           <Input
@@ -56,12 +72,60 @@ export default function AirtimeTopUp() {
             register={register}
             name="pin"
             label="PIN"
-            type="number"
+            type="password"
             errors={errors}
           />
-           <Button label="Buy Airtime" loading={loading} />
+          <Button label="Buy Airtime" loading={loading} />
         </form>
       </main>
+
+      <section>
+        <button className="w-40" onClick={handleShowForm}>
+          Save to Beneficiary
+        </button>
+        {showForm && <BeneficiaryForm/>}
+      </section>
     </div>
+  );
+}
+
+export function BeneficiaryForm() {
+  const [loading, setLoading] = useState(false);
+  type form = {
+    PhoneNumber?: number;
+    name?: string;
+  };
+
+  const {
+    handleSubmit,
+    register,
+    getValues,
+    formState: { errors },
+  } = useForm<form>();
+  const submitForm = (values: form) => {};
+
+  return (
+    <main className="  mt-5 ">
+      <form
+        onSubmit={handleSubmit((formValues) => submitForm(formValues))}
+        className="transition-all duration-700 w-96 shadow-lg rounded-md p-8"
+      >
+        <Input
+          register={register}
+          name="PhoneNumber"
+          label="Phone Number"
+          type="number"
+          errors={errors}
+        />
+        <Input
+          register={register}
+          name="name"
+          label="Name"
+          type="name"
+          errors={errors}
+        />
+        <Button label="Save" loading={loading} />
+      </form>
+    </main>
   );
 }
