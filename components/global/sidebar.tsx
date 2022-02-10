@@ -7,33 +7,46 @@ import { nav } from "./utils";
 const Sidebar = () => {
   const router = useRouter();
   const path = router.pathname.slice(1);
-const [showNav,setShowNav]=useState(false)
-const handleClick = ()=>{
-  showNav ? setShowNav(false):
-  setShowNav(true)
-}
-  return (
-    <div className={`${showNav && "bg-white"}  fixed md:relative z-10 transition-all`}>
-      <div className="cursor-pointer ">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        className="m-3 h-8 w-8 md:hidden"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-        onClick={handleClick}
+  const [showNav, setShowNav] = useState(false);
+  const isHome = router.pathname === '/'
+  
 
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M4 6h16M4 12h16M4 18h7"
-        />
-      </svg>
+  
+  const handleClick = () => {
+    showNav ? setShowNav(false) : setShowNav(true);
+  };
+  if(isHome){
+    return null
+  }
+  return (
+    <div
+      className={`${
+        showNav && "bg-white"
+      }  fixed md:relative z-10 transition-all`}
+    >
+      <div className="cursor-pointer ">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="m-3 h-8 w-8 md:hidden"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          onClick={handleClick}
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M4 6h16M4 12h16M4 18h7"
+          />
+        </svg>
       </div>
 
-      <main className={`w-64  ${showNav ? 'block':'hidden' }  md:block ml-2 border-r h-[90vh]  `}>
+      <main
+        className={`w-64  ${
+          showNav ? "block" : "hidden"
+        }  md:block ml-2 border-r h-[90vh]  `}
+      >
         <section
           className="flex bg-primary items-center justify-center w-60 rounded-lg mt-10 py-3 cursor-pointer 
             hover:bg-primary

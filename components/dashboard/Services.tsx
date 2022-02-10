@@ -38,13 +38,13 @@ const services = [
 
 export default function Services() {
   return (
-    <section className="flex flex-wrap justify-center md:justify-start">
+    <section className="flex flex-wrap justify-center md:justify-around gap-4">
       {services.map((item) => (
         <Link href={item.name.replace(/ /g,"-").toLowerCase()} passHref  key={item.name.replace(" ", "_")}>
           <a>
 
         <div
-          className="shadow-xl bg-white w-60 h-60 md:w-44 md:h-40 flex flex-col  items-center justify-center  m-3 transition-all hover:shadow-2xl cursor-pointer hover:text-primary"
+          className="shadow-xl bg-white w-60 h-60 md:w-44 md:h-40 flex flex-col  items-center justify-center  my-3 transition-all hover:shadow-2xl cursor-pointer hover:text-primary"
          
         >
           <Image

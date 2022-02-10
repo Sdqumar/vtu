@@ -20,9 +20,9 @@ const account = [
 
 export default function AccountHistory() {
   return (
-    <section className="mt-10 mx-4 flex w-fit flex-col  border-red-400 ">
+    <section className="mt-10 flex flex-col ">
          <div
-        className="py-3 my-4   bg-gray-100 self-end rounded-lg w-fit 
+        className="py-3 my-4   bg-gray-100 self-end rounded-lg 
           font-medium px-3 flex items-center cursor-pointer hover:bg-green-100"
       >
         <svg
@@ -40,10 +40,10 @@ export default function AccountHistory() {
         </svg>
         Add fund
       </div>
-      <div className=" flex  flex-col md:flex-row">
+      <div className=" flex  flex-col md:flex-row gap-4 justify-center ">
         {account.map((item) => (
           <div
-            className="flex h-[5rem] items-center px-2 justify-center  md:w-[20vw] w-[90vw] m-auto border"
+            className="flex h-[5rem] items-center px-2 justify-center  w-[90vw] md:max-w-[23vw]   border"
             key={item.name}
           >
             <Image
