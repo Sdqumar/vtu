@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import Button from "../global/Button";
-import Input from "../global/input";
+import Input from "../global/registerInput";
 import { form, submitForm } from "./utils";
 
 
@@ -25,7 +25,8 @@ const SignIn = () => {
                 name="email"
                 label="Email"
                 type="email"
-                errors={errors} />
+                errors={errors}
+                />
             <Input
                 register={register}
                 name="password"

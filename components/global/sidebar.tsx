@@ -22,7 +22,7 @@ const Sidebar = () => {
     <div
       className={`${
         showNav && "bg-white"
-      }  fixed md:relative z-10 transition-all`}
+      }  fixed md:relative z-10 transition-all mr-4`}
     >
       <div className="cursor-pointer ">
         <svg
