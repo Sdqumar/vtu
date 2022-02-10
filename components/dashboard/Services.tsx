@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 const services = [
   {
@@ -37,11 +38,14 @@ const services = [
 
 export default function Services() {
   return (
-    <section className="flex flex-wrap justify-center">
+    <section className="flex flex-wrap justify-center md:justify-start">
       {services.map((item) => (
+        <Link href={item.name.replace(/ /g,"-").toLowerCase()} passHref  key={item.name.replace(" ", "_")}>
+          <a>
+
         <div
-          className="shadow-xl bg-white w-44 h-40  flex flex-col  items-center justify-center  m-3 transition-all hover:shadow-2xl cursor-pointer hover:text-primary"
-          key={item.name}
+          className="shadow-xl bg-white w-60 h-60 md:w-44 md:h-40 flex flex-col  items-center justify-center  m-3 transition-all hover:shadow-2xl cursor-pointer hover:text-primary"
+         
         >
           <Image
             src={`/${item.img}.png`}
@@ -53,6 +57,9 @@ export default function Services() {
           />
           <h4 className="font-medium text-center ">{item.name}</h4>
         </div>
+        </a>
+
+        </Link>
       ))}
     </section>
   );
