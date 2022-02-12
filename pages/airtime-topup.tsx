@@ -30,12 +30,13 @@ export default function AirtimeTopUp() {
   };
 
   return (
-    <div className=" md:ml-20 mb-40">
-      <section className="text-3xl ml-4 mt-16  font-bold text-gray-800">
+    <div className=" md:ml-20 mb-40   mt-5  ">
+    
+    <section className="text-3xl ml-4 mt-16  font-bold text-gray-800">
         Buy Airtime
       </section>
-
-      <main className="  mt-5 ">
+      <main className="flex  flex-wrap">
+    
         <form
           onSubmit={handleSubmit((formValues) => submitForm(formValues))}
           className="transition-all duration-700 w-96 shadow-lg rounded-md p-8"
@@ -77,14 +78,15 @@ export default function AirtimeTopUp() {
           />
           <Button label="Buy Airtime" loading={loading} />
         </form>
-      </main>
-
-      <section>
-        <button className="w-40" onClick={handleShowForm}>
+        <section>
+        <button className="w-40 ml-10" onClick={handleShowForm}>
           Save to Beneficiary
         </button>
         {showForm && <BeneficiaryForm/>}
       </section>
+      </main>
+
+    
     </div>
   );
 }

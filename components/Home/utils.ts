@@ -56,10 +56,10 @@ export const prices = [
     },
     {
         img: '/airtel.png',
-        network: 'AIRTAL',
+        network: 'Airtel',
         prices: [
             {
-                size: '500.0MB',
+                size: '1000.0MB',
                 price: '₦150',
                 duration: '30 days'
             },
