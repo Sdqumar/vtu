@@ -69,9 +69,6 @@ export default function AirtimeCash() {
             type="number"
             errors={errors}
           />
-         
-
-        
           <Input
             register={register}
             name="pin"
