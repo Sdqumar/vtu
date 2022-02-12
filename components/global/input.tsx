@@ -6,11 +6,12 @@ type form = {
   PhoneNumber?: number;
   amount?: number;
   pin?: number;
+  meterNo?: number;
 };
 
 type inputProp = {
   register: UseFormRegister<form>;
-  name: "PhoneNumber" | "amount" | "pin"|"name";
+  name: "PhoneNumber" | "amount" | "pin"|"name"|'meterNo';
   label: string;
   required?: boolean;
   errors: any;

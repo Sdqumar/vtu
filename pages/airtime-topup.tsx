@@ -30,9 +30,9 @@ export default function AirtimeTopUp() {
   };
 
   return (
-    <div className=" md:ml-20 mb-40   mt-5  ">
+    <div className=" md:ml-20 mb-40 mt-10  ">
     
-    <section className="text-3xl ml-4 mt-16  font-bold text-gray-800">
+    <section className="text-3xl ml-4 my-5  font-bold text-gray-800">
         Buy Airtime
       </section>
       <main className="flex  flex-wrap">

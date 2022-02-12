@@ -45,8 +45,8 @@ export default function BuyData() {
   });
 
   return (
-    <div className=" md:ml-20 mb-40   mt-5  ">
-      <section className="text-3xl ml-4 mt-16  font-bold text-gray-800">
+    <div className=" md:ml-20 mb-40   mt-10  ">
+      <section className="text-3xl ml-4 my-5  font-bold text-gray-800">
         Buy Data
       </section>
       <main className="flex  flex-wrap">
@@ -59,6 +59,8 @@ export default function BuyData() {
             control={control}
             rules={{ required: true }}
             render={({ field }) => (
+                <>
+                <label>Network</label>
               <select
                 name={field.name}
                 onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
@@ -69,7 +71,8 @@ export default function BuyData() {
                   <option value={item}>{item}</option>
                 ))}
               </select>
-            )}
+              </>
+                          )}
           />
 
           <Input
