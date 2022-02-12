@@ -29,7 +29,7 @@ export default function BuyData() {
   const handleChangeNetwork = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const network = e.target.value;
     const bundle = prices.find((item) => item.network === network)!;
-     setBundle(bundle.prices);
+    setBundle(bundle.prices);
   };
 
   const submitForm = (values: form) => {};
@@ -59,22 +59,28 @@ export default function BuyData() {
             control={control}
             rules={{ required: true }}
             render={({ field }) => (
-                <>
+              <>
                 <label>Network</label>
-              <select
-                name={field.name}
-                onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-                  handleChangeNetwork(e)
-                }
-              >
-                {network.map((item) => (
-                  <option value={item}>{item}</option>
-                ))}
-              </select>
+                <select
+                  name={field.name}
+                  onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                    handleChangeNetwork(e)
+                  }
+                >
+                  {network.map((item) => (
+                    <option value={item} key={item}>{item}</option>
+                  ))}
+                </select>
               </>
-                          )}
+            )}
           />
-
+          <DataSelect
+            register={register}
+            name="bundle"
+            data={bundle}
+            label="Data bundle"
+            errors={errors}
+          />
           <Input
             register={register}
             name="PhoneNumber"
@@ -89,13 +95,7 @@ export default function BuyData() {
             label="Choose from beneficiary"
             errors={errors}
           />
-          <DataSelect
-            register={register}
-            name="bundle"
-            data={bundle}
-            label="Data bundle"
-            errors={errors}
-          />
+
           <Input
             register={register}
             name="amount"
@@ -110,7 +110,7 @@ export default function BuyData() {
             type="password"
             errors={errors}
           />
-          <Button label="Buy Airtime" loading={loading} />
+          <Button label="continue" loading={loading} />
         </form>
         <section>
           <button className="w-40 ml-10" onClick={handleShowForm}>

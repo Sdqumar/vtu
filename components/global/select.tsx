@@ -5,11 +5,13 @@ type form = {
     network?: string;
     PhoneNumber?: number;
     company?:string;
+    plan?:string;
+
   };
   
   type inputProp = {
     register: UseFormRegister<form>;
-    name: "PhoneNumber" | "network" |"company"  ;
+    name: "PhoneNumber" | "network" |"company"|"plan"  ;
     label: string;
     required?: boolean;
     errors: any;

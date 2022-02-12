@@ -7,11 +7,12 @@ type form = {
   amount?: number;
   pin?: number;
   meterNo?: number;
+  cardNo?: number;
 };
 
 type inputProp = {
   register: UseFormRegister<form>;
-  name: "PhoneNumber" | "amount" | "pin"|"name"|'meterNo';
+  name: "PhoneNumber" | "amount" | "pin"|"name"|'meterNo'|"cardNo";
   label: string;
   required?: boolean;
   errors: any;

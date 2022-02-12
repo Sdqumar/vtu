@@ -76,7 +76,7 @@ export default function AirtimeTopUp() {
             type="password"
             errors={errors}
           />
-          <Button label="Buy Airtime" loading={loading} />
+          <Button label="continue" loading={loading} />
         </form>
         <section>
         <button className="w-40 ml-10" onClick={handleShowForm}>
