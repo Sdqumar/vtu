@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 const account = [
   {
@@ -20,7 +21,9 @@ const account = [
 
 export default function AccountHistory() {
   return (
-    <section className="mt-10 flex flex-col ">
+    <section className="mt-10 flex flex-col">
+      <Link href='/fund'>
+
          <div
         className="py-3 my-4   bg-gray-100 self-end rounded-lg 
           font-medium px-3 flex items-center cursor-pointer hover:bg-green-100"
@@ -40,6 +43,8 @@ export default function AccountHistory() {
         </svg>
         Add fund
       </div>
+      </Link>
+
       <div className=" flex  flex-col md:flex-row gap-4 justify-center ">
         {account.map((item) => (
           <div

@@ -1,14 +1,16 @@
+import type { NextPage } from "next";
+import Link from "next/link";
 import Input from "../components/global/Input";
 import { useState } from "react";
 import Button from "../components/global/Button";
 import { useForm } from "react-hook-form";
 
-export default function BonusWallet() {
-  const [loading, setLoading] = useState(false);
+const BankTransfer: NextPage = () => {
+
+    const [loading, setLoading] = useState(false);
 
   type form = {
     amount?: number;
-    pin?: number;
   };
 
   const {
@@ -20,17 +22,15 @@ export default function BonusWallet() {
 
   const submitForm = (values: form) => {};
 
-  
-
   return (
-    <div className=" md:ml-20 mb-40  mt-10  ">
-      <section className="text-xl ml-4 my-5  font-bold text-gray-800 ">
-      Move Earnings to Wallet (Agents Only)
-      </section>
+    <div className="border rounded-xl h-fit py-10 max-w-[30rem] my-14 mx-10 px-2">
+      <h3 className="text-xl mx-4 mb-4 font-bold text-gray-600">
+        Fund with Bank 
+      </h3>
       <main className="flex  flex-wrap">
         <form
           onSubmit={handleSubmit((formValues) => submitForm(formValues))}
-          className="transition-all duration-700 w-96 shadow-lg rounded-md p-8"
+          className=" w-72 px-5"
         >
           <Input
             register={register}
@@ -39,16 +39,11 @@ export default function BonusWallet() {
             type="number"
             errors={errors}
           />
-          <Input
-            register={register}
-            name="pin"
-            label="PIN"
-            type="password"
-            errors={errors}
-          />
           <Button label="continue" loading={loading} />
         </form>
       </main>
     </div>
   );
-}
+};
+
+export default BankTransfer;

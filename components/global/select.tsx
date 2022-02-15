@@ -7,11 +7,13 @@ type form = {
     company?:string;
     plan?:string;
     exam?:string;
+    bank?:string;
+
   };
   
   type inputProp = {
     register: UseFormRegister<form>;
-    name: "PhoneNumber" | "network" |"company"|"plan"|"exam"  ;
+    name: "PhoneNumber" | "network" |"company"|"plan"|"exam"|"bank"  ;
     label: string;
     required?: boolean;
     errors: any;
