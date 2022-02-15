@@ -24,14 +24,15 @@ export default function BonusWallet() {
 
   return (
     <div className=" md:ml-20 mb-40  mt-10  ">
-      <section className="text-xl ml-4 my-5  font-bold text-gray-800 ">
-      Move Earnings to Wallet (Agents Only)
-      </section>
+     
       <main className="flex  flex-wrap">
         <form
           onSubmit={handleSubmit((formValues) => submitForm(formValues))}
           className="transition-all duration-700 w-96 shadow-lg rounded-md p-8"
         >
+           <section className="text-xl mb-5  font-bold text-gray-800 ">
+      Move Earnings to Wallet (Agents Only)
+      </section>
           <Input
             register={register}
             name="amount"

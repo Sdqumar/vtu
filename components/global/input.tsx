@@ -3,22 +3,25 @@ import Errror from "./error";
 
 type form = {
   name?: string;
+  email?: string;
   PhoneNumber?: number;
   amount?: number;
   pin?: number;
   meterNo?: number;
   cardNo?: number;
+  oldpin?: number;
 };
 
 type inputProp = {
   register: UseFormRegister<form>;
-  name: "PhoneNumber" | "amount" | "pin"|"name"|'meterNo'|"cardNo";
+  name: "PhoneNumber" | "amount" | "pin" | "oldpin"| "name" | "email" | "meterNo" | "cardNo";
   label: string;
   required?: boolean;
   errors: any;
   type?: string;
   containerStyle?: string;
   style?: string;
+  disabled?:boolean
 };
 
 export default function Input({
@@ -30,20 +33,20 @@ export default function Input({
   type = "text",
   containerStyle = "",
   style = "",
+  disabled,
   ...rest
 }: inputProp) {
   return (
     <div className="my-2 relative">
-      <label className="">{label}</label>
-      <div>
+      <label>{label}</label>
         <input
           {...register(name, { required: required })}
           type={type}
           placeholder={label}
           {...rest}
+          disabled={disabled}
           className={` ${style} ${errors[name] && "border-red-600"}`}
         />
-      </div>
       {errors[name] && <Errror message={`${label} is required`} />}
     </div>
   );
