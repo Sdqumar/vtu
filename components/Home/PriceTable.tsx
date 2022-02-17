@@ -3,7 +3,7 @@ import { prices } from "./utils";
 
 export const PriceTable = () => {
   return (
-    <div className="flex flex-wrap w-full justify-center items-center mt-5 mx-3">
+    <div className="flex flex-wrap w-full justify-center items-center mt-5">
       {prices.map((network) => {
         return (
           <section

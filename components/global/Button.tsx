@@ -12,6 +12,7 @@ export default function Button({ label, loading, onClick }: buttonProps) {
         <button
             onClick={onClick}
             disabled={loading}
+            className="bg-black"
         >
             {loading && <Spinner />}
             {label}
