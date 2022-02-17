@@ -4,7 +4,7 @@ import { PriceTable } from "../components/Home/PriceTable";
 
 const Home: NextPage = () => {
   return (
-    <div className="m-auto font-semibold">
+    <div className="mx-auto font-semibold bg-gradient-to-r from-green-400 to-primary w-full">
       <main className="flex flex-wrap gap-16 mx-5 justify-center md:justify-between min-h-[24rem] mt-10 md:mt-24 items-start " >
         <div className="mx-auto">
           <h1 className="text-6xl mb-4 font-bold text-white">Buy Data.</h1>

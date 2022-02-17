@@ -4,7 +4,7 @@ import Sidebar from "../components/global/sidebar";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <div className="">
+    <div className="flex">
        <Sidebar />
       <Component {...pageProps} /> 
     </div>

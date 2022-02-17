@@ -4,9 +4,7 @@
 @tailwind utilities;
 
 @layer base {
-  body{
-    @apply bg-gradient-to-r from-green-400 to-primary w-full
-  }
+ 
   label {
     @apply block mb-2 text-lg font-medium;
   }
