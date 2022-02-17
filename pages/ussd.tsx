@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import Input from "../components/global/Input";
+import Input from "../components/global/input";
 import { useState } from "react";
 import Button from "../components/global/Button";
 import { useForm } from "react-hook-form";
