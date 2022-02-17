@@ -67,9 +67,14 @@ const COLUMNS: Column<{
     accessor: "status",
   },
 ];
+{
+  /* eslint-disable react/jsx-key */
+}
+{
+  /* the jsx key is provided in the .get*Props() spreads, but eslint doesn't believe you. I believe you. */
+}
 
 export const Table = () => {
-  // const columns = useMemo(() => COLUMNS, []);
   const columns = React.useMemo(() => COLUMNS, []);
   const data = useMemo(() => tableData, []);
 

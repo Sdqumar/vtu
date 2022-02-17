@@ -23,7 +23,12 @@ const Agent: Referral = () => {
       <h2 className="text-2xl font-medium py-2">Are you excited ?</h2>
       <p>
         Share your Referral Link -{" "}
-        <a className="text-red-400" target='_blank' href="https://vtu.com/register/ref/sdqumar09">
+        <a
+          className="text-red-400"
+          rel="noreferrer"
+          target="_blank"
+          href="https://vtu.com/register/ref/sdqumar09"
+        >
           https://vtu.com/register/ref/sdqumar09
         </a>
       </p>
