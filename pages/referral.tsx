@@ -1,12 +1,34 @@
-import type { NextPage } from 'next'
+import type { NextPage as Referral } from "next";
 
-const Refferal: NextPage = () => {
-    return (
-        <div className='flex'>
-                Refferal
-        </div>
+const Agent: Referral = () => {
+  return (
+    <div className=" shadow-md rounded-md mx-10 my-20 items-center  justify-center h-fit p-5 w-[50%]">
+      <h2 className="text-2xl font-medium py-2">Refer Friends and Earn</h2>
+      <p>
+        Refer friends to us and earn commissions on al their transactions. There
+        is no limit you keep earning commissions on all their transactions Your
+        referral commisions goes to your earnings balance which you can withdraw
+        to your bank or move to your main wallet to buy something on the
+        platform
+      </p>
 
-    )
-}
+      <h2 className="text-2xl font-medium py-2">Referral Benefits</h2>
+      <p>
+        - Earn 0.2% on every Airtime, Direct Data, Electricity and Education
+        transactions your prospects make - Earn 2 naira on every cheap
+        sme/gifting data transactions your prospects make - You earn 300 naira
+        immediately the person you refer upgrade to agent
+      </p>
 
-export default Refferal
+      <h2 className="text-2xl font-medium py-2">Are you excited ?</h2>
+      <p>
+        Share your Referral Link -{" "}
+        <a className="text-red-400" target='_blank' href="https://vtu.com/register/ref/sdqumar09">
+          https://vtu.com/register/ref/sdqumar09
+        </a>
+      </p>
+    </div>
+  );
+};
+
+export default Agent;

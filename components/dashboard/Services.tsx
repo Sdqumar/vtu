@@ -31,7 +31,7 @@ const services = [
     img: "fund",
   },
   {
-    name: "My Referrals",
+    name: "Referral",
     img: "referral",
   },
 ];
