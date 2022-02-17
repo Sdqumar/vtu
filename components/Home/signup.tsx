@@ -5,7 +5,7 @@ import Button from "../global/Button";
 import Input from "../global/registerInput";
 import { form, signUp } from "./utils";
 import Error from "../global/alertError";
-import Success from "../global/AlertSuccess";
+import Success from "../global/alertSuccess";
 const SignUp = () => {
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState<null | string>(null);
