@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import Button from "../global/Button";
 import Input from "../global/registerInput";
-import { form, submitForm } from "./utils";
+import { form, signUp } from "./utils";
 
 const SignUp = () => {
   const [loading, setLoading] = useState(false);
@@ -10,12 +10,18 @@ const SignUp = () => {
   const {
     handleSubmit,
     register,
+    getValues,
     formState: { errors },
   } = useForm<form>();
 
+  const submitForm = async() => {
+    const values = getValues()
+    await signUp(values)
+  };
+
   return (
     <form
-      onSubmit={handleSubmit((formValues) => submitForm(formValues))}
+      onSubmit={handleSubmit(submitForm)}
       className="transition-all duration-700"
     >
       <div className="grid grid-cols-2 gap-2 justify-between">

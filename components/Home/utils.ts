@@ -1,17 +1,3 @@
-export type form = {
-    firstName: string;
-    lastName: string;
-    email: string;
-    password: string;
-    phoneNumber: number;
-}
-
-export const submitForm=(values:form)=>{
-console.log(values);
-
-}
-
-
 export const prices = [
     {
         img: '/mtn.png',
@@ -178,3 +164,19 @@ export const prices = [
         ]
     },
 ]
+export type form = {
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+    phoneNumber: number;
+}
+
+export const signUp=(values:form)=>{
+console.log(values);
+}
+export const signIn=(values:form)=>{
+console.log(values);
+}
+
+
