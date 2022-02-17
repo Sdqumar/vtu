@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import Error from "../global/alertError";
-import Success from "../global/AlertSuccess";
+import Success from "../global/alertSuccess";
 import Button from "../global/Button";
 import Input from "../global/registerInput";
 import { form, signIn } from "./utils";
