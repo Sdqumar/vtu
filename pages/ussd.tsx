@@ -6,7 +6,8 @@ import { useForm } from "react-hook-form";
 import Select from "../components/global/select";
 
 
-const bankList= ['UBA Bank','First Bank','GT Bank','Access Bank','Keystone Bank','Polaris Bank','Sterling Bank','Union Bank','Zenith Bank','FCMB','Stanbic IBTC Bank','Unity Bank','JAIZ Bank','Wema Bank',]
+const bankList= ['UBA Bank','First Bank','GT Bank','Access Bank','Keystone Bank','Polaris Bank','Sterling Bank','Union Bank','Zenith Bank','FCMB','Stanbic IBTC Bank','Unity Bank','JAIZ Bank','Wema Bank'
+]
 
 const USSD: NextPage = () => {
   const [loading, setLoading] = useState(false);
