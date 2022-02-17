@@ -8,15 +8,13 @@ const Sidebar = () => {
   const router = useRouter();
   const path = router.pathname.slice(1);
   const [showNav, setShowNav] = useState(false);
-  const isHome = router.pathname === '/'
-  
+  const isHome = router.pathname === "/";
 
-  
   const handleClick = () => {
     showNav ? setShowNav(false) : setShowNav(true);
   };
-  if(isHome){
-    return null
+  if (isHome) {
+    return null;
   }
   return (
     <div
@@ -47,28 +45,31 @@ const Sidebar = () => {
           showNav ? "block" : "hidden"
         }  md:block ml-2 border-r h-[90vh]  `}
       >
-        <section
-          className="flex bg-primary items-center justify-center w-60 rounded-lg mt-10 py-3 cursor-pointer 
+        <Link href="/dashboard" passHref>
+          <a>
+            <section
+              className="flex bg-primary items-center justify-center w-60 rounded-lg mt-10 py-3 cursor-pointer 
             hover:bg-primary
             "
-        >
-          <Image
-            src="/avatar.jpg"
-            priority={true}
-            width={40}
-            height={40}
-            className="rounded-full"
-            alt="avatar"
-          />
+            >
+              <Image
+                src="/avatar.jpg"
+                priority={true}
+                width={40}
+                height={40}
+                className="rounded-full"
+                alt="avatar"
+              />
 
-          <div>
-            <h4 className="font-semibold text-lg text-white px-5">
-              Sadeeq Umar
-            </h4>
-            <span className="  text-yellow-200 px-5">₦1,500</span>
-          </div>
-        </section>
-
+              <div>
+                <h4 className="font-semibold text-lg text-white px-5">
+                  Sadeeq Umar
+                </h4>
+                <span className="text-yellow-200 px-5">₦1,500</span>
+              </div>
+            </section>
+          </a>
+        </Link>
         <section className="my-6">
           {nav.map((_item) => {
             const isActive =

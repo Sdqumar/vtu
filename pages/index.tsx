@@ -4,7 +4,7 @@ import { PriceTable } from '../components/Home/PriceTable'
 
 const Home: NextPage = () => {
   return (
-    <div>
+    <div className='m-auto'>
       <main className='flex flex-wrap gap-16 mx-5  justify-center items-center'>
         <div className='w-[30rem] text-center'>
           <h1 className='text-6xl mb-4 font-semibold text-primary'>Welcome to VTU</h1>
