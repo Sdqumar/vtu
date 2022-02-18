@@ -18,9 +18,7 @@ const Sidebar = () => {
   }
   return (
     <div
-      className={`${
-        showNav && "bg-white"
-      }  fixed z-10 mr-4 transition-all md:relative`}
+      className={`fixed z-10 mr-4 h-full bg-white transition-all md:relative`}
     >
       <div className="cursor-pointer ">
         <svg
@@ -48,8 +46,8 @@ const Sidebar = () => {
         <Link href="/dashboard" passHref>
           <a>
             <section
-              className="mt-10 flex w-60 cursor-pointer items-center justify-center rounded-lg bg-primary py-3 
-            hover:bg-primary
+              className="bg-primary hover:bg-primary mt-10 flex w-60 cursor-pointer items-center justify-center rounded-lg 
+            py-3
             "
             >
               <Image
@@ -82,14 +80,12 @@ const Sidebar = () => {
                 key={_item.label}
               >
                 <div
-                  className={`flex cursor-pointer items-center py-3 px-5 hover:bg-slate-100
-                                ${
-                                  isActive &&
-                                  " border-l-4 border-l-primary bg-gray-100"
-                                }`}
+                  className={`flex cursor-pointer items-center py-3 px-5 hover:bg-slate-100${
+                    isActive && " border-l-primary border-l-4 bg-gray-100"
+                  }`}
                 >
                   <svg
-                    className={`h-6 w-6   text-primary ${
+                    className={`text-primary h-6   w-6 ${
                       !isActive && " text-gray-700"
                     }`}
                     viewBox="0 0 20 20"
@@ -99,7 +95,7 @@ const Sidebar = () => {
                   </svg>
 
                   <h3
-                    className={`ml-5 text-lg font-medium text-primary ${
+                    className={`text-primary ml-5 text-lg font-medium ${
                       !isActive && "text-gray-700"
                     }`}
                   >
@@ -111,7 +107,7 @@ const Sidebar = () => {
           })}
         </section>
 
-        <section className="absolute bottom-1 ml-5 flex cursor-pointer items-center hover:text-red-600">
+        <section className="absolute bottom-14 ml-5 flex cursor-pointer items-center hover:text-red-600">
           <svg
             className="h-6 w-6"
             fill="none"

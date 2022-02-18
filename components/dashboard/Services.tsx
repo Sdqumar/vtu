@@ -38,7 +38,7 @@ const services = [
 
 export default function Services() {
   return (
-    <section className="flex flex-wrap justify-center gap-4 md:justify-around">
+    <section className="flex flex-wrap  justify-center gap-4 md:justify-around">
       {services.map((item) => (
         <Link
           href={item.name.replace(/ /g, "-").toLowerCase()}
@@ -46,7 +46,7 @@ export default function Services() {
           key={item.name.replace(" ", "_")}
         >
           <a>
-            <div className="my-3 flex h-60 w-60 cursor-pointer flex-col items-center justify-center  bg-white shadow-xl  transition-all hover:text-primary hover:shadow-2xl md:h-40 md:w-44">
+            <div className="hover:text-primary my-3 flex h-60 w-60 cursor-pointer flex-col items-center justify-center bg-white shadow-md transition-all hover:shadow-xl md:h-40 md:w-44">
               <Image
                 src={`/${item.img}.png`}
                 priority={true}

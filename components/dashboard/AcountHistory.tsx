@@ -21,7 +21,7 @@ const account = [
 
 export default function AccountHistory() {
   return (
-    <section className="mt-10 flex flex-col">
+    <section className="mx-10 mt-5 flex flex-col md:mx-0 ">
       <Link href="/fund" passHref>
         <div
           className="my-4 flex   cursor-pointer items-center self-end 
@@ -29,7 +29,7 @@ export default function AccountHistory() {
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="mr-1 h-5 w-5 text-primary "
+            className="text-primary mr-1 h-5 w-5 "
             viewBox="0 0 20 20"
             fill="currentColor"
           >
