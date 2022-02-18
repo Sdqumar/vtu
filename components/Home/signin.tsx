@@ -7,10 +7,12 @@ import Button from "../global/Button";
 import Input from "../global/registerInput";
 import { form } from "./utils";
 import { signIn } from "../../utils/auth";
+import { useUser } from "../context/userContext";
 
 const SignIn = () => {
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState<null | string>(null);
+  const userContext = useUser();
 
   const router = useRouter();
   const {
@@ -24,7 +26,9 @@ const SignIn = () => {
     setLoading(true);
     const values = getValues();
     try {
-      await signIn(values);
+      const user = await signIn(values);
+      const { email, displayName, uid } = user.user;
+      userContext?.setUser({ email, displayName, uid });
       setAlert("success");
       setLoading(false);
       setTimeout(() => router.push("/dashboard"), 2000);

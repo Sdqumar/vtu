@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { signout } from "../../utils/auth";
+import { useUser } from "../context/userContext";
 import { nav } from "./utils";
 
 const Sidebar = () => {
@@ -10,6 +11,7 @@ const Sidebar = () => {
   const path = router.pathname.slice(1);
   const [showNav, setShowNav] = useState(false);
   const isHome = router.pathname === "/";
+  const userContext = useUser();
 
   const handleSignOut = async () => {
     await signout();
@@ -52,7 +54,7 @@ const Sidebar = () => {
       <main
         className={`block w-64 transition-all md:-translate-x-0 ${
           showNav ? "-translate-x-0" : "-translate-x-64"
-        }  ml-2 h-[90vh] border-r md:block  `}
+        }  ml-2 h-[90vh] border-r md:block`}
       >
         <Link href="/dashboard" passHref>
           <a>
@@ -72,7 +74,7 @@ const Sidebar = () => {
 
               <div>
                 <h4 className="px-5 text-lg font-semibold text-white">
-                  Sadeeq Umar
+                  {userContext?.user?.displayName}
                 </h4>
                 <span className="px-5 text-yellow-200">₦1,500</span>
               </div>
