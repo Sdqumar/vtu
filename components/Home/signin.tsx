@@ -5,7 +5,8 @@ import Error from "../global/alertError";
 import Success from "../global/alertSuccess";
 import Button from "../global/Button";
 import Input from "../global/registerInput";
-import { form, signIn } from "./utils";
+import { form } from "./utils";
+import { signIn } from "../../utils/auth";
 
 const SignIn = () => {
   const [loading, setLoading] = useState(false);

@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { signout } from "../../utils/auth";
 import { nav } from "./utils";
 
 const Sidebar = () => {
@@ -10,19 +11,29 @@ const Sidebar = () => {
   const [showNav, setShowNav] = useState(false);
   const isHome = router.pathname === "/";
 
+  const handleSignOut = async () => {
+    await signout();
+    setTimeout(() => {
+      router.push("/");
+    }, 1000);
+  };
+
   const handleClick = () => {
     showNav ? setShowNav(false) : setShowNav(true);
   };
+
   if (isHome) {
     return null;
   }
+
   return (
     <div
-      className={`fixed z-10 mr-4 h-full bg-white transition-all md:relative`}
+      className={`fixed z-10 mr-4 h-full ${
+        showNav && "bg-white"
+      } transition-all md:relative`}
     >
       <div className="cursor-pointer ">
         <svg
-          xmlns="http://www.w3.org/2000/svg"
           className="m-3 h-8 w-8 md:hidden"
           fill="none"
           viewBox="0 0 24 24"
@@ -39,8 +50,8 @@ const Sidebar = () => {
       </div>
 
       <main
-        className={`w-64  ${
-          showNav ? "block" : "hidden"
+        className={`block w-64 transition-all md:-translate-x-0 ${
+          showNav ? "-translate-x-0" : "-translate-x-64"
         }  ml-2 h-[90vh] border-r md:block  `}
       >
         <Link href="/dashboard" passHref>
@@ -107,7 +118,11 @@ const Sidebar = () => {
           })}
         </section>
 
-        <section className="absolute bottom-14 ml-5 flex cursor-pointer items-center hover:text-red-600">
+        <section
+          className="absolute bottom-14 ml-5 flex cursor-pointer items-center hover:text-red-600
+        "
+          onClick={handleSignOut}
+        >
           <svg
             className="h-6 w-6"
             fill="none"

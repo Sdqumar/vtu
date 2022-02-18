@@ -3,9 +3,11 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import Button from "../global/Button";
 import Input from "../global/registerInput";
-import { form, signUp } from "./utils";
+import { form } from "./utils";
 import Error from "../global/alertError";
 import Success from "../global/alertSuccess";
+import { signUp } from "../../utils/auth";
+
 const SignUp = () => {
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState<null | string>(null);

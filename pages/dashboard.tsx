@@ -5,7 +5,7 @@ import Services from "../components/dashboard/Services";
 const Dashboard: NextPage = () => {
   return (
     <main className="mx-auto max-w-[50rem] ">
-      <section className="mt-14 ml-10 text-center text-3xl font-bold text-gray-800 md:ml-0 md:text-left">
+      <section className="mt-14  text-center text-3xl font-bold text-gray-800 md:ml-0 md:text-left">
         Hello, Sadeeq Umar
       </section>
       <AccountHistory />

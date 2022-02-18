@@ -1,12 +1,3 @@
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  updateProfile,
-} from "firebase/auth";
-import { doc, setDoc, getFirestore } from "firebase/firestore";
-import firebase from "../../lib/firebaseConfig";
-
 export const prices = [
   {
     img: "/mtn.png",
@@ -179,38 +170,4 @@ export type form = {
   email: string;
   password: string;
   phoneNumber: number;
-};
-
-export const signUp = (values: form) => {
-  const { email, password, firstName, lastName, phoneNumber } = values;
-  const db = getFirestore(firebase);
-  const auth = getAuth(firebase);
-  return createUserWithEmailAndPassword(auth, email, password).then(
-    (userCredential) => {
-      const user = userCredential.user;
-      updateProfile(user, {
-        displayName: firstName,
-      }).then(async () => {
-        await setDoc(doc(db, "users", user.uid), {
-          name: `${firstName} ${lastName}`,
-          email,
-          firstName,
-          lastName,
-          phoneNumber,
-        });
-      });
-    }
-  );
-};
-export const signIn = (values: form) => {
-  const { email, password } = values;
-  const auth = getAuth(firebase);
-  return signInWithEmailAndPassword(auth, email, password);
-  // .then((userCredential) => {
-  //   const user = userCredential.user;
-  // })
-  // .catch((error) => {
-  //   const errorCode = error.code;
-  //   const errorMessage = error.message;
-  // });
 };
