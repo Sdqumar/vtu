@@ -4,18 +4,17 @@
 @tailwind utilities;
 
 @layer base {
- 
   label {
-    @apply block mb-2 text-lg font-medium;
+    @apply mb-2 block text-lg font-medium;
   }
   input {
-    @apply border py-2 w-full px-4 rounded-md border-gray-400 focus:outline-primary focus:border-2 focus:border-primary placeholder:italic placeholder:text-slate-400;
+    @apply w-full rounded-md border border-gray-400 py-2 px-4 placeholder:italic placeholder:text-slate-400 focus:border-2 focus:border-primary focus:outline-primary;
   }
   select {
-    @apply block border py-2 w-full px-4 pr-10 rounded-md border-gray-400 focus:outline-primary focus:border-2 focus:border-primary appearance-none placeholder:italic placeholder:text-slate-400 first:italic disabled:italic;
+    @apply block w-full appearance-none rounded-md border border-gray-400 py-2 px-4 pr-10 placeholder:italic placeholder:text-slate-400 first:italic focus:border-2 focus:border-primary focus:outline-primary disabled:italic;
   }
 
   button {
-    @apply flex justify-center bg-primary px-5 py-2 whitespace-nowrap ease-in-out duration-700 font-medium focus:outline-primary text-white rounded-lg w-full mt-3;
+    @apply mt-3 flex w-full justify-center whitespace-nowrap rounded-lg bg-primary px-5 py-2 font-medium text-white duration-700 ease-in-out focus:outline-primary;
   }
 }

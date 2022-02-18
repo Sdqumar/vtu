@@ -41,7 +41,7 @@ const SignUp = () => {
     >
       {alert === "success" && <Success text="Sign Up Successful" />}
       {alert === "error" && <Error text="Email has already been registed" />}
-      <div className="grid grid-cols-2 gap-2 justify-between">
+      <div className="grid grid-cols-2 justify-between gap-2">
         <Input
           register={register}
           name="firstName"

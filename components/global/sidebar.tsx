@@ -20,7 +20,7 @@ const Sidebar = () => {
     <div
       className={`${
         showNav && "bg-white"
-      }  fixed md:relative z-10 transition-all mr-4`}
+      }  fixed z-10 mr-4 transition-all md:relative`}
     >
       <div className="cursor-pointer ">
         <svg
@@ -43,12 +43,12 @@ const Sidebar = () => {
       <main
         className={`w-64  ${
           showNav ? "block" : "hidden"
-        }  md:block ml-2 border-r h-[90vh]  `}
+        }  ml-2 h-[90vh] border-r md:block  `}
       >
         <Link href="/dashboard" passHref>
           <a>
             <section
-              className="flex bg-primary items-center justify-center w-60 rounded-lg mt-10 py-3 cursor-pointer 
+              className="mt-10 flex w-60 cursor-pointer items-center justify-center rounded-lg bg-primary py-3 
             hover:bg-primary
             "
             >
@@ -62,10 +62,10 @@ const Sidebar = () => {
               />
 
               <div>
-                <h4 className="font-semibold text-lg text-white px-5">
+                <h4 className="px-5 text-lg font-semibold text-white">
                   Sadeeq Umar
                 </h4>
-                <span className="text-yellow-200 px-5">₦1,500</span>
+                <span className="px-5 text-yellow-200">₦1,500</span>
               </div>
             </section>
           </a>
@@ -82,10 +82,10 @@ const Sidebar = () => {
                 key={_item.label}
               >
                 <div
-                  className={`py-3 cursor-pointer flex items-center px-5 hover:bg-slate-100
+                  className={`flex cursor-pointer items-center py-3 px-5 hover:bg-slate-100
                                 ${
                                   isActive &&
-                                  " bg-gray-100 border-l-4 border-l-primary"
+                                  " border-l-4 border-l-primary bg-gray-100"
                                 }`}
                 >
                   <svg
@@ -99,7 +99,7 @@ const Sidebar = () => {
                   </svg>
 
                   <h3
-                    className={`font-medium text-primary ml-5 text-lg ${
+                    className={`ml-5 text-lg font-medium text-primary ${
                       !isActive && "text-gray-700"
                     }`}
                   >
@@ -111,7 +111,7 @@ const Sidebar = () => {
           })}
         </section>
 
-        <section className="flex items-center ml-5 absolute bottom-1 cursor-pointer hover:text-red-600">
+        <section className="absolute bottom-1 ml-5 flex cursor-pointer items-center hover:text-red-600">
           <svg
             className="h-6 w-6"
             fill="none"
@@ -125,7 +125,7 @@ const Sidebar = () => {
               d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
             />
           </svg>
-          <h3 className="font-medium  text-lg ml-1 ">Log Out</h3>
+          <h3 className="ml-1  text-lg font-medium ">Log Out</h3>
         </section>
       </main>
     </div>

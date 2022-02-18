@@ -3,11 +3,11 @@ import { prices } from "./utils";
 
 export const PriceTable = () => {
   return (
-    <div className="flex flex-wrap w-full justify-center items-center mt-5">
+    <div className="mt-5 flex w-full flex-wrap items-center justify-center">
       {prices.map((network) => {
         return (
           <section
-            className="flex mx-3 mb-10 flex-wrap justify-center items-center flex-col shadow-xl p-10 rounded-lg bg-white"
+            className="mx-3 mb-10 flex flex-col flex-wrap items-center justify-center rounded-lg bg-white p-10 shadow-xl"
             key={network.network}
           >
             <Image
@@ -17,7 +17,7 @@ export const PriceTable = () => {
               width={85}
               alt={network.network}
             />
-            <h5 className="text-gray-800 mt-2 font-bold">{network.network}</h5>
+            <h5 className="mt-2 font-bold text-gray-800">{network.network}</h5>
 
             <table className="mt-5 w-52 ">
               {network.prices.map((item, index) => (

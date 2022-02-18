@@ -31,13 +31,13 @@ export default function Account() {
     }
   };
   return (
-    <div className=" md:ml-20 justify-center md:justify-start h-fit mt-20 gap-10 flex flex-wrap ">
+    <div className=" mt-20 flex h-fit flex-wrap justify-center gap-10 md:ml-20 md:justify-start ">
       <main className="flex  flex-wrap ">
         <form
           onSubmit={handleSubmit((formValues) => submitForm(formValues))}
-          className="transition-all duration-700 w-96 shadow-lg rounded-md p-8"
+          className="w-96 rounded-md p-8 shadow-lg transition-all duration-700"
         >
-          <section className="text-xl mb-5  font-bold text-gray-800 ">
+          <section className="mb-5 text-xl  font-bold text-gray-800 ">
             My Profile
           </section>
           <Input
@@ -73,13 +73,13 @@ export default function Account() {
           )}
           <h3
             onClick={handleUpdate}
-            className="bg-primary rounded-md w-full mx-auto font-medium cursor-pointer text-white text-center p-2"
+            className="mx-auto w-full cursor-pointer rounded-md bg-primary p-2 text-center font-medium text-white"
           >
             {edit ? "Update" : "Edit"}
           </h3>
         </form>
       </main>
-      <UpdatePIN/>
+      <UpdatePIN />
     </div>
   );
 }
@@ -105,9 +105,9 @@ export function UpdatePIN() {
       <main className="flex  flex-wrap">
         <form
           onSubmit={handleSubmit((formValues) => submitForm(formValues))}
-          className="transition-all duration-700 w-96 shadow-lg rounded-md p-8"
+          className="w-96 rounded-md p-8 shadow-lg transition-all duration-700"
         >
-          <section className="text-xl mb-5  font-bold text-gray-800 ">
+          <section className="mb-5 text-xl  font-bold text-gray-800 ">
             Transaction PIN
           </section>
           <Input

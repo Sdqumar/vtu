@@ -6,8 +6,7 @@ import Button from "../components/global/Button";
 import { useForm } from "react-hook-form";
 
 const BankTransfer: NextPage = () => {
-
-    const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   type form = {
     amount?: number;
@@ -23,9 +22,9 @@ const BankTransfer: NextPage = () => {
   const submitForm = (values: form) => {};
 
   return (
-    <div className="border rounded-xl h-fit py-10 max-w-[30rem] my-14 mx-10 px-2">
-      <h3 className="text-xl mx-4 mb-4 font-bold text-gray-600">
-        Fund with Bank 
+    <div className="my-14 mx-10 h-fit max-w-[30rem] rounded-xl border py-10 px-2">
+      <h3 className="mx-4 mb-4 text-xl font-bold text-gray-600">
+        Fund with Bank
       </h3>
       <main className="flex  flex-wrap">
         <form

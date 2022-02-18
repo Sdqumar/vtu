@@ -5,16 +5,29 @@ import Button from "../components/global/Button";
 import { useForm } from "react-hook-form";
 import Select from "../components/global/select";
 
-
-const bankList= ['UBA Bank','First Bank','GT Bank','Access Bank','Keystone Bank','Polaris Bank','Sterling Bank','Union Bank','Zenith Bank','FCMB','Stanbic IBTC Bank','Unity Bank','JAIZ Bank','Wema Bank'
-]
+const bankList = [
+  "UBA Bank",
+  "First Bank",
+  "GT Bank",
+  "Access Bank",
+  "Keystone Bank",
+  "Polaris Bank",
+  "Sterling Bank",
+  "Union Bank",
+  "Zenith Bank",
+  "FCMB",
+  "Stanbic IBTC Bank",
+  "Unity Bank",
+  "JAIZ Bank",
+  "Wema Bank",
+];
 
 const USSD: NextPage = () => {
   const [loading, setLoading] = useState(false);
 
   type form = {
     amount?: number;
-    bank?:string
+    bank?: string;
   };
 
   const {
@@ -27,8 +40,8 @@ const USSD: NextPage = () => {
   const submitForm = (values: form) => {};
 
   return (
-    <div className="border rounded-xl h-fit py-10 max-w-[30rem] my-14 mx-10 px-2">
-      <h3 className="text-xl mx-4 mb-4 font-bold text-gray-600">
+    <div className="my-14 mx-10 h-fit max-w-[30rem] rounded-xl border py-10 px-2">
+      <h3 className="mx-4 mb-4 text-xl font-bold text-gray-600">
         Fund with Bank USSD
       </h3>
       <main className="flex  flex-wrap">

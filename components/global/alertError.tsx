@@ -1,8 +1,8 @@
 export default function Error({ text, ...props }: { text: string }) {
   return (
     <div {...props}>
-      <div className="alert flex flex-row my-4 items-center bg-red-100 p-5 rounded-lg border-b-2 border-red-300">
-        <div className="alert-icon flex items-center bg-red-100 border-2 border-red-500 justify-center h-10 w-10 flex-shrink-0 rounded-full">
+      <div className="alert my-4 flex flex-row items-center rounded-lg border-b-2 border-red-300 bg-red-100 p-5">
+        <div className="alert-icon flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full border-2 border-red-500 bg-red-100">
           <span className="text-red-500">
             <svg fill="currentColor" viewBox="0 0 20 20" className="h-6 w-6">
               <path
@@ -14,7 +14,7 @@ export default function Error({ text, ...props }: { text: string }) {
           </span>
         </div>
         <div className="alert-content ml-4">
-          <div className="alert-title font-semibold text-lg text-red-800">
+          <div className="alert-title text-lg font-semibold text-red-800">
             {text}
           </div>
         </div>

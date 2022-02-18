@@ -24,12 +24,12 @@ export default function AccountHistory() {
     <section className="mt-10 flex flex-col">
       <Link href="/fund" passHref>
         <div
-          className="py-3 my-4   bg-gray-100 self-end rounded-lg 
-          font-medium px-3 flex items-center cursor-pointer hover:bg-green-100"
+          className="my-4 flex   cursor-pointer items-center self-end 
+          rounded-lg bg-gray-100 py-3 px-3 font-medium hover:bg-green-100"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5 mr-1 text-primary "
+            className="mr-1 h-5 w-5 text-primary "
             viewBox="0 0 20 20"
             fill="currentColor"
           >
@@ -44,10 +44,10 @@ export default function AccountHistory() {
         </div>
       </Link>
 
-      <div className=" flex  flex-col md:flex-row gap-4 justify-center ">
+      <div className=" flex  flex-col justify-center gap-4 md:flex-row ">
         {account.map((item) => (
           <div
-            className="flex h-[5rem] items-center px-2 justify-center  w-[90vw] md:max-w-[23vw]   border"
+            className="flex h-[5rem] w-[90vw] items-center justify-center  border px-2   md:max-w-[23vw]"
             key={item.name}
           >
             <Image
@@ -60,10 +60,10 @@ export default function AccountHistory() {
             />
 
             <div className="ml-8">
-              <h3 className="text-base uppercase sm:text-sm  text-gray-500 font-medium">
+              <h3 className="text-base font-medium uppercase  text-gray-500 sm:text-sm">
                 {item.name}
               </h3>
-              <h5 className="text-2xl sm:text-sm  text-gray-700 font-medium">
+              <h5 className="text-2xl font-medium  text-gray-700 sm:text-sm">
                 ₦{item.amount}
               </h5>
             </div>

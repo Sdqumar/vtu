@@ -2,8 +2,8 @@ import type { NextPage as Referral } from "next";
 
 const Agent: Referral = () => {
   return (
-    <div className=" shadow-md rounded-md mx-10 my-20 items-center  justify-center h-fit p-5 w-[50%]">
-      <h2 className="text-2xl font-medium py-2">Refer Friends and Earn</h2>
+    <div className=" mx-10 my-20 h-fit w-[50%] items-center  justify-center rounded-md p-5 shadow-md">
+      <h2 className="py-2 text-2xl font-medium">Refer Friends and Earn</h2>
       <p>
         Refer friends to us and earn commissions on al their transactions. There
         is no limit you keep earning commissions on all their transactions Your
@@ -12,7 +12,7 @@ const Agent: Referral = () => {
         platform
       </p>
 
-      <h2 className="text-2xl font-medium py-2">Referral Benefits</h2>
+      <h2 className="py-2 text-2xl font-medium">Referral Benefits</h2>
       <p>
         - Earn 0.2% on every Airtime, Direct Data, Electricity and Education
         transactions your prospects make - Earn 2 naira on every cheap
@@ -20,7 +20,7 @@ const Agent: Referral = () => {
         immediately the person you refer upgrade to agent
       </p>
 
-      <h2 className="text-2xl font-medium py-2">Are you excited ?</h2>
+      <h2 className="py-2 text-2xl font-medium">Are you excited ?</h2>
       <p>
         Share your Referral Link -{" "}
         <a

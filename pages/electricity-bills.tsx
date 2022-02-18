@@ -10,7 +10,7 @@ export default function ElectricityBills() {
   const [showForm, setShowForm] = useState(false);
 
   type form = {
-    company?:string;
+    company?: string;
     meterNo?: number;
     amount?: number;
     pin?: number;
@@ -23,30 +23,28 @@ export default function ElectricityBills() {
     formState: { errors },
   } = useForm<form>();
   const company = [
-  "Ibadan Electricity Distribution Company - IBEDC", 
-  "Abuja Electricity Distribution Company - AEDC",
-   "Ikeja Electricity Distribution Company - IKEDC", 
-   "Kano Electricity Distribution Company - KEDCO",
-   "Jos Electricity Distribution Company - JED",
-   "Port Harcourt Electricity Distribution Company - PHED"
+    "Ibadan Electricity Distribution Company - IBEDC",
+    "Abuja Electricity Distribution Company - AEDC",
+    "Ikeja Electricity Distribution Company - IKEDC",
+    "Kano Electricity Distribution Company - KEDCO",
+    "Jos Electricity Distribution Company - JED",
+    "Port Harcourt Electricity Distribution Company - PHED",
   ];
   const submitForm = (values: form) => {};
 
   const handleShowForm = () => {
-    showForm? setShowForm(false):setShowForm(true)
+    showForm ? setShowForm(false) : setShowForm(true);
   };
 
   return (
-    <div className=" md:ml-20 mb-40 mt-10  ">
-    
-    <section className="text-3xl ml-4 my-5  font-bold text-gray-800">
-    Electricity Bills
+    <div className=" mb-40 mt-10 md:ml-20  ">
+      <section className="my-5 ml-4 text-3xl  font-bold text-gray-800">
+        Electricity Bills
       </section>
       <main className="flex  flex-wrap">
-    
         <form
           onSubmit={handleSubmit((formValues) => submitForm(formValues))}
-          className="transition-all duration-700 w-96 shadow-lg rounded-md p-8"
+          className="w-96 rounded-md p-8 shadow-lg transition-all duration-700"
         >
           <Select
             register={register}
@@ -86,14 +84,12 @@ export default function ElectricityBills() {
           <Button label="continue" loading={loading} />
         </form>
         <section>
-        <button className="w-40 ml-10" onClick={handleShowForm}>
-          Save to Beneficiary
-        </button>
-        {showForm && <BeneficiaryForm/>}
-      </section>
+          <button className="ml-10 w-40" onClick={handleShowForm}>
+            Save to Beneficiary
+          </button>
+          {showForm && <BeneficiaryForm />}
+        </section>
       </main>
-
-    
     </div>
   );
 }
@@ -117,7 +113,7 @@ export function BeneficiaryForm() {
     <main className="  mt-5 ">
       <form
         onSubmit={handleSubmit((formValues) => submitForm(formValues))}
-        className="transition-all duration-700 w-96 shadow-lg rounded-md p-8"
+        className="w-96 rounded-md p-8 shadow-lg transition-all duration-700"
       >
         <Input
           register={register}

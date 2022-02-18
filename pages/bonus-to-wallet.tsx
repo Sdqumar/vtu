@@ -20,19 +20,16 @@ export default function BonusWallet() {
 
   const submitForm = (values: form) => {};
 
-  
-
   return (
-    <div className=" md:ml-20 mb-40  mt-10  ">
-     
+    <div className=" mb-40 mt-10  md:ml-20  ">
       <main className="flex  flex-wrap">
         <form
           onSubmit={handleSubmit((formValues) => submitForm(formValues))}
-          className="transition-all duration-700 w-96 shadow-lg rounded-md p-8"
+          className="w-96 rounded-md p-8 shadow-lg transition-all duration-700"
         >
-           <section className="text-xl mb-5  font-bold text-gray-800 ">
-      Move Earnings to Wallet (Agents Only)
-      </section>
+          <section className="mb-5 text-xl  font-bold text-gray-800 ">
+            Move Earnings to Wallet (Agents Only)
+          </section>
           <Input
             register={register}
             name="amount"

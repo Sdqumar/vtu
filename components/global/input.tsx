@@ -14,14 +14,22 @@ type form = {
 
 type inputProp = {
   register: UseFormRegister<form>;
-  name: "PhoneNumber" | "amount" | "pin" | "oldpin"| "name" | "email" | "meterNo" | "cardNo";
+  name:
+    | "PhoneNumber"
+    | "amount"
+    | "pin"
+    | "oldpin"
+    | "name"
+    | "email"
+    | "meterNo"
+    | "cardNo";
   label: string;
   required?: boolean;
   errors: any;
   type?: string;
   containerStyle?: string;
   style?: string;
-  disabled?:boolean
+  disabled?: boolean;
 };
 
 export default function Input({
@@ -37,16 +45,16 @@ export default function Input({
   ...rest
 }: inputProp) {
   return (
-    <div className="my-2 relative">
+    <div className="relative my-2">
       <label>{label}</label>
-        <input
-          {...register(name, { required: required })}
-          type={type}
-          placeholder={label}
-          {...rest}
-          disabled={disabled}
-          className={` ${style} ${errors[name] && "border-red-600"}`}
-        />
+      <input
+        {...register(name, { required: required })}
+        type={type}
+        placeholder={label}
+        {...rest}
+        disabled={disabled}
+        className={` ${style} ${errors[name] && "border-red-600"}`}
+      />
       {errors[name] && <Errror message={`${label} is required`} />}
     </div>
   );

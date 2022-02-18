@@ -116,7 +116,7 @@ export const Table = () => {
           </option>
         ))}
       </select>
-      <table className="my-4 shadow-lg rounded-md" {...getTableProps()}>
+      <table className="my-4 rounded-md shadow-lg" {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
@@ -146,7 +146,7 @@ export const Table = () => {
         </tbody>
       </table>
 
-      <div className="flex justify-center items-center ">
+      <div className="flex items-center justify-center ">
         <span>
           Page{" "}
           <strong>
@@ -154,7 +154,7 @@ export const Table = () => {
           </strong>
         </span>
         <button
-          className="w-24 mx-2"
+          className="mx-2 w-24"
           onClick={() => previousPage()}
           disabled={!canPreviousPage}
         >

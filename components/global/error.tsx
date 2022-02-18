@@ -1,8 +1,7 @@
 type errorProps = {
-    message: string;
-  };
+  message: string;
+};
 
 export default function Errror({ message }: errorProps) {
-    return <p className="text-red-600 mt-2">{message}</p>;
-  }
-  
+  return <p className="mt-2 text-red-600">{message}</p>;
+}

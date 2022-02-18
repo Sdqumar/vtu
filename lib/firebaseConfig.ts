@@ -12,6 +12,12 @@ const firebaseConfig = {
 };
 
 const firebase = initializeApp(firebaseConfig);
-export const analytics = getAnalytics(firebase);
 
+export const analytics = () => {
+  if (typeof window !== "undefined") {
+    return getAnalytics(firebase);
+  } else {
+    return null
+  }
+}
 export default firebase

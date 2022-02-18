@@ -28,8 +28,8 @@ const items = [
 
 const Fund: NextPage = () => {
   return (
-    <div className="border rounded-xl h-fit py-10 max-w-[30rem] my-14 mx-10 px-2">
-      <h3 className="text-xl mx-4 mb-4 font-medium text-gray-600">
+    <div className="my-14 mx-10 h-fit max-w-[30rem] rounded-xl border py-10 px-2">
+      <h3 className="mx-4 mb-4 text-xl font-medium text-gray-600">
         Fund Wallet
       </h3>
 
@@ -41,10 +41,10 @@ const Fund: NextPage = () => {
             key={item.name.replace(" ", "_")}
           >
             <a>
-              <div className="flex  shadow-md  cursor-pointer rounded-md m-4 p-3 w-48 items-center font-medium text-md text-gray-400">
+              <div className="text-md  m-4  flex w-48 cursor-pointer items-center rounded-md p-3 font-medium text-gray-400 shadow-md">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-12 w-15 p-1 mr-2 bg-primary rounded-md text-white "
+                  className="w-15 mr-2 h-12 rounded-md bg-primary p-1 text-white "
                   viewBox={item?.viewBox || "0 0 20 20"}
                   fill="currentColor"
                 >
