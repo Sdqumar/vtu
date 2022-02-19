@@ -93,6 +93,7 @@ export default function BuyData() {
           <Select
             register={register}
             name="network"
+            required={false}
             data={list}
             label="Choose from beneficiary"
             errors={errors}
@@ -110,6 +111,7 @@ export default function BuyData() {
             name="pin"
             label="PIN"
             type="password"
+            maxLength={4}
             errors={errors}
           />
           <Button label="continue" loading={loading} />

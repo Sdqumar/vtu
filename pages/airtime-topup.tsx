@@ -56,6 +56,7 @@ export default function AirtimeTopUp() {
           <Select
             register={register}
             name="network"
+            required={false}
             data={list}
             label="Choose from beneficiary"
             errors={errors}
@@ -71,6 +72,7 @@ export default function AirtimeTopUp() {
             register={register}
             name="pin"
             label="PIN"
+            maxLength={4}
             type="password"
             errors={errors}
           />

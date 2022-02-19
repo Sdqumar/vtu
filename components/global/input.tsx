@@ -31,6 +31,7 @@ type inputProp = {
   style?: string;
   defaultValue?: string | number | undefined;
   disabled?: boolean;
+  maxLength?: number;
 };
 
 export default function Input({
