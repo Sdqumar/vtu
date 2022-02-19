@@ -171,5 +171,5 @@ export type form = {
   password: string;
   phoneNumber: number;
   pin: number;
-  maxlength?: "string";
+  maxLength?: "string";
 };

@@ -82,10 +82,10 @@ const SignUp = () => {
         name="pin"
         label="PIN"
         type="password"
-        maxlength="4"
+        maxLength={4}
         errors={errors}
       />
-      <Button label="Sign Up" loading={loading} />
+      <Button label="Sign Up" loading={loading} style="bg-black" />
     </form>
   );
 };

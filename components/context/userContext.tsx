@@ -4,10 +4,12 @@ type props = {
   children: ReactNode;
 };
 export type AuthUser = {
-  email: string | null;
+  email: string;
   uid: string;
   displayName: string | null;
+  name?: string;
   pin?: number;
+  phoneNumber?: number;
   walletBalance?: number;
   totalFunding?: number;
   totalSpent?: number;

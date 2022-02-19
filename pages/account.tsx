@@ -8,10 +8,13 @@ export default function Account() {
   const [loading, setLoading] = useState(false);
   const [edit, setEdit] = useState(false);
   const userContext = useUser();
+  const user = userContext?.user;
+
   type form = {
     name?: string;
     email?: string;
     PhoneNumber?: number;
+    defaultValue?: string | number | undefined;
   };
 
   const {
@@ -43,6 +46,7 @@ export default function Account() {
           </section>
           <Input
             register={register}
+            defaultValue={user?.name}
             name="name"
             label="Full Name"
             errors={errors}
@@ -50,6 +54,7 @@ export default function Account() {
           />
           <Input
             register={register}
+            defaultValue={user?.email}
             name="email"
             label="Email Address"
             errors={errors}
@@ -57,6 +62,7 @@ export default function Account() {
           />
           <Input
             register={register}
+            defaultValue={user?.phoneNumber}
             name="PhoneNumber"
             label="Phone Number"
             type="number"

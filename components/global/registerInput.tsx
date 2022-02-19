@@ -26,7 +26,7 @@ type inputProp = {
   type?: string;
   containerStyle?: string;
   style?: string;
-  maxlength?: string;
+  maxLength?: number;
 };
 
 export default function Input({

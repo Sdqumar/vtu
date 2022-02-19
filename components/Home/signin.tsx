@@ -8,6 +8,8 @@ import Input from "../global/registerInput";
 import { form } from "./utils";
 import { signIn } from "../../utils/auth";
 import { useUser } from "../context/userContext";
+import { type } from "os";
+import Spinner from "../global/sipnner";
 
 const SignIn = () => {
   const [loading, setLoading] = useState(false);
@@ -22,12 +24,20 @@ const SignIn = () => {
     formState: { errors },
   } = useForm<form>();
 
+  type user = {
+    email: string;
+    uid: string;
+    displayName: string;
+    pin?: number;
+  };
   const submitForm = async () => {
     setLoading(true);
     const values = getValues();
+
     try {
       const user = await signIn(values);
       const { email, displayName, uid } = user.user;
+      //@ts-ignore
       userContext?.setUser({ email, displayName, uid });
       setAlert("success");
       setLoading(false);
@@ -63,8 +73,7 @@ const SignIn = () => {
         type="password"
         errors={errors}
       />
-
-      <Button label="sign In" loading={loading} />
+      <Button label="Sign Up" loading={loading} style="bg-black" />
     </form>
   );
 };

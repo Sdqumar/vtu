@@ -29,6 +29,7 @@ type inputProp = {
   type?: string;
   containerStyle?: string;
   style?: string;
+  defaultValue?: string | number | undefined;
   disabled?: boolean;
 };
 
@@ -41,6 +42,7 @@ export default function Input({
   type = "text",
   containerStyle = "",
   style = "",
+  defaultValue = "",
   disabled,
   ...rest
 }: inputProp) {
@@ -51,6 +53,7 @@ export default function Input({
         {...register(name, { required: required })}
         type={type}
         placeholder={label}
+        defaultValue={defaultValue}
         {...rest}
         disabled={disabled}
         className={` ${style} ${errors[name] && "border-red-600"}`}
