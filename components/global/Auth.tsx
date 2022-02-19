@@ -24,6 +24,7 @@ function Auth({ children }: Authprops) {
         const { email, displayName, uid } = currentUser;
         const userData = await getUserData(uid);
         if (!user?.displayName) {
+          //@ts-ignore
           setUser({ email, displayName, uid, ...userData });
         }
         setverify(true);
