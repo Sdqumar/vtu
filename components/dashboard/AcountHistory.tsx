@@ -1,25 +1,29 @@
 import Image from "next/image";
 import Link from "next/link";
-
-const account = [
-  {
-    name: "Wallet Balance",
-    amount: "1500",
-    icon: "dollarGreen",
-  },
-  {
-    name: "TOTAL FUNDING",
-    amount: "10000",
-    icon: "dollarBlue",
-  },
-  {
-    name: "TOTAL SPENT",
-    amount: "8500",
-    icon: "dollarRed",
-  },
-];
+import { useUser } from "../context/userContext";
 
 export default function AccountHistory() {
+  const userContext = useUser();
+  const user = userContext?.user;
+
+  const account = [
+    {
+      name: "Wallet Balance",
+      amount: user?.walletBalance || 0,
+      icon: "dollarGreen",
+    },
+    {
+      name: "TOTAL FUNDING",
+      amount: user?.totalFunding || 0,
+      icon: "dollarBlue",
+    },
+    {
+      name: "TOTAL SPENT",
+      amount: user?.totalSpent || 0,
+      icon: "dollarRed",
+    },
+  ];
+
   return (
     <section className="mx-10 mt-5 flex flex-col md:mx-0 ">
       <Link href="/fund" passHref>

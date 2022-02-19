@@ -38,7 +38,7 @@ const Sidebar = () => {
   const [showNav, setShowNav] = useState(false);
   const isHome = router.pathname === "/";
   const userContext = useUser();
-
+  const user = userContext?.user;
   const handleSignOut = async () => {
     await signout();
     setTimeout(() => {
@@ -99,10 +99,14 @@ const Sidebar = () => {
               />
 
               <div>
-                <h4 className="px-5 text-lg font-semibold text-white">
-                  {userContext?.user?.displayName}
+                <h4 className="px-5 text-lg font-semibold capitalize text-white">
+                  {user?.displayName}
                 </h4>
-                <span className="px-5 text-yellow-200">₦1,500</span>
+                {user?.walletBalance && (
+                  <span className="px-5 text-yellow-200">
+                    ₦ {user?.walletBalance}
+                  </span>
+                )}
               </div>
             </section>
           </a>
