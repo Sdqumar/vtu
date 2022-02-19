@@ -1,12 +1,25 @@
 import type { NextPage } from "next";
+import Link from "next/link";
+import { useUser } from "../components/context/userContext";
 import Form from "../components/Home/form";
 import { PriceTable } from "../components/Home/PriceTable";
 
 const Home: NextPage = () => {
+  const userContext = useUser();
+
   return (
-    <div className="mx-auto w-full bg-gradient-to-r from-green-400 to-primary font-semibold">
-      <nav className="w-full bg-black p-10 py-6 text-4xl text-white md:text-5xl">
+    <div className="to-primary mx-auto w-full bg-gradient-to-r from-green-400 font-semibold">
+      <nav className="flex w-full justify-between bg-black p-10 py-6 text-4xl text-white md:text-5xl">
         EASYTOPUP
+        {userContext?.user?.displayName && (
+          <Link href="/dashboard" passHref>
+            <a>
+              <span className="cursor-pointer border p-1 text-2xl">
+                DASHBOARD
+              </span>
+            </a>
+          </Link>
+        )}
       </nav>
       <main className="mx-5 flex min-h-[24rem] flex-wrap items-start justify-center gap-16 pt-10 md:justify-between md:pt-24 ">
         <div className="mx-auto">

@@ -19,10 +19,14 @@ function Auth({ children }: Authprops) {
 
   const getUser = async () => {
     const auth = getAuth(firebase);
-    onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        const { email, displayName, uid } = user;
+    onAuthStateChanged(auth, async (currentUser) => {
+      if (currentUser) {
+        const { email, displayName, uid } = currentUser;
         setCurrentUser({ email, displayName, uid });
+        currentUser;
+        if (!user?.displayName) {
+          setUser({ email, displayName, uid });
+        }
         setverify(true);
         setloading(false);
       } else {
@@ -30,7 +34,6 @@ function Auth({ children }: Authprops) {
       }
     });
   };
-  console.log(router.pathname === "/");
 
   useEffect(() => {
     getUser();
