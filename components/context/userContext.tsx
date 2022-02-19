@@ -7,6 +7,10 @@ export type AuthUser = {
   email: string | null;
   uid: string;
   displayName: string | null;
+  pin?: number;
+  walletBalance?: number;
+  totalFunding?: number;
+  totalSpent?: number;
 };
 const AuthUser = {
   email: "",

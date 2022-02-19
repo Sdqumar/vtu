@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { AuthUser, useUser } from "../context/userContext";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import firebase from "../../lib/firebaseConfig";
+import { getUserData } from "./utils";
 type Authprops = {
   children: ReactNode;
 };
@@ -13,7 +14,6 @@ function Auth({ children }: Authprops) {
   const setUser = userContext!.setUser;
 
   const [loading, setloading] = useState(true);
-  const [currentUser, setCurrentUser] = useState<AuthUser>();
   const [verify, setverify] = useState(false);
   const router = useRouter();
 
@@ -22,10 +22,9 @@ function Auth({ children }: Authprops) {
     onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
         const { email, displayName, uid } = currentUser;
-        setCurrentUser({ email, displayName, uid });
-        currentUser;
+        const userData = await getUserData(uid);
         if (!user?.displayName) {
-          setUser({ email, displayName, uid });
+          setUser({ email, displayName, uid, ...userData });
         }
         setverify(true);
         setloading(false);

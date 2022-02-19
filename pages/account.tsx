@@ -2,11 +2,12 @@ import Input from "../components/global/input";
 import { useState } from "react";
 import Button from "../components/global/Button";
 import { useForm } from "react-hook-form";
+import { useUser } from "../components/context/userContext";
 
 export default function Account() {
   const [loading, setLoading] = useState(false);
   const [edit, setEdit] = useState(false);
-
+  const userContext = useUser();
   type form = {
     name?: string;
     email?: string;
@@ -73,7 +74,7 @@ export default function Account() {
           )}
           <h3
             onClick={handleUpdate}
-            className="mx-auto w-full cursor-pointer rounded-md bg-primary p-2 text-center font-medium text-white"
+            className="bg-primary mx-auto w-full cursor-pointer rounded-md p-2 text-center font-medium text-white"
           >
             {edit ? "Update" : "Edit"}
           </h3>

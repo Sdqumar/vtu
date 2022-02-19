@@ -14,7 +14,7 @@ const Home: NextPage = () => {
         {userContext?.user?.displayName && (
           <Link href="/dashboard" passHref>
             <a>
-              <span className="cursor-pointer border p-1 text-2xl">
+              <span className="cursor-pointer border-2 p-1 px-4 text-2xl">
                 DASHBOARD
               </span>
             </a>
