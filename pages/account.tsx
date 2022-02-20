@@ -62,7 +62,7 @@ export default function Account() {
           />
           <Input
             register={register}
-            defaultValue={user?.phoneNumber}
+            defaultValue={Number(user?.phoneNumber)}
             name="PhoneNumber"
             label="Phone Number"
             type="number"
@@ -73,8 +73,9 @@ export default function Account() {
             <Input
               register={register}
               name="pin"
-              label="pin"
+              label="PIN"
               type="number"
+              maxLength={4}
               errors={errors}
             />
           )}

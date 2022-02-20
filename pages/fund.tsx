@@ -44,7 +44,7 @@ const Fund: NextPage = () => {
               <div className="text-md  m-4  flex w-48 cursor-pointer items-center rounded-md p-3 font-medium text-gray-400 shadow-md">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="w-15 mr-2 h-12 rounded-md bg-primary p-1 text-white "
+                  className="w-15 bg-primary mr-2 h-12 rounded-md p-1 text-white "
                   viewBox={item?.viewBox || "0 0 20 20"}
                   fill="currentColor"
                 >
