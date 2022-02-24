@@ -1,25 +1,44 @@
 import type { NextPage } from "next";
-import Link from "next/link";
 import Input from "../components/global/input";
 import { useState } from "react";
 import Button from "../components/global/Button";
 import { useForm } from "react-hook-form";
+import { usePaystackPayment } from "react-paystack";
+import { useUser } from "./../components/context/userContext";
+import paymentConfig from "../components/global/paymentConfig";
+
+type form = {
+  amount?: number;
+};
 
 const ATMCard: NextPage = () => {
   const [loading, setLoading] = useState(false);
+  const [amount, setAmount] = useState(0);
+  const userContext = useUser();
+  const user = userContext?.user;
 
-  type form = {
-    amount?: number;
+  const customer = {
+    email: user!.email,
+    name: user!.name!,
   };
 
+  const payment = { amount: amount, total: amount + amount * 0.02 };
+
+  const initializePayment = usePaystackPayment(
+    paymentConfig(customer, payment)
+  );
   const {
     register,
-    getValues,
     handleSubmit,
     formState: { errors },
   } = useForm<form>();
 
-  const submitForm = (values: form) => {};
+  const submitForm = (values: form) => {
+    if (values.amount) {
+      setAmount(Number(values.amount));
+    }
+    initializePayment();
+  };
 
   return (
     <div className="my-14 mx-10 h-fit max-w-[30rem] rounded-xl border py-10 px-2">
@@ -38,6 +57,7 @@ const ATMCard: NextPage = () => {
             type="number"
             errors={errors}
           />
+          <span className="font-medium">Charges : 2%</span>
           <Button label="continue" loading={loading} />
         </form>
       </main>

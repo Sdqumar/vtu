@@ -1,6 +1,5 @@
 import type { NextPage } from "next";
 import Link from "next/link";
-import Payment from "../components/global/payment";
 
 const items = [
   {
@@ -57,7 +56,6 @@ const Fund: NextPage = () => {
           </Link>
         ))}
       </section>
-      <Payment />
     </div>
   );
 };
