@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import { useEffect } from "react";
 import { useUser } from "../components/context/userContext";
 import AccountHistory from "../components/dashboard/AcountHistory";
 import Services from "../components/dashboard/Services";
@@ -6,6 +7,18 @@ import Services from "../components/dashboard/Services";
 const Dashboard: NextPage = () => {
   const userContext = useUser();
   const user = userContext?.user;
+
+  // useEffect(() => {
+  //   (async () => {
+  //     const customer = await fetch("/api/userAccountDetails", {
+  //       method: "POST",
+  //       body: JSON.stringify({ email: user!.email }),
+  //     });
+
+  //     console.log(await customer.json());
+  //   })();
+  // }, [user]);
+
   return (
     <main className="mx-auto max-w-[50rem] ">
       <section className="mt-14  text-center text-3xl font-bold capitalize text-gray-800 md:ml-0 md:text-left">

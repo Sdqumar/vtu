@@ -31,6 +31,17 @@ export const signUp = async (values: form) => {
   await updateProfile(user, {
     displayName: firstName,
   });
+  let customer = {
+    name: `${firstName} ${lastName}`,
+    email,
+  };
+  const customerData = await fetch("/api/createUserAccount", {
+    method: "POST",
+    body: JSON.stringify(customer),
+  });
+  let data = await customerData.json();
+  const accountNumber = data.result.responseBody.accounts[0].accountNumber;
+
   await sendEmailVerification(user);
   await setDoc(doc(db, "users", user.uid), {
     name: `${firstName} ${lastName}`,
@@ -38,15 +49,8 @@ export const signUp = async (values: form) => {
     firstName,
     lastName,
     phoneNumber,
+    accountNumber,
     pin,
-  });
-  const customer = {
-    name: `${firstName} ${lastName}`,
-    email,
-  };
-  await fetch("/api/createUserAccount", {
-    method: "POST",
-    body: JSON.stringify(customer),
   });
 };
 

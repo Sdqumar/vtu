@@ -23,10 +23,10 @@ function Auth({ children }: Authprops) {
       if (currentUser) {
         const { email, displayName, uid } = currentUser;
         const userData = await getUserData(uid);
+
         if (!user?.displayName) {
-          if (typeof email === "string") {
+          typeof email === "string" &&
             setUser({ email, displayName, uid, ...userData });
-          }
         }
         setverify(true);
         setloading(false);
