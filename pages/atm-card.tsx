@@ -3,9 +3,9 @@ import Input from "../components/global/input";
 import { useState } from "react";
 import Button from "../components/global/Button";
 import { useForm } from "react-hook-form";
-import { usePaystackPayment } from "react-paystack";
 import { useUser } from "./../components/context/userContext";
-import paymentConfig from "../components/global/paymentConfig";
+import Script from "next/script";
+declare const MonnifySDK: any;
 
 type form = {
   amount?: number;
@@ -24,20 +24,35 @@ const ATMCard: NextPage = () => {
 
   const payment = { amount: amount, total: amount + amount * 0.02 };
 
-  const initializePayment = usePaystackPayment(
-    paymentConfig(customer, payment)
-  );
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<form>();
 
+  function payWithMonnify() {
+    MonnifySDK.initialize({
+      amount: payment.total,
+      currency: "NGN",
+      reference: "" + Math.floor(Math.random() * 1000000000 + 1),
+      customerName: customer.name,
+      customerEmail: customer.email,
+      apiKey: "MK_TEST_AWZX1QJ3CJ",
+      contractCode: "3936455328",
+      paymentDescription: "Test Pay",
+      isTestMode: true,
+      metadata: {
+        ...customer,
+        ...payment,
+      },
+      paymentMethods: ["CARD"],
+    });
+  }
   const submitForm = (values: form) => {
     if (values.amount) {
       setAmount(Number(values.amount));
     }
-    initializePayment();
+    payWithMonnify();
   };
 
   return (
@@ -61,6 +76,7 @@ const ATMCard: NextPage = () => {
           <Button label="continue" loading={loading} />
         </form>
       </main>
+      <Script src="https://sdk.monnify.com/plugin/monnify.js" />
     </div>
   );
 };

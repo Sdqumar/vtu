@@ -10,6 +10,7 @@ export default function paymentConfig(user: user, payment: payment) {
     reference: new Date().getTime().toString(),
     email: user.email,
     amount: payment.total * 100,
+    // channels: ["bank"],
     publicKey: "pk_test_cc89c527520c2442c1e462c3128f57442882a3ca",
     metadata: {
       ...user,
