@@ -48,11 +48,22 @@ const ATMCard: NextPage = () => {
       paymentMethods: ["CARD"],
     });
   }
-  const submitForm = (values: form) => {
-    if (values.amount) {
-      setAmount(Number(values.amount));
+  const submitForm = async (values: form) => {
+    // if (values.amount) {
+    //   setAmount(Number(values.amount));
+    // }
+    // payWithMonnify();
+    console.log("submit");
+
+    try {
+      const data = await fetch("/api/createUserAccount", {
+        method: "POST",
+        body: JSON.stringify(customer),
+      });
+      console.log(await data.json());
+    } catch (error) {
+      console.log(error);
     }
-    payWithMonnify();
   };
 
   return (
