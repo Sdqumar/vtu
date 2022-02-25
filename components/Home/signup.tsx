@@ -21,6 +21,7 @@ const SignUp = () => {
   } = useForm<form>();
 
   const submitForm = async () => {
+    setLoading(true);
     const values = getValues();
     try {
       await signUp(values);

@@ -40,6 +40,14 @@ export const signUp = async (values: form) => {
     phoneNumber,
     pin,
   });
+  const customer = {
+    name: `${firstName} ${lastName}`,
+    email,
+  };
+  await fetch("/api/createUserAccount", {
+    method: "POST",
+    body: JSON.stringify(customer),
+  });
 };
 
 export const signIn = (values: form) => {
