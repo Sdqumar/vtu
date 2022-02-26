@@ -111,7 +111,6 @@ const USSD: NextPage = () => {
   } = useForm<form>();
 
   const submitForm = (values: form) => {
-    console.log(values);
     const banks = BankUSSDs(user!.accountNumber!, values.amount!);
 
     banks.find((bank) => {
