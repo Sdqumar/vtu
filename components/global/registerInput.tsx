@@ -56,7 +56,7 @@ export default function Input({
           {...rest}
           className={` ${style} ${errors[name] && "border-red-600"}`}
         />
-        {(name === "password" || "pin") && Type === "password" && (
+        {(name === "password" || name === "pin") && Type === "password" && (
           <svg
             onClick={() => setType("text")}
             className="absolute right-3 top-12 h-5 w-5 cursor-pointer fill-black"
@@ -70,7 +70,7 @@ export default function Input({
             />
           </svg>
         )}
-        {(name === "password" || "pin") && Type === "text" && (
+        {(name === "password" || name === "pin") && Type === "text" && (
           <svg
             onClick={() => setType("password")}
             className="absolute right-3 top-12 h-6 w-6 cursor-pointer text-black"

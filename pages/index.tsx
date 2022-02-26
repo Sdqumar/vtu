@@ -9,12 +9,12 @@ const Home: NextPage = () => {
 
   return (
     <div className="to-primary mx-auto w-full bg-gradient-to-r from-green-400 font-semibold">
-      <nav className="flex w-full justify-between bg-black p-10 py-6 text-4xl text-white md:text-5xl">
+      <nav className="flex w-full justify-between bg-black p-5 py-6 text-xl text-white md:text-4xl">
         EASYTOPUP
         {userContext?.user?.displayName && (
           <Link href="/dashboard" passHref>
             <a>
-              <span className="cursor-pointer border-2 p-1 px-4 text-2xl">
+              <span className="mx-4 cursor-pointer border-2 p-1 px-4 text-[1rem] sm:text-2xl">
                 DASHBOARD
               </span>
             </a>

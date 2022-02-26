@@ -73,7 +73,7 @@ const SignIn = () => {
         type="password"
         errors={errors}
       />
-      <Button label="Sign Up" loading={loading} style="bg-black" />
+      <Button label="Sign In" loading={loading} style="bg-black" />
     </form>
   );
 };
