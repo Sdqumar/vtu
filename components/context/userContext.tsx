@@ -13,6 +13,7 @@ export type AuthUser = {
   walletBalance?: number;
   totalFunding?: number;
   totalSpent?: number;
+  accountNumber?: number;
 };
 const AuthUser = {
   email: "",
