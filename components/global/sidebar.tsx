@@ -78,9 +78,9 @@ const Sidebar = () => {
       </div>
 
       <main
-        className={`block w-64 transition-all md:-translate-x-0 ${
-          showNav ? "-translate-x-0" : "-translate-x-64"
-        }  ml-2 h-[90vh] border-r md:block`}
+        className={`ml-2 block h-[90vh]  w-64 border-r md:block ${
+          showNav ? "block " : "hidden  "
+        }  `}
       >
         <Link href="/dashboard" passHref>
           <a>
