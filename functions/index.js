@@ -1,47 +1,37 @@
 const functions = require("firebase-functions");
-const puppeteer = require("puppeteer");
+const admin = require("firebase-admin");
+admin.initializeApp();
 
-exports.vehicleCheck = functions
-  .runWith({ memory: "1GB" })
-  .https.onRequest(async (request, response) => {
-    response.set("Access-Control-Allow-Origin", "*");
-    const { number } = request.query;
-    const browser = await puppeteer.launch();
-    const url =
-      "https://my.service.nsw.gov.au/MyServiceNSW/index#/rms/freeRegoCheck/details";
-    let finalResult = "";
-    try {
-      const page = await browser.newPage();
+exports.paymentWebhook = functions.https.onRequest(async (req, res) => {
+  res.set("Access-Control-Allow-Origin", "*");
+  const body = {
+    eventType: "SUCCESSFUL_TRANSACTION",
+    eventData: {
+      metaData: {
+        uid: "s05eCpxUAWd7ApmmtsvgTEfWnTb2",
+        amount: "323",
+      },
+    },
+  };
+  const eventType = body.eventType;
+  try {
+    await admin.firestore().collection("payment").add(body);
 
-      await page.goto(url);
-      await page.waitForSelector("#formly_2_input_plateNumber_0");
-      await page.type("#formly_2_input_plateNumber_0", number);
-      await page.click(
-        "#formly_2_checkbox-label-with-action_termsAndConditions_1"
-      );
-      page.on("response", async (response) => {
-        response.text().then(function (textBody) {
-          if (textBody.startsWith("[")) {
-            const json = JSON.parse(textBody);
-            const body = json[0];
-            if (body.method == "postVehicleListForFreeRegoCheck") {
-              finalResult = body.result;
-            }
-          }
+    if (eventType === "SUCCESSFUL_TRANSACTION") {
+      const eventData = body.eventData.metaData;
+      const userId = eventData.uid;
+
+      admin
+        .firestore()
+        .collection("users")
+        .doc(userId)
+        .update({
+          wallentBalance: admin.firestore.FieldValue.increment(
+            Number(eventData.amount)
+          ),
         });
-      });
-      await Promise.all([
-        page.click('button[type="submit"]'),
-        page.waitForNavigation({ waitUntil: "networkidle0" }),
-      ]);
-
-      if (finalResult) {
-        response.status(200).json({
-          data: finalResult,
-        });
-        browser.close();
-      }
-    } catch (error) {
-      response.status(400).json(error);
     }
-  });
+  } catch (error) {
+    res.status(400).json(error);
+  }
+});

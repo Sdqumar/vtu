@@ -20,6 +20,7 @@ const ATMCard: NextPage = () => {
   const customer = {
     email: user!.email,
     name: user!.name!,
+    uid: user!.uid!,
   };
 
   const payment = { amount: amount, total: amount + amount * 0.02 };
@@ -39,7 +40,7 @@ const ATMCard: NextPage = () => {
       customerEmail: customer.email,
       apiKey: "MK_TEST_AWZX1QJ3CJ",
       contractCode: "3936455328",
-      paymentDescription: "Test Pay",
+      paymentDescription: "EasyTopUp ATM Fund",
       isTestMode: true,
       metadata: {
         ...customer,

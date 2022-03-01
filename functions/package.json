@@ -14,8 +14,7 @@
   "main": "index.js",
   "dependencies": {
     "firebase-admin": "^9.8.0",
-    "firebase-functions": "^3.14.1",
-    "puppeteer": "^13.4.0"
+    "firebase-functions": "^3.14.1"
   },
   "devDependencies": {
     "firebase-functions-test": "^0.2.0"

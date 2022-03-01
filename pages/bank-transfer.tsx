@@ -4,12 +4,11 @@ import { useState } from "react";
 import Button from "../components/global/Button";
 import { useForm } from "react-hook-form";
 import { useUser } from "../components/context/userContext";
-import { usePaystackPayment } from "react-paystack";
-import paymentConfig from "../components/global/paymentConfig";
+import PaymentConfig from "../components/global/paymentConfig";
 
 const BankTransfer: NextPage = () => {
   const [loading, setLoading] = useState(false);
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState(10);
   const userContext = useUser();
   const user = userContext?.user;
 
@@ -20,9 +19,6 @@ const BankTransfer: NextPage = () => {
 
   const payment = { amount: amount, total: amount + amount * 0.02 };
 
-  const initializePayment = usePaystackPayment(
-    paymentConfig(customer, payment)
-  );
   type form = {
     amount?: number;
   };
@@ -38,7 +34,6 @@ const BankTransfer: NextPage = () => {
     if (values.amount) {
       setAmount(Number(values.amount));
     }
-    initializePayment();
   };
 
   return (
@@ -60,6 +55,9 @@ const BankTransfer: NextPage = () => {
           />
           <Button label="continue" loading={loading} />
         </form>
+        {payment.amount > 100 && (
+          <PaymentConfig user={customer} payment={payment} />
+        )}
       </main>
     </div>
   );
