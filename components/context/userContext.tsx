@@ -11,7 +11,7 @@ export type AuthUser = {
   pin?: number;
   phoneNumber?: number;
   walletBalance?: number;
-  totalFunding?: number;
+  totalFunded?: number;
   totalSpent?: number;
   accountNumber?: number;
 };

@@ -1,10 +1,21 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect } from "react";
 import { useUser } from "../context/userContext";
+import { getUserData } from "../global/utils";
 
 export default function AccountHistory() {
   const userContext = useUser();
   const user = userContext?.user;
+  const setUser = userContext!.setUser;
+
+  useEffect(() => {
+    (async () => {
+      const userData = await getUserData(user!.uid);
+      // @ts-ignore
+      setUser({ ...userData });
+    })();
+  }, []);
 
   const account = [
     {
@@ -14,7 +25,7 @@ export default function AccountHistory() {
     },
     {
       name: "TOTAL FUNDING",
-      amount: user?.totalFunding || 0,
+      amount: user?.totalFunded || 0,
       icon: "dollarBlue",
     },
     {

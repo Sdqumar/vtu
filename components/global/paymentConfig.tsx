@@ -14,18 +14,18 @@ type payment = {
 type user = {
   name: string;
   email: string;
+  uid: string;
 };
 type props = {
   user: user;
   payment: payment;
-  // disable: boolean;
 };
 const PaystackHook = ({ user, payment }: props) => {
   const config = {
     reference: new Date().getTime().toString(),
     email: user.email,
     amount: payment.total * 100,
-    // channels: "bank",
+    // channels: ["bank"],
     publicKey: "pk_test_cc89c527520c2442c1e462c3128f57442882a3ca",
     metadata: {
       ...user,

@@ -15,6 +15,7 @@ const BankTransfer: NextPage = () => {
   const customer = {
     email: user!.email,
     name: user!.name!,
+    uid: user!.uid!,
   };
 
   const payment = { amount: amount, total: amount + amount * 0.02 };
