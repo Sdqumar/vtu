@@ -5,6 +5,7 @@ import Button from "../components/global/Button";
 import { useForm } from "react-hook-form";
 import { useUser } from "./../components/context/userContext";
 import Script from "next/script";
+import { useRouter } from "next/router";
 declare const MonnifySDK: any;
 
 type form = {
@@ -16,7 +17,7 @@ const ATMCard: NextPage = () => {
   const [amount, setAmount] = useState(0);
   const userContext = useUser();
   const user = userContext?.user;
-
+  const router = useRouter();
   const customer = {
     email: user!.email,
     name: user!.name!,
@@ -47,6 +48,12 @@ const ATMCard: NextPage = () => {
         ...payment,
       },
       paymentMethods: ["CARD"],
+      onComplete: function (response: string) {
+        // router.push("/dashboard");
+      },
+      onClose: function () {
+        router.push("/dashboard");
+      },
     });
   }
   const submitForm = async (values: form) => {

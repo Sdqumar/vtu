@@ -1,9 +1,6 @@
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { usePaystackPayment } from "react-paystack";
-
-const onSuccess = (reference: string) => {
-  console.log(reference);
-};
 
 const onClose = () => {
   console.log("closed");
@@ -21,6 +18,12 @@ type props = {
   payment: payment;
 };
 const PaystackHook = ({ user, payment }: props) => {
+  const router = useRouter();
+  const onSuccess = (reference: string) => {
+    console.log(reference);
+    router.push("/dashboard");
+  };
+
   const config = {
     reference: new Date().getTime().toString(),
     email: user.email,
@@ -41,7 +44,7 @@ const PaystackHook = ({ user, payment }: props) => {
   };
   const initializePayment = usePaystackPayment(config);
 
-  initializePayment();
+  initializePayment(onSuccess);
   return <div></div>;
 };
 
