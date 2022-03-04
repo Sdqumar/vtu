@@ -1,6 +1,6 @@
 import React, { ReactNode, useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { AuthUser, useUser } from "../context/userContext";
+import { useUser } from "../context/userContext";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import firebase from "../../lib/firebaseConfig";
 import { getUserData } from "./utils";
@@ -39,6 +39,7 @@ function Auth({ children }: Authprops) {
   useEffect(() => {
     getUser();
   }, [user]);
+
   if (!verify && !loading && router.pathname !== "/") {
     router.push("/");
   }

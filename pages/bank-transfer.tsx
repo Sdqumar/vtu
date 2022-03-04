@@ -5,7 +5,7 @@ import Button from "../components/global/Button";
 import { useForm } from "react-hook-form";
 import { useUser } from "../components/context/userContext";
 import PaymentConfig from "../components/global/paymentConfig";
-
+import { PaystackButton } from "react-paystack";
 const BankTransfer: NextPage = () => {
   const [loading, setLoading] = useState(false);
   const [amount, setAmount] = useState(10);

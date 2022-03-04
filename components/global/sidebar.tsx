@@ -1,9 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { signout } from "../../utils/auth";
 import { useUser } from "../context/userContext";
+import listenForOutsideClicks from "./clickOutside";
 
 const nav = [
   {
@@ -35,7 +36,7 @@ const nav = [
 const Sidebar = () => {
   const router = useRouter();
   const path = router.pathname.slice(1);
-  const [showNav, setShowNav] = useState(false);
+
   const isHome = router.pathname === "/";
   const userContext = useUser();
   const user = userContext?.user;
@@ -46,19 +47,24 @@ const Sidebar = () => {
     }, 1000);
   };
 
-  const handleClick = () => {
-    showNav ? setShowNav(false) : setShowNav(true);
-  };
-
   if (isHome) {
     return null;
   }
+  const menuRef = useRef<HTMLDivElement | null>(null);
+  const [listening, setListening] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const toggle = () => setIsOpen(!isOpen);
+
+  useEffect(
+    listenForOutsideClicks(listening, setListening, menuRef, setIsOpen)
+  );
 
   return (
     <div
       className={`fixed z-10 mr-4 h-full ${
-        showNav && "bg-white"
+        isOpen && "bg-white"
       } transition-all md:relative`}
+      ref={menuRef}
     >
       <div className="cursor-pointer ">
         <svg
@@ -66,7 +72,7 @@ const Sidebar = () => {
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
-          onClick={handleClick}
+          onClick={toggle}
         >
           <path
             strokeLinecap="round"
@@ -79,7 +85,7 @@ const Sidebar = () => {
 
       <main
         className={`ml-2 block h-[90vh]  w-64 border-r md:block ${
-          showNav ? "block " : "hidden  "
+          isOpen ? "block " : "hidden  "
         }  `}
       >
         <Link href="/dashboard" passHref>

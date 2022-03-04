@@ -15,11 +15,7 @@ export type AuthUser = {
   totalSpent?: number;
   accountNumber?: number;
 };
-const AuthUser = {
-  email: "",
-  uid: "",
-  displayName: "",
-};
+
 type userContext = {
   user: AuthUser | null;
   setUser: React.Dispatch<React.SetStateAction<AuthUser | null>>;
@@ -27,7 +23,7 @@ type userContext = {
 const UserContext = createContext<userContext | null>(null);
 
 function UserProvider({ children }: props) {
-  const [user, setUser] = useState<AuthUser | null>(AuthUser);
+  const [user, setUser] = useState<AuthUser | null>(null);
   return (
     <UserContext.Provider value={{ user, setUser }}>
       {children}
