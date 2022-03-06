@@ -55,14 +55,14 @@ export default function AirtimeTopUp() {
             type="number"
             errors={errors}
           />
-          <Select
+          {/* <Select
             register={register}
             name="PhoneNumber"
             required={false}
             data={list}
             label="Choose from beneficiary"
             errors={errors}
-          />
+          /> */}
           <Input
             register={register}
             name="amount"

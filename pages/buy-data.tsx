@@ -92,14 +92,14 @@ export default function BuyData() {
             type="number"
             errors={errors}
           />
-          <Select
+          {/* <Select
             register={register}
-            name="network"
+            name="PhoneNumber"
             required={false}
             data={list}
             label="Choose from beneficiary"
             errors={errors}
-          />
+          /> */}
 
           <Input
             register={register}

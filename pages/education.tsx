@@ -31,7 +31,9 @@ export default function Education() {
     "JAMB UTME Form - N3450 ",
   ];
 
-  const submitForm = (values: form) => {};
+  const submitForm = (values: form) => {
+    console.log(values);
+  };
 
   const handleShowForm = () => {
     showForm ? setShowForm(false) : setShowForm(true);
@@ -62,13 +64,13 @@ export default function Education() {
             type="number"
             errors={errors}
           />
-          <Select
+          {/* <Select
             register={register}
             name="PhoneNumber"
             data={list}
             label="Choose from beneficiary"
             errors={errors}
-          />
+          /> */}
           <Input
             register={register}
             name="pin"

@@ -18,7 +18,9 @@ export default function BonusWallet() {
     formState: { errors },
   } = useForm<form>();
 
-  const submitForm = (values: form) => {};
+  const submitForm = (values: form) => {
+    console.log(values);
+  };
 
   return (
     <div className=" mb-40 mt-10  md:ml-20  ">

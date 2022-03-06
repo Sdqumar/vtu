@@ -33,7 +33,9 @@ export default function CableSubscription() {
     // setBundle(bundle.prices);
   };
 
-  const submitForm = (values: form) => {};
+  const submitForm = (values: form) => {
+    console.log(values, getValues());
+  };
 
   const handleShowForm = () => {
     showForm ? setShowForm(false) : setShowForm(true);
@@ -92,13 +94,13 @@ export default function CableSubscription() {
             errors={errors}
           />
 
-          <Select
+          {/* <Select
             register={register}
-            name="network"
+            name="PhoneNumber"
             data={list}
             label="Choose from beneficiary"
             errors={errors}
-          />
+          /> */}
           <Input
             register={register}
             name="PhoneNumber"
