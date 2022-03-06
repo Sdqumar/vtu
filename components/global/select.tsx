@@ -39,6 +39,7 @@ export default function Select({
       >
         {data.map((item, index) => (
           <option value={item} key={index}>
+            {/* {console.log(item)} */}
             {item}
           </option>
         ))}

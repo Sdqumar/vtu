@@ -32,7 +32,9 @@ export default function BuyData() {
     setBundle(bundle.prices);
   };
 
-  const submitForm = (values: form) => {};
+  const submitForm = (values: form) => {
+    console.log(values, getValues());
+  };
 
   const handleShowForm = () => {
     showForm ? setShowForm(false) : setShowForm(true);

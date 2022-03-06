@@ -2,15 +2,11 @@ import Input from "../components/global/input";
 import { useState } from "react";
 import Button from "../components/global/Button";
 import Select from "../components/global/select";
-import DataSelect from "../components/global/dataSelect";
-import { prices } from "../components/Home/utils";
 import { useForm } from "react-hook-form";
 
 export default function AirtimeCash() {
   const [loading, setLoading] = useState(false);
-  const [list, setList] = useState([]);
   const [showForm, setShowForm] = useState(false);
-  const [bundle, setBundle] = useState(prices[0].prices);
 
   type form = {
     network?: string;
@@ -27,7 +23,9 @@ export default function AirtimeCash() {
   } = useForm<form>();
   const network = ["MTN", "Airtel", "9mobile", "GLO"];
 
-  const submitForm = (values: form) => {};
+  const submitForm = (values: form) => {
+    console.log(values);
+  };
 
   const handleShowForm = () => {
     showForm ? setShowForm(false) : setShowForm(true);

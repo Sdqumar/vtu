@@ -23,7 +23,9 @@ export default function AirtimeTopUp() {
     formState: { errors },
   } = useForm<form>();
   const network = ["MTN", "Airtel", "9mobile", "GLO"];
-  const submitForm = (values: form) => {};
+  const submitForm = (values: form) => {
+    console.log(values);
+  };
 
   const handleShowForm = () => {
     showForm ? setShowForm(false) : setShowForm(true);
@@ -43,7 +45,7 @@ export default function AirtimeTopUp() {
             register={register}
             name="network"
             data={network}
-            label="Network"
+            label="Choose Network"
             errors={errors}
           />
           <Input
@@ -55,7 +57,7 @@ export default function AirtimeTopUp() {
           />
           <Select
             register={register}
-            name="network"
+            name="PhoneNumber"
             required={false}
             data={list}
             label="Choose from beneficiary"
