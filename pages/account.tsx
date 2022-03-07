@@ -35,7 +35,7 @@ export default function Account() {
     }
   };
   return (
-    <div className=" mt-20 flex h-fit flex-wrap justify-center gap-10 md:ml-20 md:justify-start ">
+    <div className=" mt-20 flex h-fit w-full flex-wrap justify-center gap-10 md:ml-20 md:justify-start ">
       <main className="flex  flex-wrap ">
         <form
           onSubmit={handleSubmit((formValues) => submitForm(formValues))}

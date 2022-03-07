@@ -24,15 +24,13 @@ const ATMCard: NextPage = () => {
     uid: user!.uid!,
   };
 
-  const payment = { amount: amount, total: amount + amount * 0.02 };
-
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<form>();
 
-  function payWithMonnify() {
+  function payWithMonnify(payment: { total: number }) {
     MonnifySDK.initialize({
       amount: payment.total,
       currency: "NGN",
@@ -48,19 +46,17 @@ const ATMCard: NextPage = () => {
         ...payment,
       },
       paymentMethods: ["CARD"],
-      onComplete: function (response: string) {
-        // router.push("/dashboard");
-      },
+      onComplete: function (response: string) {},
       onClose: function () {
         router.push("/dashboard");
       },
     });
   }
   const submitForm = async (values: form) => {
-    if (values.amount) {
-      setAmount(Number(values.amount));
-    }
-    payWithMonnify();
+    const amount = values.amount!;
+    const payment = { amount, total: amount + amount * 0.02 };
+
+    payWithMonnify(payment);
   };
 
   return (

@@ -11,9 +11,11 @@ export default function AccountHistory() {
 
   useEffect(() => {
     (async () => {
-      const userData = await getUserData(user!.uid);
       // @ts-ignore
-      setUser({ ...userData });
+      const { walletBalance, totalFunded } = await getUserData(user!.uid);
+
+      // @ts-ignore
+      setUser({ ...user, walletBalance, totalFunded });
     })();
   }, []);
 
@@ -62,7 +64,7 @@ export default function AccountHistory() {
       <div className=" flex  flex-col justify-center gap-4 md:flex-row ">
         {account.map((item) => (
           <div
-            className="flex h-[5rem] w-[90vw] items-center justify-center  border px-2   md:max-w-[23vw]"
+            className="flex h-[5rem] w-[80vw] items-center justify-center  border px-2   md:max-w-[23vw]"
             key={item.name}
           >
             <Image

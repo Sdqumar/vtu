@@ -42,7 +42,9 @@ const Sidebar = () => {
   const user = userContext?.user;
   const handleSignOut = async () => {
     await signout();
+
     setTimeout(() => {
+      userContext?.setUser(null);
       router.push("/");
     }, 1000);
   };
@@ -84,7 +86,7 @@ const Sidebar = () => {
       </div>
 
       <main
-        className={`ml-2 block h-[90vh]  w-64 border-r md:block ${
+        className={` ml-2 block h-[90vh] w-64 border-r md:block ${
           isOpen ? "block " : "hidden  "
         }  `}
       >
@@ -156,8 +158,8 @@ const Sidebar = () => {
           })}
         </section>
 
-        <section
-          className="absolute bottom-14 ml-5 flex cursor-pointer items-center hover:text-red-600
+        <button
+          className="absolute bottom-14 ml-5 flex w-fit cursor-pointer items-center bg-transparent text-gray-700 hover:text-red-600
         "
           onClick={handleSignOut}
         >
@@ -174,8 +176,8 @@ const Sidebar = () => {
               d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
             />
           </svg>
-          <h3 className="ml-1  text-lg font-medium ">Log Out</h3>
-        </section>
+          <h3 className="ml-1 text-lg font-medium ">Log Out</h3>
+        </button>
       </main>
     </div>
   );

@@ -8,7 +8,7 @@ const Dashboard: NextPage = () => {
   const user = userContext?.user;
 
   return (
-    <main className="mx-auto max-w-[50rem] ">
+    <main className="mx-auto w-full ">
       <section className="mt-14  text-center text-3xl font-bold capitalize text-gray-800 md:ml-0 md:text-left">
         Hello, {user?.name}
       </section>
