@@ -47,9 +47,6 @@ const Sidebar = () => {
     }, 1000);
   };
 
-  if (isHome) {
-    return null;
-  }
   const menuRef = useRef<HTMLDivElement | null>(null);
   const [listening, setListening] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -59,6 +56,9 @@ const Sidebar = () => {
     listenForOutsideClicks(listening, setListening, menuRef, setIsOpen)
   );
 
+  if (isHome) {
+    return null;
+  }
   return (
     <div
       className={`fixed z-10 mr-4 h-full ${
