@@ -3,17 +3,25 @@ import type { AppProps } from "next/app";
 import Sidebar from "../components/global/sidebar";
 import UserProvider from "../components/context/userContext";
 import Auth from "../components/global/Auth";
+import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
+import { useState } from "react";
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const [queryClient] = useState(() => new QueryClient());
+
   return (
-    <div className="flex">
-      <UserProvider>
-        <Auth>
-          <Sidebar />
-          <Component {...pageProps} />
-        </Auth>
-      </UserProvider>
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <Hydrate state={pageProps.dehydratedState}>
+        <UserProvider>
+          <Auth>
+            <div className="flex">
+              <Sidebar />
+              <Component {...pageProps} />
+            </div>
+          </Auth>
+        </UserProvider>
+      </Hydrate>
+    </QueryClientProvider>
   );
 }
 

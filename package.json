@@ -17,7 +17,8 @@
     "react-hook-form": "^7.24.0",
     "react-onclickoutside": "^6.12.1",
     "react-paystack": "^3.0.5",
-    "react-table": "^7.7.0"
+    "react-table": "^7.7.0",
+    "react-query": "^3.34.16"
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.4.0",
