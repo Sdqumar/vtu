@@ -4,7 +4,7 @@ import Errror from "./error";
 type form = {
   name?: string;
   email?: string;
-  PhoneNumber?: number;
+  phoneNumber?: number;
   amount?: number;
   pin?: number;
   meterNo?: number;
@@ -15,7 +15,7 @@ type form = {
 type inputProp = {
   register: UseFormRegister<form>;
   name:
-    | "PhoneNumber"
+    | "phoneNumber"
     | "amount"
     | "pin"
     | "oldpin"

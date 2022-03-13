@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import Button from "../components/global/Button";
 import Select from "../components/global/select";
+import axios from "axios";
 
 export default function AirtimeTopUp() {
   const [loading, setLoading] = useState(false);
@@ -11,7 +12,7 @@ export default function AirtimeTopUp() {
 
   type form = {
     network?: string;
-    PhoneNumber?: number;
+    phoneNumber?: number;
     amount?: number;
     pin?: number;
   };
@@ -23,8 +24,19 @@ export default function AirtimeTopUp() {
     formState: { errors },
   } = useForm<form>();
   const network = ["MTN", "Airtel", "9mobile", "GLO"];
-  const submitForm = (values: form) => {
+  const submitForm = async (values: form) => {
     console.log(values);
+    try {
+      // const { data } = await axios("/api/user");
+      const { data } = await axios({
+        method: "post",
+        url: "/api/buyAirtime",
+        data: values,
+      });
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleShowForm = () => {
@@ -50,7 +62,7 @@ export default function AirtimeTopUp() {
           />
           <Input
             register={register}
-            name="PhoneNumber"
+            name="phoneNumber"
             label="Phone Number"
             type="number"
             errors={errors}
@@ -114,7 +126,7 @@ export function BeneficiaryForm() {
       >
         <Input
           register={register}
-          name="PhoneNumber"
+          name="phoneNumber"
           label="Phone Number"
           type="number"
           errors={errors}

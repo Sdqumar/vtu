@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@babel/core": "^7.17.2",
+    "axios": "^0.26.1",
     "firebase": "^9.6.3",
     "firebase-admin": "^10.0.1",
     "next": "12.0.8",
@@ -17,8 +18,8 @@
     "react-hook-form": "^7.24.0",
     "react-onclickoutside": "^6.12.1",
     "react-paystack": "^3.0.5",
-    "react-table": "^7.7.0",
-    "react-query": "^3.34.16"
+    "react-query": "^3.34.16",
+    "react-table": "^7.7.0"
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.4.0",
