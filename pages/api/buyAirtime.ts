@@ -1,5 +1,6 @@
 import axios from "axios";
 import type { NextApiRequest, NextApiResponse } from "next";
+import { firestore } from "../../lib/firebaseNode";
 
 type Data = {
   name: string;
@@ -18,8 +19,12 @@ export default async function handler(
     Ported_number: true,
     airtime_type: "VTU", //VTU or awuf4U or Share and Sell
   };
-  console.log(data);
 
+  const citiesRef = firestore.collection("payment");
+  const snapshot = await citiesRef.get();
+  snapshot.forEach((doc) => {
+    console.log(doc.id, "=>", doc.data());
+  });
   axios({
     method: "post",
     url: "https://www.superjaraapi.com/api/topup/",
