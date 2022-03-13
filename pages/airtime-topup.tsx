@@ -4,11 +4,14 @@ import { useState } from "react";
 import Button from "../components/global/Button";
 import Select from "../components/global/select";
 import axios from "axios";
+import { useUser } from "../components/context/userContext";
 
 export default function AirtimeTopUp() {
   const [loading, setLoading] = useState(false);
   const [list, setList] = useState([]);
   const [showForm, setShowForm] = useState(false);
+  const userContext = useUser();
+  const user = userContext?.user!;
 
   type form = {
     network?: string;
@@ -25,13 +28,11 @@ export default function AirtimeTopUp() {
   } = useForm<form>();
   const network = ["MTN", "Airtel", "9mobile", "GLO"];
   const submitForm = async (values: form) => {
-    console.log(values);
     try {
-      // const { data } = await axios("/api/user");
       const { data } = await axios({
         method: "post",
         url: "/api/buyAirtime",
-        data: values,
+        data: { values, uid: user.uid },
       });
       console.log(data);
     } catch (error) {

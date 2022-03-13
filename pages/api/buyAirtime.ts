@@ -1,4 +1,5 @@
 import axios from "axios";
+import { FieldValue } from "firebase-admin/firestore";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { firestore } from "../../lib/firebaseNode";
 
@@ -10,8 +11,8 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  const { network, phoneNumber, amount } = req.body;
-
+  const { values, uid } = req.body;
+  const { network, phoneNumber, amount } = values;
   const data = {
     network,
     amount,
@@ -19,12 +20,17 @@ export default async function handler(
     Ported_number: true,
     airtime_type: "VTU", //VTU or awuf4U or Share and Sell
   };
+  console.log(amount);
+  console.log(-Number(amount));
 
-  const citiesRef = firestore.collection("payment");
-  const snapshot = await citiesRef.get();
-  snapshot.forEach((doc) => {
-    console.log(doc.id, "=>", doc.data());
+  const userRef = firestore.collection("users").doc(uid);
+
+  await userRef.update({
+    walletBalance: FieldValue.increment(-Number(amount)),
+    totalFunded: FieldValue.increment(-Number(amount)),
+    totalSpent: FieldValue.increment(Number(amount)),
   });
+
   axios({
     method: "post",
     url: "https://www.superjaraapi.com/api/topup/",
