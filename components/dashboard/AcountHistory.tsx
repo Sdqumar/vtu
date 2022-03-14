@@ -1,3 +1,4 @@
+import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect } from "react";
@@ -6,11 +7,21 @@ import { getUserData } from "../global/utils";
 
 export default function AccountHistory() {
   const userContext = useUser();
-  const user = userContext?.user;
+  const user = userContext?.user!;
   const setUser = userContext!.setUser;
 
   useEffect(() => {
     (async () => {
+      // try {
+      //   const { data } = await axios({
+      //     method: "post",
+      //     url: "/api/walletBalance",
+      //     data: { accountNumber: user.accountNumber },
+      //   });
+      //   console.log(data);
+      // } catch (error) {
+      //   console.log(error);
+      // }
       // @ts-ignore
       const { walletBalance, totalFunded } = await getUserData(user!.uid);
 

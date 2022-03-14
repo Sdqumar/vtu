@@ -64,7 +64,7 @@ export default function ElectricityBills() {
           />
           {/* <Select
             register={register}
-            name="PhoneNumber"
+            name="phoneNumber"
             data={list}
             label="Choose from beneficiary"
             errors={errors}
@@ -99,7 +99,7 @@ export default function ElectricityBills() {
 export function BeneficiaryForm() {
   const [loading, setLoading] = useState(false);
   type form = {
-    PhoneNumber?: number;
+    phoneNumber?: number;
     name?: string;
   };
 
@@ -119,7 +119,7 @@ export function BeneficiaryForm() {
       >
         <Input
           register={register}
-          name="PhoneNumber"
+          name="phoneNumber"
           label="Phone Number"
           type="number"
           errors={errors}

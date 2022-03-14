@@ -16,7 +16,7 @@ export default function CableSubscription() {
     provider?: string;
     plan?: string;
     cardNo?: number;
-    PhoneNumber?: number;
+    phoneNumber?: number;
     pin?: number;
   };
 
@@ -96,14 +96,14 @@ export default function CableSubscription() {
 
           {/* <Select
             register={register}
-            name="PhoneNumber"
+            name="phoneNumber"
             data={list}
             label="Choose from beneficiary"
             errors={errors}
           /> */}
           <Input
             register={register}
-            name="PhoneNumber"
+            name="phoneNumber"
             label="Phone Number"
             type="number"
             errors={errors}
@@ -131,7 +131,7 @@ export default function CableSubscription() {
 export function BeneficiaryForm() {
   const [loading, setLoading] = useState(false);
   type form = {
-    PhoneNumber?: number;
+    phoneNumber?: number;
     name?: string;
   };
 
@@ -151,7 +151,7 @@ export function BeneficiaryForm() {
       >
         <Input
           register={register}
-          name="PhoneNumber"
+          name="phoneNumber"
           label="Phone Number"
           type="number"
           errors={errors}

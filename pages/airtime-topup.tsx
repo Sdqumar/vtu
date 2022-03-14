@@ -70,7 +70,7 @@ export default function AirtimeTopUp() {
           />
           {/* <Select
             register={register}
-            name="PhoneNumber"
+            name="phoneNumber"
             required={false}
             data={list}
             label="Choose from beneficiary"
@@ -107,7 +107,7 @@ export default function AirtimeTopUp() {
 export function BeneficiaryForm() {
   const [loading, setLoading] = useState(false);
   type form = {
-    PhoneNumber?: number;
+    phoneNumber?: number;
     name?: string;
   };
 

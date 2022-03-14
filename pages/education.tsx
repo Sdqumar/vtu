@@ -14,7 +14,7 @@ export default function Education() {
 
   type form = {
     exam?: string;
-    PhoneNumber?: number;
+    phoneNumber?: number;
     pin?: number;
   };
 
@@ -59,14 +59,14 @@ export default function Education() {
 
           <Input
             register={register}
-            name="PhoneNumber"
+            name="phoneNumber"
             label="Phone Number"
             type="number"
             errors={errors}
           />
           {/* <Select
             register={register}
-            name="PhoneNumber"
+            name="phoneNumber"
             data={list}
             label="Choose from beneficiary"
             errors={errors}
@@ -94,7 +94,7 @@ export default function Education() {
 export function BeneficiaryForm() {
   const [loading, setLoading] = useState(false);
   type form = {
-    PhoneNumber?: number;
+    phoneNumber?: number;
     name?: string;
   };
 
@@ -114,7 +114,7 @@ export function BeneficiaryForm() {
       >
         <Input
           register={register}
-          name="PhoneNumber"
+          name="phoneNumber"
           label="Phone Number"
           type="number"
           errors={errors}

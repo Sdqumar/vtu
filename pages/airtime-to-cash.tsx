@@ -10,7 +10,7 @@ export default function AirtimeCash() {
 
   type form = {
     network?: string;
-    PhoneNumber?: number;
+    phoneNumber?: number;
     amount?: number;
     pin?: number;
   };
@@ -58,7 +58,7 @@ export default function AirtimeCash() {
 
           <Input
             register={register}
-            name="PhoneNumber"
+            name="phoneNumber"
             label="Phone Number"
             type="number"
             errors={errors}
@@ -86,7 +86,7 @@ export default function AirtimeCash() {
 export function BeneficiaryForm() {
   const [loading, setLoading] = useState(false);
   type form = {
-    PhoneNumber?: number;
+    phoneNumber?: number;
     name?: string;
   };
 
@@ -106,7 +106,7 @@ export function BeneficiaryForm() {
       >
         <Input
           register={register}
-          name="PhoneNumber"
+          name="phoneNumber"
           label="Phone Number"
           type="number"
           errors={errors}

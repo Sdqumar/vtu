@@ -13,7 +13,7 @@ export default function Account() {
   type form = {
     name?: string;
     email?: string;
-    PhoneNumber?: number;
+    phoneNumber?: number;
     defaultValue?: string | number | undefined;
   };
 
@@ -63,7 +63,7 @@ export default function Account() {
           <Input
             register={register}
             defaultValue={Number(user?.phoneNumber)}
-            name="PhoneNumber"
+            name="phoneNumber"
             label="Phone Number"
             type="number"
             errors={errors}

@@ -3,7 +3,7 @@ import Errror from "./error";
 
 type form = {
   network?: string;
-  PhoneNumber?: number;
+  phoneNumber?: number;
   company?: string;
   plan?: string;
   exam?: string;
@@ -12,7 +12,7 @@ type form = {
 
 type inputProp = {
   register: UseFormRegister<form>;
-  name: "PhoneNumber" | "network" | "company" | "plan" | "exam" | "bank";
+  name: "phoneNumber" | "network" | "company" | "plan" | "exam" | "bank";
   label: string;
   required?: boolean;
   errors: any;
