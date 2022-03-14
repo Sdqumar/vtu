@@ -12,21 +12,13 @@ export default function AccountHistory() {
 
   useEffect(() => {
     (async () => {
-      // try {
-      //   const { data } = await axios({
-      //     method: "post",
-      //     url: "/api/walletBalance",
-      //     data: { accountNumber: user.accountNumber },
-      //   });
-      //   console.log(data);
-      // } catch (error) {
-      //   console.log(error);
-      // }
       // @ts-ignore
-      const { walletBalance, totalFunded } = await getUserData(user!.uid);
+      const { walletBalance, totalFunded, totalSpent } = await getUserData(
+        user!.uid
+      );
 
       // @ts-ignore
-      setUser({ ...user, walletBalance, totalFunded });
+      setUser({ ...user, walletBalance, totalFunded, totalSpent });
     })();
   }, []);
 

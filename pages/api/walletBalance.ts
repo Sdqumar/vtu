@@ -22,7 +22,7 @@ export default async function handler(
   };
   const { accountNumber } = req.body;
 
-  const url = `https://sandbox.monnify.com/api/v2/disbursements/wallet-balance?accountNumber=${accountNumber}"`;
+  const url = `https://sandbox.monnify.com/api/v2/disbursements/wallet-balance?accountNumber=${accountNumber}`;
 
   try {
     const data = await fetch(url, {

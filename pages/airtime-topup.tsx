@@ -28,11 +28,13 @@ export default function AirtimeTopUp() {
   } = useForm<form>();
   const network = ["MTN", "Airtel", "9mobile", "GLO"];
   const submitForm = async (values: form) => {
+    console.log(values);
+
     try {
       const { data } = await axios({
         method: "post",
         url: "/api/buyAirtime",
-        data: { values, uid: user.uid },
+        data: { values, user },
       });
       console.log(data);
     } catch (error) {
