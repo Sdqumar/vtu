@@ -1,5 +1,5 @@
 import Input from "../components/global/input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../components/global/Button";
 import { prices } from "../components/Home/utils";
 import { useForm, Controller } from "react-hook-form";
@@ -26,15 +26,32 @@ export default function BuyData() {
   const {
     register,
     getValues,
+    setValue,
     formState: { errors },
     handleSubmit,
     watch,
   } = useForm<form>({});
 
   const network = ["MTN", "Airtel", "9mobile", "GLO"];
+  const watchNetwork = watch("network", "MTN");
+  const watchBundle = watch(
+    "bundle",
+    `${bundle[0].size} - ${bundle[0].price} - ${bundle[0].duration}`
+  );
+
+  useEffect(() => {
+    const bundle = prices.find((item) => item.network === watchNetwork);
+    setBundle(bundle!.prices);
+  }, [watchNetwork]);
+
+  useEffect(() => {
+    const amount = watchBundle?.split("-")[1].slice(2);
+
+    setValue("amount", Number(amount));
+  }, [watchBundle]);
 
   const submitForm = async (values: form) => {
-    console.log(values, getValues());
+    console.log(values);
 
     // const requestData = { ...values, ...getValues() };
     // console.log(requestData);
@@ -104,6 +121,7 @@ export default function BuyData() {
             label="Amount"
             type="number"
             errors={errors}
+            disabled
           />
           <Input
             register={register}
