@@ -25,6 +25,7 @@ export default function BuyData() {
 
   const {
     register,
+    setError,
     getValues,
     setValue,
     formState: { errors },
@@ -51,7 +52,13 @@ export default function BuyData() {
   }, [watchBundle]);
 
   const submitForm = async (values: form) => {
-    console.log(values);
+    if (values.pin !== user.pin) {
+      setError("pin", {
+        type: "wrongpin",
+        message: "Incorrect Pin!",
+      });
+      return;
+    }
 
     // const requestData = { ...values, ...getValues() };
     // console.log(requestData);
@@ -98,6 +105,14 @@ export default function BuyData() {
             label="Data bundle"
             errors={errors}
           />
+          <Input
+            register={register}
+            name="amount"
+            label="Amount"
+            type="number"
+            errors={errors}
+            disabled
+          />
 
           <Input
             register={register}
@@ -115,14 +130,6 @@ export default function BuyData() {
             errors={errors}
           /> */}
 
-          <Input
-            register={register}
-            name="amount"
-            label="Amount"
-            type="number"
-            errors={errors}
-            disabled
-          />
           <Input
             register={register}
             name="pin"
