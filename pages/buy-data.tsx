@@ -6,6 +6,9 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useUser } from "../components/context/userContext";
 import Select from "../components/global/select";
+import Success from "../components/global/alertSuccess";
+import Error from "../components/global/alertError";
+import Router, { useRouter } from "next/router";
 
 type form = {
   network?: string;
@@ -17,11 +20,12 @@ type form = {
 
 export default function BuyData() {
   const [loading, setLoading] = useState(false);
+  const [alert, setAlert] = useState<null | "success" | "error">(null);
   const [bundle, setBundle] = useState(prices[0].prices);
 
   const userContext = useUser();
   const user = userContext?.user!;
-
+  const router = useRouter();
   const {
     register,
     setError,
@@ -66,22 +70,31 @@ export default function BuyData() {
       });
       return;
     }
+    setLoading(true);
 
     const requestData = { ...values, ...getValues() };
     try {
-      const { data } = await axios({
+      await axios({
         method: "post",
         url: "/api/buyData",
         data: { values: requestData, user },
       });
-      console.log(data);
+      setAlert("success");
+      setLoading(false);
+      setTimeout(() => {
+        router.push("/dashboard");
+      }, 1000);
     } catch (error) {
+      setAlert("error");
       console.log(error);
+      setLoading(false);
     }
   };
 
   return (
-    <div className=" mb-40 mt-10   md:ml-20  ">
+    <div className=" mb-40 mt-10 md:ml-20">
+      {alert === "success" && <Success text="Transaction Successful" />}
+      {alert === "error" && <Error text=" Transaction Error" />}
       <section className="my-5 ml-4 text-3xl font-bold text-gray-800">
         Buy Data
       </section>
