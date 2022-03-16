@@ -2,7 +2,7 @@ import Input from "../components/global/input";
 import { useEffect, useState } from "react";
 import Button from "../components/global/Button";
 import { prices } from "../components/Home/utils";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useUser } from "../components/context/userContext";
 import Select from "../components/global/select";
@@ -60,18 +60,26 @@ export default function BuyData() {
       return;
     }
 
-    // const requestData = { ...values, ...getValues() };
-    // console.log(requestData);
-    // try {
-    //   const { data } = await axios({
-    //     method: "post",
-    //     url: "/api/buyData",
-    //     data: { values: requestData, user },
-    //   });
-    //   console.log(data);
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    if (values.amount! > user.walletBalance!) {
+      setError("amount", {
+        type: "amount",
+        message: "Insufficent Funds!",
+      });
+      return;
+    }
+
+    const requestData = { ...values, ...getValues() };
+    console.log(requestData);
+    try {
+      const { data } = await axios({
+        method: "post",
+        url: "/api/buyData",
+        data: { values: requestData, user },
+      });
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleShowForm = () => {

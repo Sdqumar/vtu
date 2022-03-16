@@ -59,7 +59,7 @@ export default function Input({
         disabled={disabled}
         className={` ${style} ${errors[name] && "border-red-600"}`}
       />
-      {errors[name]?.type !== "wrongpin" && errors[name] && (
+      {errors[name]?.type === "required" && (
         <Errror message={`${label} is required`} />
       )}
       {errors[name] && <Errror message={errors[name].message} />}
