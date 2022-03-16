@@ -29,7 +29,7 @@ export default function AccountHistory() {
       icon: "dollarGreen",
     },
     {
-      name: "TOTAL FUNDING",
+      name: "TOTAL FUNDED",
       amount: user?.totalFunded || 0,
       icon: "dollarBlue",
     },

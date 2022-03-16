@@ -5,18 +5,20 @@ import Select from "../components/global/select";
 import DataSelect from "../components/global/dataSelect";
 import { prices } from "../components/Home/utils";
 import { useForm, Controller } from "react-hook-form";
+import axios from "axios";
+import { useUser } from "../components/context/userContext";
 
 export default function CableSubscription() {
   const [loading, setLoading] = useState(false);
   const [list, setList] = useState([]);
   const [showForm, setShowForm] = useState(false);
-  const [bundle, setBundle] = useState(prices[0].prices);
+  const userContext = useUser();
+  const user = userContext?.user!;
 
   type form = {
     provider?: string;
     plan?: string;
-    cardNo?: number;
-    phoneNumber?: number;
+    cardNumber?: number;
     pin?: number;
   };
 
@@ -33,10 +35,20 @@ export default function CableSubscription() {
     // setBundle(bundle.prices);
   };
 
-  const submitForm = (values: form) => {
-    console.log(values, getValues());
+  const submitForm = async (values: form) => {
+    const requestData = { ...values, ...getValues() };
+    console.log(requestData);
+    try {
+      const { data } = await axios({
+        method: "post",
+        url: "/api/cableSub",
+        data: { values: requestData, user },
+      });
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
-
   const handleShowForm = () => {
     showForm ? setShowForm(false) : setShowForm(true);
   };
@@ -88,7 +100,15 @@ export default function CableSubscription() {
           />
           <Input
             register={register}
-            name="cardNo"
+            name="amount"
+            label="Amount"
+            type="number"
+            errors={errors}
+            disabled
+          />
+          <Input
+            register={register}
+            name="cardNumber"
             label="Card Number"
             type="number"
             errors={errors}
@@ -101,13 +121,7 @@ export default function CableSubscription() {
             label="Choose from beneficiary"
             errors={errors}
           /> */}
-          <Input
-            register={register}
-            name="phoneNumber"
-            label="Phone Number"
-            type="number"
-            errors={errors}
-          />
+
           <Input
             register={register}
             name="pin"

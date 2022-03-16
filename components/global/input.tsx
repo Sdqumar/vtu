@@ -8,7 +8,7 @@ type form = {
   amount?: number;
   pin?: number;
   meterNo?: number;
-  cardNo?: number;
+  cardNumber?: number;
   oldpin?: number;
 };
 
@@ -22,7 +22,7 @@ type inputProp = {
     | "name"
     | "email"
     | "meterNo"
-    | "cardNo";
+    | "cardNumber";
   label: string;
   required?: boolean;
   errors: any;

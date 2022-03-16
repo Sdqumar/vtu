@@ -23,8 +23,8 @@ export default async function handler(
       status,
       network,
       amount,
-      type: "Airtime",
-      name: "Airtime Payment",
+      type: "Airtime to Cash",
+      name: `${amount} airtime to Cash to ${phoneNumber} `,
       to: phoneNumber,
       date: FieldValue.serverTimestamp(),
     };
@@ -36,6 +36,7 @@ export default async function handler(
   try {
     let user = await userRef.get();
     let userData = user.data()!;
+    console.log(userData.walletBalance);
 
     if (userData.pin !== pin) {
       throw new Error("incorrect pin");
@@ -56,6 +57,7 @@ export default async function handler(
   } catch (error) {
     const transaction = getTransaction("Failed Transactions ", "failed");
     await transactionRef.add(transaction);
+    console.log(error);
 
     res.status(400).send({ error });
   }

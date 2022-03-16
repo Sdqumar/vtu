@@ -13,7 +13,7 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
   const { values, user } = req.body;
-  const { network, phoneNumber, amount, pin } = values;
+  const { phoneNumber, amount, pin, examCard } = values;
   const { uid } = user;
 
   const getTransaction = <t extends string>(message: t, status: t) => {
@@ -21,10 +21,9 @@ export default async function handler(
       uid,
       message,
       status,
-      network,
       amount,
-      type: "Airtime",
-      name: "Airtime Payment",
+      type: "Exam Card Payment",
+      name: `${examCard}`,
       to: phoneNumber,
       date: FieldValue.serverTimestamp(),
     };
@@ -54,8 +53,9 @@ export default async function handler(
 
     res.status(200).json({ message: "Transaction Successful" });
   } catch (error) {
-    const transaction = getTransaction("Failed Transactions ", "failed");
+    const transaction = getTransaction("Failed Transaction ", "failed");
     await transactionRef.add(transaction);
+    console.log(error);
 
     res.status(400).send({ error });
   }

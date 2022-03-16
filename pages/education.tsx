@@ -4,7 +4,15 @@ import Button from "../components/global/Button";
 import Select from "../components/global/select";
 import DataSelect from "../components/global/dataSelect";
 import { prices } from "../components/Home/utils";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
+import axios from "axios";
+import { useUser } from "../components/context/userContext";
+
+type form = {
+  exam?: string;
+  phoneNumber?: number;
+  pin?: number;
+};
 
 export default function Education() {
   const [loading, setLoading] = useState(false);
@@ -12,11 +20,8 @@ export default function Education() {
   const [showForm, setShowForm] = useState(false);
   const [bundle, setBundle] = useState(prices[0].prices);
 
-  type form = {
-    exam?: string;
-    phoneNumber?: number;
-    pin?: number;
-  };
+  const userContext = useUser();
+  const user = userContext?.user!;
 
   const {
     register,
@@ -25,14 +30,25 @@ export default function Education() {
     formState: { errors },
   } = useForm<form>();
   const exam = [
-    "WAEC Card - N2000",
-    "NECO Card - N950",
-    "NABTEB Card - N900 ",
-    "JAMB UTME Form - N3450 ",
+    { name: "WAEC Card", amount: "N2000" },
+    { name: "NECO Card", amount: "N950" },
+    { name: "NABTEB Card", amount: "N900" },
+    { name: "JAMB UTME Form", amount: "N3450 " },
   ];
 
-  const submitForm = (values: form) => {
+  const submitForm = async (values: form) => {
     console.log(values);
+
+    try {
+      const { data } = await axios({
+        method: "post",
+        url: "/api/buyAirtime",
+        data: { values, user },
+      });
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleShowForm = () => {
@@ -52,7 +68,7 @@ export default function Education() {
           <Select
             register={register}
             name="exam"
-            data={exam}
+            data={exam.map((item) => item.name + " - " + item.amount)}
             label="Choose Exam type"
             errors={errors}
           />

@@ -3,10 +3,14 @@ import { useState } from "react";
 import Button from "../components/global/Button";
 import Select from "../components/global/select";
 import { useForm } from "react-hook-form";
+import axios from "axios";
+import { useUser } from "../components/context/userContext";
 
 export default function AirtimeCash() {
   const [loading, setLoading] = useState(false);
   const [showForm, setShowForm] = useState(false);
+  const userContext = useUser();
+  const user = userContext?.user!;
 
   type form = {
     network?: string;
@@ -23,8 +27,19 @@ export default function AirtimeCash() {
   } = useForm<form>();
   const network = ["MTN", "Airtel", "9mobile", "GLO"];
 
-  const submitForm = (values: form) => {
+  const submitForm = async (values: form) => {
     console.log(values);
+
+    try {
+      const { data } = await axios({
+        method: "post",
+        url: "/api/airtimeCash",
+        data: { values, user },
+      });
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleShowForm = () => {

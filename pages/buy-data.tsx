@@ -1,90 +1,87 @@
 import Input from "../components/global/input";
 import { useState } from "react";
 import Button from "../components/global/Button";
-import Select from "../components/global/select";
-import DataSelect from "../components/global/dataSelect";
 import { prices } from "../components/Home/utils";
 import { useForm, Controller } from "react-hook-form";
+import axios from "axios";
+import { useUser } from "../components/context/userContext";
+import Select from "../components/global/select";
+
+type form = {
+  network?: string;
+  phoneNumber?: number;
+  amount?: number;
+  pin?: number;
+  bundle?: string;
+};
+
 export default function BuyData() {
   const [loading, setLoading] = useState(false);
-  const [list, setList] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [bundle, setBundle] = useState(prices[0].prices);
-  //   const [getNework, setGetNework] = useState([]);
-  type form = {
-    network?: string;
-    phoneNumber?: number;
-    amount?: number;
-    pin?: number;
-    bundle?: string;
-  };
+
+  const userContext = useUser();
+  const user = userContext?.user!;
 
   const {
     register,
     getValues,
     formState: { errors },
-  } = useForm<form>();
+    handleSubmit,
+    watch,
+  } = useForm<form>({});
+
   const network = ["MTN", "Airtel", "9mobile", "GLO"];
 
-  const handleChangeNetwork = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const network = e.target.value;
-    const bundle = prices.find((item) => item.network === network)!;
-    setBundle(bundle.prices);
-  };
-
-  const submitForm = (values: form) => {
+  const submitForm = async (values: form) => {
     console.log(values, getValues());
+
+    // const requestData = { ...values, ...getValues() };
+    // console.log(requestData);
+    // try {
+    //   const { data } = await axios({
+    //     method: "post",
+    //     url: "/api/buyData",
+    //     data: { values: requestData, user },
+    //   });
+    //   console.log(data);
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
 
   const handleShowForm = () => {
     showForm ? setShowForm(false) : setShowForm(true);
   };
 
-  const { handleSubmit, control, reset } = useForm({
-    defaultValues: {
-      network: "MtN",
-    },
-  });
-
   return (
     <div className=" mb-40 mt-10   md:ml-20  ">
-      <section className="my-5 ml-4 text-3xl  font-bold text-gray-800">
+      <section className="my-5 ml-4 text-3xl font-bold text-gray-800">
         Buy Data
       </section>
-      <main className="flex  flex-wrap">
+      <main className="flex flex-wrap">
         <form
           onSubmit={handleSubmit((formValues) => submitForm(formValues))}
           className="w-96 rounded-md p-8 shadow-lg transition-all duration-700"
         >
-          <Controller
+          <Select
+            register={register}
             name="network"
-            control={control}
-            rules={{ required: true }}
-            render={({ field }) => (
-              <>
-                <label>Network</label>
-                <select
-                  name={field.name}
-                  onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-                    handleChangeNetwork(e)
-                  }
-                >
-                  {network.map((item) => (
-                    <option value={item} key={item}>
-                      {item}
-                    </option>
-                  ))}
-                </select>
-              </>
-            )}
+            data={network}
+            label="Network"
+            errors={errors}
           />
-          <DataSelect
+
+          <Select
             register={register}
             name="bundle"
-            data={bundle}
+            data={bundle.map(
+              (item) => `${item.size} - ${item.price} - ${item.duration}`
+            )}
             label="Data bundle"
             errors={errors}
           />
+
           <Input
             register={register}
             name="phoneNumber"

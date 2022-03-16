@@ -3,18 +3,22 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import Button from "../components/global/Button";
 import Select from "../components/global/select";
+import axios from "axios";
+import { useUser } from "../components/context/userContext";
+
+type form = {
+  company?: string;
+  meterNo?: number;
+  amount?: number;
+  pin?: number;
+};
 
 export default function ElectricityBills() {
   const [loading, setLoading] = useState(false);
-  const [list, setList] = useState([]);
   const [showForm, setShowForm] = useState(false);
 
-  type form = {
-    company?: string;
-    meterNo?: number;
-    amount?: number;
-    pin?: number;
-  };
+  const userContext = useUser();
+  const user = userContext?.user!;
 
   const {
     handleSubmit,
@@ -30,8 +34,18 @@ export default function ElectricityBills() {
     "Jos Electricity Distribution Company - JED",
     "Port Harcourt Electricity Distribution Company - PHED",
   ];
-  const submitForm = (values: form) => {
+  const submitForm = async (values: form) => {
     console.log(values);
+    try {
+      const { data } = await axios({
+        method: "post",
+        url: "/api/electricSub",
+        data: { values: values, user },
+      });
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleShowForm = () => {
@@ -73,6 +87,13 @@ export default function ElectricityBills() {
             register={register}
             name="amount"
             label="Amount"
+            type="number"
+            errors={errors}
+          />
+          <Input
+            register={register}
+            name="phoneNumber"
+            label="Phone Number"
             type="number"
             errors={errors}
           />
