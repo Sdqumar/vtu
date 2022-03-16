@@ -6,25 +6,23 @@ import Select from "../components/global/select";
 import axios from "axios";
 import { useUser } from "../components/context/userContext";
 
+type form = {
+  network?: string;
+  phoneNumber?: number;
+  amount?: number;
+  pin?: number;
+};
+
 export default function AirtimeTopUp() {
   const [loading, setLoading] = useState(false);
-  const [list, setList] = useState([]);
   const [showForm, setShowForm] = useState(false);
 
   const userContext = useUser();
   const user = userContext?.user!;
 
-  type form = {
-    network?: string;
-    phoneNumber?: number;
-    amount?: number;
-    pin?: number;
-  };
-
   const {
     handleSubmit,
     register,
-    getValues,
     formState: { errors },
   } = useForm<form>();
   const network = ["MTN", "Airtel", "9mobile", "GLO"];
@@ -41,10 +39,6 @@ export default function AirtimeTopUp() {
     } catch (error) {
       console.log(error);
     }
-  };
-
-  const handleShowForm = () => {
-    showForm ? setShowForm(false) : setShowForm(true);
   };
 
   return (
@@ -71,14 +65,7 @@ export default function AirtimeTopUp() {
             type="number"
             errors={errors}
           />
-          {/* <Select
-            register={register}
-            name="phoneNumber"
-            required={false}
-            data={list}
-            label="Choose from beneficiary"
-            errors={errors}
-          /> */}
+
           <Input
             register={register}
             name="amount"
@@ -96,54 +83,7 @@ export default function AirtimeTopUp() {
           />
           <Button label="continue" loading={loading} />
         </form>
-        <section>
-          <button className="ml-10 w-40" onClick={handleShowForm}>
-            Save to Beneficiary
-          </button>
-          {showForm && <BeneficiaryForm />}
-        </section>
       </main>
     </div>
-  );
-}
-
-export function BeneficiaryForm() {
-  const [loading, setLoading] = useState(false);
-  type form = {
-    phoneNumber?: number;
-    name?: string;
-  };
-
-  const {
-    handleSubmit,
-    register,
-    getValues,
-    formState: { errors },
-  } = useForm<form>();
-  const submitForm = (values: form) => {};
-
-  return (
-    <main className="  mt-5 ">
-      <form
-        onSubmit={handleSubmit((formValues) => submitForm(formValues))}
-        className="w-96 rounded-md p-8 shadow-lg transition-all duration-700"
-      >
-        <Input
-          register={register}
-          name="phoneNumber"
-          label="Phone Number"
-          type="number"
-          errors={errors}
-        />
-        <Input
-          register={register}
-          name="name"
-          label="Name"
-          type="name"
-          errors={errors}
-        />
-        <Button label="Save" loading={loading} />
-      </form>
-    </main>
   );
 }

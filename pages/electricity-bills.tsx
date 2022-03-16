@@ -48,10 +48,6 @@ export default function ElectricityBills() {
     }
   };
 
-  const handleShowForm = () => {
-    showForm ? setShowForm(false) : setShowForm(true);
-  };
-
   return (
     <div className=" mb-40 mt-10 md:ml-20  ">
       <section className="my-5 ml-4 text-3xl  font-bold text-gray-800">
@@ -76,13 +72,7 @@ export default function ElectricityBills() {
             type="number"
             errors={errors}
           />
-          {/* <Select
-            register={register}
-            name="phoneNumber"
-            data={list}
-            label="Choose from beneficiary"
-            errors={errors}
-          /> */}
+
           <Input
             register={register}
             name="amount"
@@ -106,54 +96,7 @@ export default function ElectricityBills() {
           />
           <Button label="continue" loading={loading} />
         </form>
-        <section>
-          <button className="ml-10 w-40" onClick={handleShowForm}>
-            Save to Beneficiary
-          </button>
-          {showForm && <BeneficiaryForm />}
-        </section>
       </main>
     </div>
-  );
-}
-
-export function BeneficiaryForm() {
-  const [loading, setLoading] = useState(false);
-  type form = {
-    phoneNumber?: number;
-    name?: string;
-  };
-
-  const {
-    handleSubmit,
-    register,
-    getValues,
-    formState: { errors },
-  } = useForm<form>();
-  const submitForm = (values: form) => {};
-
-  return (
-    <main className="  mt-5 ">
-      <form
-        onSubmit={handleSubmit((formValues) => submitForm(formValues))}
-        className="w-96 rounded-md p-8 shadow-lg transition-all duration-700"
-      >
-        <Input
-          register={register}
-          name="phoneNumber"
-          label="Phone Number"
-          type="number"
-          errors={errors}
-        />
-        <Input
-          register={register}
-          name="name"
-          label="Name"
-          type="name"
-          errors={errors}
-        />
-        <Button label="Save" loading={loading} />
-      </form>
-    </main>
   );
 }

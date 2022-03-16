@@ -17,7 +17,6 @@ type form = {
 
 export default function BuyData() {
   const [loading, setLoading] = useState(false);
-  const [showForm, setShowForm] = useState(false);
   const [bundle, setBundle] = useState(prices[0].prices);
 
   const userContext = useUser();
@@ -69,7 +68,6 @@ export default function BuyData() {
     }
 
     const requestData = { ...values, ...getValues() };
-    console.log(requestData);
     try {
       const { data } = await axios({
         method: "post",
@@ -80,10 +78,6 @@ export default function BuyData() {
     } catch (error) {
       console.log(error);
     }
-  };
-
-  const handleShowForm = () => {
-    showForm ? setShowForm(false) : setShowForm(true);
   };
 
   return (
@@ -129,14 +123,6 @@ export default function BuyData() {
             type="number"
             errors={errors}
           />
-          {/* <Select
-            register={register}
-            name="phoneNumber"
-            required={false}
-            data={list}
-            label="Choose from beneficiary"
-            errors={errors}
-          /> */}
 
           <Input
             register={register}
@@ -148,54 +134,7 @@ export default function BuyData() {
           />
           <Button label="continue" loading={loading} />
         </form>
-        <section>
-          <button className="ml-10 w-40" onClick={handleShowForm}>
-            Save to Beneficiary
-          </button>
-          {showForm && <BeneficiaryForm />}
-        </section>
       </main>
     </div>
-  );
-}
-
-export function BeneficiaryForm() {
-  const [loading, setLoading] = useState(false);
-  type form = {
-    phoneNumber?: number;
-    name?: string;
-  };
-
-  const {
-    handleSubmit,
-    register,
-    getValues,
-    formState: { errors },
-  } = useForm<form>();
-  const submitForm = (values: form) => {};
-
-  return (
-    <main className="  mt-5 ">
-      <form
-        onSubmit={handleSubmit((formValues) => submitForm(formValues))}
-        className="w-96 rounded-md p-8 shadow-lg transition-all duration-700"
-      >
-        <Input
-          register={register}
-          name="phoneNumber"
-          label="Phone Number"
-          type="number"
-          errors={errors}
-        />
-        <Input
-          register={register}
-          name="name"
-          label="Name"
-          type="name"
-          errors={errors}
-        />
-        <Button label="Save" loading={loading} />
-      </form>
-    </main>
   );
 }

@@ -2,8 +2,6 @@ import Input from "../components/global/input";
 import { useState } from "react";
 import Button from "../components/global/Button";
 import Select from "../components/global/select";
-import DataSelect from "../components/global/dataSelect";
-import { prices } from "../components/Home/utils";
 import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
 import { useUser } from "../components/context/userContext";
@@ -11,7 +9,6 @@ import { useUser } from "../components/context/userContext";
 export default function CableSubscription() {
   const [loading, setLoading] = useState(false);
   const [list, setList] = useState([]);
-  const [showForm, setShowForm] = useState(false);
   const userContext = useUser();
   const user = userContext?.user!;
 
@@ -48,9 +45,6 @@ export default function CableSubscription() {
     } catch (error) {
       console.log(error);
     }
-  };
-  const handleShowForm = () => {
-    showForm ? setShowForm(false) : setShowForm(true);
   };
 
   const { handleSubmit, control, reset } = useForm({
@@ -114,14 +108,6 @@ export default function CableSubscription() {
             errors={errors}
           />
 
-          {/* <Select
-            register={register}
-            name="phoneNumber"
-            data={list}
-            label="Choose from beneficiary"
-            errors={errors}
-          /> */}
-
           <Input
             register={register}
             name="pin"
@@ -131,54 +117,7 @@ export default function CableSubscription() {
           />
           <Button label="continue" loading={loading} />
         </form>
-        <section>
-          <button className="ml-10 w-40" onClick={handleShowForm}>
-            Save to Beneficiary
-          </button>
-          {showForm && <BeneficiaryForm />}
-        </section>
       </main>
     </div>
-  );
-}
-
-export function BeneficiaryForm() {
-  const [loading, setLoading] = useState(false);
-  type form = {
-    phoneNumber?: number;
-    name?: string;
-  };
-
-  const {
-    handleSubmit,
-    register,
-    getValues,
-    formState: { errors },
-  } = useForm<form>();
-  const submitForm = (values: form) => {};
-
-  return (
-    <main className="  mt-5 ">
-      <form
-        onSubmit={handleSubmit((formValues) => submitForm(formValues))}
-        className="w-96 rounded-md p-8 shadow-lg transition-all duration-700"
-      >
-        <Input
-          register={register}
-          name="phoneNumber"
-          label="Phone Number"
-          type="number"
-          errors={errors}
-        />
-        <Input
-          register={register}
-          name="name"
-          label="Name"
-          type="name"
-          errors={errors}
-        />
-        <Button label="Save" loading={loading} />
-      </form>
-    </main>
   );
 }

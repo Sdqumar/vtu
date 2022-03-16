@@ -6,18 +6,18 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useUser } from "../components/context/userContext";
 
+type form = {
+  network?: string;
+  phoneNumber?: number;
+  amount?: number;
+  pin?: number;
+};
+
 export default function AirtimeCash() {
   const [loading, setLoading] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const userContext = useUser();
   const user = userContext?.user!;
-
-  type form = {
-    network?: string;
-    phoneNumber?: number;
-    amount?: number;
-    pin?: number;
-  };
 
   const {
     register,
@@ -40,10 +40,6 @@ export default function AirtimeCash() {
     } catch (error) {
       console.log(error);
     }
-  };
-
-  const handleShowForm = () => {
-    showForm ? setShowForm(false) : setShowForm(true);
   };
 
   return (
@@ -87,54 +83,7 @@ export default function AirtimeCash() {
           />
           <Button label="continue" loading={loading} />
         </form>
-        <section>
-          <button className="ml-10 w-40" onClick={handleShowForm}>
-            Save to Beneficiary
-          </button>
-          {showForm && <BeneficiaryForm />}
-        </section>
       </main>
     </div>
-  );
-}
-
-export function BeneficiaryForm() {
-  const [loading, setLoading] = useState(false);
-  type form = {
-    phoneNumber?: number;
-    name?: string;
-  };
-
-  const {
-    handleSubmit,
-    register,
-    getValues,
-    formState: { errors },
-  } = useForm<form>();
-  const submitForm = (values: form) => {};
-
-  return (
-    <main className="  mt-5 ">
-      <form
-        onSubmit={handleSubmit((formValues) => submitForm(formValues))}
-        className="w-96 rounded-md p-8 shadow-lg transition-all duration-700"
-      >
-        <Input
-          register={register}
-          name="phoneNumber"
-          label="Phone Number"
-          type="number"
-          errors={errors}
-        />
-        <Input
-          register={register}
-          name="name"
-          label="Name"
-          type="name"
-          errors={errors}
-        />
-        <Button label="Save" loading={loading} />
-      </form>
-    </main>
   );
 }
