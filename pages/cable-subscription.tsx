@@ -55,6 +55,11 @@ export default function CableSubscription() {
     },
   });
 
+  const getPlans = async () => {
+    const { data } = await axios("/api/cableList");
+    console.log(data);
+  };
+  getPlans();
   return (
     <div className=" mb-40 mt-10   md:ml-20  ">
       <section className="my-5 ml-4 text-3xl  font-bold text-gray-800">

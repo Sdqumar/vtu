@@ -2,28 +2,38 @@ import axios from "axios";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 type Data = {
-  name: string;
+  data?: any[];
+  error?: any;
 };
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  //   const config =
+  const urls = [
+    "https://sandbox.vtpass.com/api/service-variations?serviceID=dstv",
+    "https://sandbox.vtpass.com/api/service-variations?serviceID=gotv",
+    "https://sandbox.vtpass.com/api/service-variations?serviceID=startimes",
+    "https://sandbox.vtpass.com/api/service-variations?serviceID=showmax",
+  ];
 
-  await axios({
-    method: "get",
-    url: "https://sandbox.vtpass.com/api/service-variations?serviceID=dstv",
-    headers: {
-      Authorization: `Basic ${process.env.VTPASS}`,
-      "Content-Type": "application/json",
-    },
-  })
-    .then(function (response) {
-      res.status(200).json(response.data);
-    })
-    .catch(function (error) {
-      console.log(error);
-      res.status(400).json(error.response.data);
-    });
+  try {
+    const newPromise = urls.map((url) =>
+      axios({
+        method: "get",
+        url: url,
+        headers: {
+          Authorization: `Basic ${process.env.VTPASS}`,
+          "Content-Type": "application/json",
+        },
+      })
+    );
+    const result = await Promise.all(newPromise);
+
+    const data = result.map((item) => item.data);
+
+    res.status(200).json({ data });
+  } catch (error) {
+    res.status(400).json({ error });
+  }
 }
