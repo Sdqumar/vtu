@@ -5,6 +5,13 @@ import Button from "../components/global/Button";
 import Select from "../components/global/select";
 import axios from "axios";
 import { useUser } from "../components/context/userContext";
+import {
+  validateBalanceAndPIN,
+  validatePhoneNumber,
+} from "../components/global/utils";
+import { useRouter } from "next/router";
+import Success from "../components/global/alertSuccess";
+import Error from "../components/global/alertError";
 
 type form = {
   network?: string;
@@ -15,19 +22,26 @@ type form = {
 
 export default function AirtimeTopUp() {
   const [loading, setLoading] = useState(false);
-  const [showForm, setShowForm] = useState(false);
+  const [alert, setAlert] = useState<null | "success" | "error">(null);
 
   const userContext = useUser();
   const user = userContext?.user!;
+  const router = useRouter();
 
   const {
     handleSubmit,
     register,
+    setError,
     formState: { errors },
   } = useForm<form>();
   const network = ["MTN", "Airtel", "9mobile", "GLO"];
   const submitForm = async (values: form) => {
-    console.log(values);
+    const isValidNumber = validatePhoneNumber(setError, values);
+    if (!isValidNumber) return;
+
+    const isValidBalanceAndPIN = validateBalanceAndPIN(setError, values, user);
+    if (!isValidBalanceAndPIN) return;
+    setLoading(true);
 
     try {
       const { data } = await axios({
@@ -35,14 +49,22 @@ export default function AirtimeTopUp() {
         url: "/api/buyAirtime",
         data: { values, user },
       });
-      console.log(data);
+      setAlert("success");
+      setLoading(false);
+      setTimeout(() => {
+        router.push("/dashboard");
+      }, 1000);
     } catch (error) {
+      setAlert("error");
       console.log(error);
+      setLoading(false);
     }
   };
 
   return (
     <div className=" mb-40 mt-10 md:ml-20  ">
+      {alert === "success" && <Success text="Transaction Successful" />}
+      {alert === "error" && <Error text=" Transaction Error" />}
       <section className="my-5 ml-4 text-3xl  font-bold text-gray-800">
         Buy Airtime
       </section>
@@ -70,7 +92,7 @@ export default function AirtimeTopUp() {
             register={register}
             name="amount"
             label="Amount"
-            type="number"
+            maxLength={10}
             errors={errors}
           />
           <Input

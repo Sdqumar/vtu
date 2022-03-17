@@ -33,7 +33,6 @@ export default function BuyData() {
   const {
     register,
     setError,
-    getValues,
     setValue,
     formState: { errors },
     handleSubmit,
