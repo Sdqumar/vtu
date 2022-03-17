@@ -15,7 +15,7 @@ export default async function handler(
     method: "get",
     url: "https://sandbox.vtpass.com/api/service-variations?serviceID=dstv",
     headers: {
-      Authorization: `Basic ${process.env.SUPERJARAAPI}`,
+      Authorization: `Basic ${process.env.VTPASS}`,
       "Content-Type": "application/json",
     },
   })

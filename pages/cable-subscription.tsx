@@ -2,9 +2,17 @@ import Input from "../components/global/input";
 import { useState } from "react";
 import Button from "../components/global/Button";
 import Select from "../components/global/select";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useUser } from "../components/context/userContext";
+import { validateBalanceAndPIN } from "../components/global/utils";
+
+type form = {
+  provider?: string;
+  plan?: string;
+  cardNumber?: number;
+  pin?: number;
+};
 
 export default function CableSubscription() {
   const [loading, setLoading] = useState(false);
@@ -12,29 +20,23 @@ export default function CableSubscription() {
   const userContext = useUser();
   const user = userContext?.user!;
 
-  type form = {
-    provider?: string;
-    plan?: string;
-    cardNumber?: number;
-    pin?: number;
-  };
-
   const {
     register,
     getValues,
+    setError,
+    watch,
     formState: { errors },
   } = useForm<form>();
-  const providers = ["StarTimes", "DSTV", "GoTv", "ShowMax"];
+  const providers = ["DSTV", "StarTimes", "GoTv", "ShowMax"];
 
-  const handleChangeNetwork = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const provider = e.target.value;
-    // const bundle = prices.find((item) => item.network === provider)!;
-    // setBundle(bundle.prices);
-  };
+  const watchNetwork = watch("provider", "DSTV");
 
   const submitForm = async (values: form) => {
     const requestData = { ...values, ...getValues() };
     console.log(requestData);
+    const isValidBalanceAndPIN = validateBalanceAndPIN(setError, values, user);
+    if (!isValidBalanceAndPIN) return;
+    setLoading(true);
     try {
       const { data } = await axios({
         method: "post",
@@ -63,27 +65,12 @@ export default function CableSubscription() {
           onSubmit={handleSubmit((formValues) => submitForm(formValues))}
           className="w-96 rounded-md p-8 shadow-lg transition-all duration-700"
         >
-          <Controller
-            name="provider"
-            control={control}
-            rules={{ required: true }}
-            render={({ field }) => (
-              <>
-                <label>Choose Provider</label>
-                <select
-                  name={field.name}
-                  onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-                    handleChangeNetwork(e)
-                  }
-                >
-                  {providers.map((item) => (
-                    <option value={item} key={item}>
-                      {item}
-                    </option>
-                  ))}
-                </select>
-              </>
-            )}
+          <Select
+            register={register}
+            name="bundle"
+            data={providers}
+            label="Data bundle"
+            errors={errors}
           />
           <Select
             register={register}
