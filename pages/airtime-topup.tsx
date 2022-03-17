@@ -38,13 +38,11 @@ export default function AirtimeTopUp() {
   const submitForm = async (values: form) => {
     const isValidNumber = validatePhoneNumber(setError, values);
     if (!isValidNumber) return;
-
     const isValidBalanceAndPIN = validateBalanceAndPIN(setError, values, user);
     if (!isValidBalanceAndPIN) return;
     setLoading(true);
-
     try {
-      const { data } = await axios({
+      await axios({
         method: "post",
         url: "/api/buyAirtime",
         data: { values, user },
@@ -84,7 +82,7 @@ export default function AirtimeTopUp() {
             register={register}
             name="phoneNumber"
             label="Phone Number"
-            type="number"
+            maxLength={10}
             errors={errors}
           />
 
@@ -92,7 +90,7 @@ export default function AirtimeTopUp() {
             register={register}
             name="amount"
             label="Amount"
-            maxLength={10}
+            type="number"
             errors={errors}
           />
           <Input

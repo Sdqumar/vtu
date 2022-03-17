@@ -102,6 +102,13 @@ export const validateBalanceAndPIN = (
     return false;
   }
 
+  if (values.amount! < 0) {
+    setError("amount", {
+      type: "amount",
+      message: "Incorrect amount value!",
+    });
+    return false;
+  }
   if (values.amount! > user.walletBalance!) {
     setError("amount", {
       type: "amount",
