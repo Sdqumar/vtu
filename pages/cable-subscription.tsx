@@ -1,39 +1,71 @@
 import Input from "../components/global/input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../components/global/Button";
 import Select from "../components/global/select";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useUser } from "../components/context/userContext";
 import { validateBalanceAndPIN } from "../components/global/utils";
+import { useQuery } from "react-query";
 
 type form = {
   provider?: string;
   plan?: string;
   cardNumber?: number;
   pin?: number;
+  amount?: number;
+};
+
+const getPlans = async () => {
+  return axios("/api/cableList");
 };
 
 export default function CableSubscription() {
   const [loading, setLoading] = useState(false);
-  const [list, setList] = useState([]);
+  const [list, setList] = useState<
+    null | { name: string; variation_amount: string }[]
+  >(null);
   const userContext = useUser();
   const user = userContext?.user!;
 
   const {
     register,
-    getValues,
+    setValue,
     setError,
     watch,
+    handleSubmit,
     formState: { errors },
   } = useForm<form>();
-  const providers = ["DSTV", "StarTimes", "GoTv", "ShowMax"];
 
-  const watchNetwork = watch("provider", "DSTV");
+  const providers = ["DSTV", "StarTimes", "GoTv", "ShowMax"];
+  const watchProviders = watch("provider", "DSTV");
+  const watchplan = watch("plan");
+
+  const { data, isLoading } = useQuery("plans", getPlans, {
+    staleTime: Infinity,
+  });
+
+  useEffect(() => {
+    if (data !== undefined && !isLoading) {
+      const [plans] = data?.data?.data?.filter(
+        (item: { serviceID: string }) =>
+          item.serviceID === watchProviders?.toLowerCase()
+      );
+      setList(plans.varations);
+      setValue("plan", plans.varations[0].name);
+    }
+  }, [watchProviders, data]);
+
+  useEffect(() => {
+    const amount = list?.find(
+      (item) => item.name === watchplan
+    )?.variation_amount;
+    setValue("amount", Number(amount));
+  }, [watchplan]);
 
   const submitForm = async (values: form) => {
-    const requestData = { ...values, ...getValues() };
-    console.log(requestData);
+    console.log(values);
+
     const isValidBalanceAndPIN = validateBalanceAndPIN(setError, values, user);
     if (!isValidBalanceAndPIN) return;
     setLoading(true);
@@ -41,25 +73,13 @@ export default function CableSubscription() {
       const { data } = await axios({
         method: "post",
         url: "/api/cableSub",
-        data: { values: requestData, user },
+        data: { values, user },
       });
       console.log(data);
     } catch (error) {
       console.log(error);
     }
   };
-
-  const { handleSubmit, control, reset } = useForm({
-    defaultValues: {
-      provider: "DSTV",
-    },
-  });
-
-  const getPlans = async () => {
-    const { data } = await axios("/api/cableList");
-    console.log(data);
-  };
-  getPlans();
   return (
     <div className=" mb-40 mt-10   md:ml-20  ">
       <section className="my-5 ml-4 text-3xl  font-bold text-gray-800">
@@ -72,15 +92,15 @@ export default function CableSubscription() {
         >
           <Select
             register={register}
-            name="bundle"
+            name="provider"
             data={providers}
-            label="Data bundle"
+            label="Choose provider"
             errors={errors}
           />
           <Select
             register={register}
             name="plan"
-            data={list}
+            data={list?.map((item) => item.name)}
             label="Choose plan"
             errors={errors}
           />
@@ -90,7 +110,7 @@ export default function CableSubscription() {
             label="Amount"
             type="number"
             errors={errors}
-            disabled
+            // disabled
           />
           <Input
             register={register}

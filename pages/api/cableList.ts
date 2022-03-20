@@ -30,7 +30,7 @@ export default async function handler(
     );
     const result = await Promise.all(newPromise);
 
-    const data = result.map((item) => item.data);
+    const data = result.map((item) => item.data.content);
 
     res.status(200).json({ data });
   } catch (error) {

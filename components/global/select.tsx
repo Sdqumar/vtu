@@ -9,6 +9,7 @@ type form = {
   exam?: string;
   bundle?: string;
   bank?: string;
+  provider?: string;
 };
 
 type inputProp = {
@@ -20,12 +21,13 @@ type inputProp = {
     | "plan"
     | "exam"
     | "bank"
+    | "provider"
     | "bundle";
   label: string;
   required?: boolean;
   errors: any;
   containerStyle?: string;
-  data: string[];
+  data: string[] | undefined;
 };
 
 export default function Select({
@@ -45,7 +47,7 @@ export default function Select({
         {...register(name, { required: required })}
         className={errors[name] && "border-red-600"}
       >
-        {data.map((item, index) => (
+        {data?.map((item, index) => (
           <option value={item} key={index}>
             {/* {console.log(item)} */}
             {item}
