@@ -53,7 +53,8 @@ const ATMCard: NextPage = () => {
     });
   }
   const submitForm = async (values: form) => {
-    const amount = values.amount!;
+    const amount = Number(values.amount)!;
+
     const payment = { amount, total: amount + amount * 0.02 };
 
     payWithMonnify(payment);
