@@ -63,7 +63,7 @@ export const validatePhoneNumber = (
   if (values.network === "MTN") {
     isValidNumber = MTNPrefixes.includes(numberPrefix!);
   }
-  if (values.phoneNumber?.toString().length !== 10) {
+  if (values.phoneNumber?.toString().length !== 11) {
     setError("phoneNumber", {
       type: "number",
       message: "Incorrect phone number!",

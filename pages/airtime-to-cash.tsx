@@ -5,6 +5,7 @@ import Select from "../components/global/select";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useUser } from "../components/context/userContext";
+import { validatePhoneNumber } from "../components/global/utils";
 
 type form = {
   network?: string;
@@ -15,21 +16,28 @@ type form = {
 
 export default function AirtimeCash() {
   const [loading, setLoading] = useState(false);
-  const [showForm, setShowForm] = useState(false);
   const userContext = useUser();
   const user = userContext?.user!;
 
   const {
     register,
-    getValues,
+    setError,
     handleSubmit,
     formState: { errors },
   } = useForm<form>();
   const network = ["MTN", "Airtel", "9mobile", "GLO"];
 
   const submitForm = async (values: form) => {
-    console.log(values);
+    const isValidNumber = validatePhoneNumber(setError, values);
+    if (!isValidNumber) return;
 
+    if (values.pin !== user.pin) {
+      setError("pin", {
+        type: "wrongpin",
+        message: "Incorrect Pin!",
+      });
+      return false;
+    }
     try {
       const { data } = await axios({
         method: "post",
@@ -70,8 +78,8 @@ export default function AirtimeCash() {
           <Input
             register={register}
             name="phoneNumber"
-            label="Phone Number"
-            type="number"
+            label="Sending From (number from which the airtime will be sent)"
+            maxLength={11}
             errors={errors}
           />
           <Input
