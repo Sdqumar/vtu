@@ -52,10 +52,70 @@ export default function AirtimeCash() {
 
   return (
     <div className=" mb-40 mt-10   md:ml-20  ">
-      <section className="my-5 ml-4 text-3xl  font-bold text-gray-800">
+      <section className="my-5  text-3xl  font-bold text-gray-800">
         Convert Airtime to Cash
       </section>
       <main className="flex  flex-wrap">
+        <section>
+          <h2 className="font-medium">
+            Before you fill form to convert airtime to cash Kindly note the
+            conditions below:
+          </h2>
+          <ul className="list-disc">
+            <li>
+              Fill the form below correctly for airtime to Before you fill form
+              to convert airtime to cash Kindly note the cash, any airtime
+              transferred without filling the form shall be defaulted.
+            </li>
+            <li>
+              The minimum amount is #500 and maximum for is #5,000. Glo is #1000
+              maximum per transfer.
+            </li>
+            <li>
+              If you want to send pin, please load it on any mtn sim and
+              transfer to us
+            </li>
+            <li>
+              You must send the airtime within 20 minutes or the transaction
+              will be automatically cancelled
+            </li>
+            <li>To transfer mtn airtime: *600*recipient number*amount*pin#</li>
+            <li>
+              To change mtn transfer pin: *600*default pin*new pin*new pin# e.g
+              *600*0000*new pin*new pin#
+            </li>
+            <li> To transfer 9mobile airtime: *223*pin*amount*number#</li>
+            <li>
+              To change 9mobile transfer pin: *247*default pin*new pin# e.g
+              *247*0000*new pin#
+            </li>
+            <li>To transfer Glo airtime: *131*recipient number*amount*pin#</li>
+            <li>
+              To change Glo transfer pin: *132*default pin*new pin*new pin# e.g
+              *132*0000*new pin#
+            </li>
+            <li>
+              For MTN: Your wallet will be credited with 85%, For GLO:80%, For
+              9MOBILE:75% of the amount of airtime sent.
+            </li>
+            <li>
+              Take for instance for MTN #1000 airtime=#850, For GLO #1000
+              airtime=#800, For 9MOBILE #1000 airtime=#750 will be credited.
+            </li>
+            <li>
+              You must not send any amount different from the amount filled,
+              defaulter shall be charged 20% extra.
+            </li>
+            <li>
+              Airtime sent from another line different from the one you fill
+              shall be credited with 20% extra charge.
+            </li>
+            <li>
+              We accept airtime transfer only. Any VTU sent to us will not be
+              credited to your wallet.
+            </li>
+          </ul>
+        </section>
         <form
           onSubmit={handleSubmit((formValues) => submitForm(formValues))}
           className="w-96 rounded-md p-8 shadow-lg transition-all duration-700"
