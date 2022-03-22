@@ -24,8 +24,8 @@ export default async function handler(
       network,
       amount,
       type: "Airtime to Cash",
-      name: `${amount} airtime to Cash to ${phoneNumber} `,
-      to: phoneNumber,
+      name: `${amount} airtime to Cash from ${phoneNumber} `,
+      from: phoneNumber,
       date: FieldValue.serverTimestamp(),
     };
   };
@@ -36,22 +36,14 @@ export default async function handler(
   try {
     let user = await userRef.get();
     let userData = user.data()!;
-    console.log(userData.walletBalance);
 
     if (userData.pin !== pin) {
       throw new Error("incorrect pin");
     }
-    if (userData.walletBalance < amount) {
-      throw new Error("insufficent funds");
-    }
 
-    const transaction = getTransaction("Transaction Successful", "delivered");
+    const transaction = getTransaction("Request Sent", "pending");
 
     await transactionRef.add(transaction);
-    await userRef.update({
-      walletBalance: FieldValue.increment(-Number(amount)),
-      totalSpent: FieldValue.increment(Number(amount)),
-    });
 
     res.status(200).json({ message: "Transaction Successful" });
   } catch (error) {
@@ -61,14 +53,4 @@ export default async function handler(
 
     res.status(400).send({ error });
   }
-
-  // axios({
-  //   method: "post",
-  //   url: "https://www.superjaraapi.com/api/topup/",
-  //   headers: {
-  //     Authorization: `Token ${process.env.SUPERJARAAPIa}`,
-  //     "Content-Type": "application/json",
-  //   },
-  //   data: data,
-  // })
 }

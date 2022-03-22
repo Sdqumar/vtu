@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useUser } from "../components/context/userContext";
 import { validatePhoneNumber } from "../components/global/utils";
+import Success from "../components/global/alertSuccess";
 
 type form = {
   network?: string;
@@ -16,6 +17,7 @@ type form = {
 
 export default function AirtimeCash() {
   const [loading, setLoading] = useState(false);
+  const [alert, setAlert] = useState("");
   const userContext = useUser();
   const user = userContext?.user!;
 
@@ -38,25 +40,29 @@ export default function AirtimeCash() {
       });
       return false;
     }
+    setLoading(true);
     try {
       const { data } = await axios({
         method: "post",
         url: "/api/airtimeCash",
         data: { values, user },
       });
+      setLoading(false);
       console.log(data);
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
+    setLoading(false);
   };
 
   return (
-    <div className=" mb-40 mt-10   md:ml-20  ">
-      <section className="my-5  text-3xl  font-bold text-gray-800">
+    <div className="  mb-40 mt-10 md:ml-20">
+      <section className="my-5 mx-5 text-3xl font-bold  text-gray-800 md:mx-0">
         Convert Airtime to Cash
       </section>
-      <main className="flex  flex-wrap">
-        <section>
+      <main className="">
+        <section className="mx-10 mb-4 max-w-4xl md:mx-0">
           <h2 className="font-medium">
             Before you fill form to convert airtime to cash Kindly note the
             conditions below:
@@ -116,6 +122,10 @@ export default function AirtimeCash() {
             </li>
           </ul>
         </section>
+        <div className="w-96">
+          {alert === "success" && <Success text="Transaction Successful" />}
+        </div>
+
         <form
           onSubmit={handleSubmit((formValues) => submitForm(formValues))}
           className="w-96 rounded-md p-8 shadow-lg transition-all duration-700"
