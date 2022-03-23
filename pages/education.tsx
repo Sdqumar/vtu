@@ -54,7 +54,6 @@ export default function Education() {
     const isValidBalanceAndPIN = validateBalanceAndPIN(setError, values, user);
     if (!isValidBalanceAndPIN) return;
     setLoading(true);
-    console.log(values);
 
     try {
       const { data } = await axios({
