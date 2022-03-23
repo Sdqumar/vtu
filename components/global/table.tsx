@@ -1,62 +1,22 @@
 import { useTable, useFilters, usePagination, Column } from "react-table";
 import React, { useMemo } from "react";
-type data = {
-  name: string;
-  date: string;
-  amount: string;
-  number: string;
-  status: string;
-}[];
-const tableData: data = [
-  {
-    name: "Wallet Fund",
-    date: "Thu Dec 23 2021 , 22:43:51",
-    number: "08143104693",
-    amount: "500",
-    status: "Delivered",
-  },
-  {
-    name: "Wallet Fund",
-    date: "Thu Dec 23 2021 , 22:43:51",
-    number: "08143104693",
-    amount: "500",
-    status: "Delivered",
-  },
-  {
-    name: "Wallet Fund",
-    date: "Thu Dec 23 2021 , 22:43:51",
-    number: "08143104693",
-    amount: "500",
-    status: "Delivered",
-  },
-  {
-    name: "Wallet Fund",
-    date: "Thu Dec 23 2021 , 22:43:51",
-    number: "08143104693",
-    amount: "500",
-    status: "Delivered",
-  },
-];
+import { DocumentData } from "firebase/firestore";
+import { format } from "date-fns";
 
-const COLUMNS: Column<{
-  name: string;
-  date: string;
-  amount: string;
-  number: string;
-  status: string;
-}>[] = [
+const COLUMNS = [
   {
     Header: "Name",
     accessor: "name",
   },
   {
     Header: "Date",
-    accessor: "date",
+    accessor: (row: { date: any }) =>
+      format(row.date.toDate(), "EE, dd MMM hh:mm "),
   },
 
   {
-    Header: "Number",
-    accessor: "number",
+    Header: "TO",
+    accessor: "to",
   },
   {
     Header: "Amount",
@@ -74,10 +34,9 @@ const COLUMNS: Column<{
   /* the jsx key is provided in the .get*Props() spreads, but eslint doesn't believe you. I believe you. */
 }
 
-export const Table = () => {
+export const Table = ({ data: tableData }: { data: DocumentData[] }) => {
   const columns = React.useMemo(() => COLUMNS, []);
   const data = useMemo(() => tableData, []);
-
   const {
     getTableProps,
     getTableBodyProps,
@@ -94,6 +53,7 @@ export const Table = () => {
     prepareRow,
   } = useTable(
     {
+      // @ts-ignore
       columns,
       data,
     },

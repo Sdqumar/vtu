@@ -24,8 +24,8 @@ export default async function handler(
       network,
       amount,
       type: "Airtime to Cash",
-      name: `${amount} airtime to Cash from ${phoneNumber} `,
-      from: phoneNumber,
+      name: `${amount} Airtime to Cash`,
+      to: phoneNumber,
       date: FieldValue.serverTimestamp(),
     };
   };

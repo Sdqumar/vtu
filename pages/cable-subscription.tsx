@@ -5,7 +5,6 @@ import Select from "../components/global/select";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useUser } from "../components/context/userContext";
-import { validateBalanceAndPIN } from "../components/global/utils";
 import { useQuery } from "react-query";
 
 type form = {
@@ -31,7 +30,6 @@ export default function CableSubscription() {
   const {
     register,
     setValue,
-    setError,
     watch,
     handleSubmit,
     formState: { errors },

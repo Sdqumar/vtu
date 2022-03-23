@@ -23,8 +23,8 @@ export default async function handler(
       status,
       network,
       amount,
-      type: network + " Airtime Payment",
-      name: "Airtime ",
+      type: " Airtime Payment",
+      name: network + " Airtime ",
       to: phoneNumber,
       date: FieldValue.serverTimestamp(),
     };

@@ -124,7 +124,7 @@ export default function BuyData() {
             register={register}
             name="phoneNumber"
             label="Phone Number"
-            maxLength={10}
+            maxLength={11}
             errors={errors}
           />
 
