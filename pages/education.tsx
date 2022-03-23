@@ -1,9 +1,8 @@
 import Input from "../components/global/input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../components/global/Button";
 import Select from "../components/global/select";
-import { prices } from "../components/Home/utils";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useUser } from "../components/context/userContext";
 
@@ -11,28 +10,38 @@ type form = {
   exam?: string;
   phoneNumber?: number;
   pin?: number;
+  amount?: number;
 };
+
+const exam = [
+  { name: "WAEC Card", amount: "N2000" },
+  { name: "NECO Card", amount: "N950" },
+  { name: "NABTEB Card", amount: "N900" },
+  { name: "JAMB UTME Form", amount: "N3450 " },
+];
 
 export default function Education() {
   const [loading, setLoading] = useState(false);
-  const [showForm, setShowForm] = useState(false);
-  const [bundle, setBundle] = useState(prices[0].prices);
 
   const userContext = useUser();
   const user = userContext?.user!;
 
   const {
     register,
-    getValues,
+    setValue,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<form>();
-  const exam = [
-    { name: "WAEC Card", amount: "N2000" },
-    { name: "NECO Card", amount: "N950" },
-    { name: "NABTEB Card", amount: "N900" },
-    { name: "JAMB UTME Form", amount: "N3450 " },
-  ];
+
+  const watchExam = watch("exam", "WAEC Card - N2000");
+
+  useEffect(() => {
+    if (watchExam) {
+      const amount = watchExam.split("-")[1].slice(2);
+      setValue("amount", Number(amount));
+    }
+  }, [watchExam]);
 
   const submitForm = async (values: form) => {
     console.log(values);
@@ -50,7 +59,7 @@ export default function Education() {
   };
 
   return (
-    <div className=" mb-40 mt-10   md:ml-20  ">
+    <div className=" mb-40 mt-10 md:ml-20">
       <section className="my-5 ml-4 text-3xl  font-bold text-gray-800">
         Exam Card
       </section>
@@ -66,7 +75,14 @@ export default function Education() {
             label="Choose Exam type"
             errors={errors}
           />
-
+          <Input
+            register={register}
+            name="amount"
+            label="Amount"
+            type="number"
+            errors={errors}
+            disabled
+          />
           <Input
             register={register}
             name="phoneNumber"

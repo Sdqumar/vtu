@@ -66,13 +66,13 @@ export default function CableSubscription() {
   const submitForm = async (values: form) => {
     console.log(values);
 
-    const isValidBalanceAndPIN = validateBalanceAndPIN(setError, values, user);
-    if (!isValidBalanceAndPIN) return;
-    setLoading(true);
+    // const isValidBalanceAndPIN = validateBalanceAndPIN(setError, values, user);
+    // if (!isValidBalanceAndPIN) return;
+    // setLoading(true);
     try {
       const { data } = await axios({
         method: "post",
-        url: "/api/cableSub",
+        url: "/api/validateCard",
         data: { values, user },
       });
       console.log(data);

@@ -53,7 +53,6 @@ export default function BuyData() {
 
   useEffect(() => {
     const amount = watchBundle?.split("-")[1].slice(2);
-
     setValue("amount", Number(amount));
   }, [watchBundle]);
 
