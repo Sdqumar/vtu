@@ -5,10 +5,14 @@ import Select from "../components/global/select";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useUser } from "../components/context/userContext";
+import { validateBalanceAndPIN } from "../components/global/utils";
+import { useRouter } from "next/router";
+import Success from "../components/global/alertSuccess";
+import Error from "../components/global/alertError";
 
 type form = {
   exam?: string;
-  phoneNumber?: number;
+  email?: string;
   pin?: number;
   amount?: number;
 };
@@ -22,15 +26,18 @@ const exam = [
 
 export default function Education() {
   const [loading, setLoading] = useState(false);
+  const [alert, setAlert] = useState<null | "success" | "error">(null);
 
   const userContext = useUser();
   const user = userContext?.user!;
+  const router = useRouter();
 
   const {
     register,
     setValue,
     handleSubmit,
     watch,
+    setError,
     formState: { errors },
   } = useForm<form>();
 
@@ -44,7 +51,9 @@ export default function Education() {
   }, [watchExam]);
 
   const submitForm = async (values: form) => {
-    console.log(values);
+    const isValidBalanceAndPIN = validateBalanceAndPIN(setError, values, user);
+    if (!isValidBalanceAndPIN) return;
+    setLoading(true);
 
     try {
       const { data } = await axios({
@@ -53,8 +62,15 @@ export default function Education() {
         data: { values, user },
       });
       console.log(data);
+      setAlert("success");
+      setLoading(false);
+      setTimeout(() => {
+        router.push("/dashboard");
+      }, 1000);
     } catch (error) {
+      setAlert("error");
       console.log(error);
+      setLoading(false);
     }
   };
 
@@ -63,7 +79,10 @@ export default function Education() {
       <section className="my-5 ml-4 text-3xl  font-bold text-gray-800">
         Exam Card
       </section>
-      <main className="flex  flex-wrap">
+
+      <main className="">
+        {alert === "success" && <Success text="Transaction Successful" />}
+        {alert === "error" && <Error text=" Transaction Error" />}
         <form
           onSubmit={handleSubmit((formValues) => submitForm(formValues))}
           className="w-96 rounded-md p-8 shadow-lg transition-all duration-700"
@@ -85,9 +104,9 @@ export default function Education() {
           />
           <Input
             register={register}
-            name="phoneNumber"
-            label="Phone Number"
-            type="number"
+            name="email"
+            label="Email"
+            type="email"
             errors={errors}
           />
 
