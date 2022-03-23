@@ -25,18 +25,18 @@ export default function AccountHistory() {
   const account = [
     {
       name: "Wallet Balance",
-      amount: user?.walletBalance || 0,
+      amount: "₦" + user?.walletBalance || 0,
       icon: "dollarGreen",
     },
     {
-      name: "TOTAL FUNDED",
-      amount: user?.totalFunded || 0,
+      name: "TOTAL earnings",
+      amount: user?.earnings || 0,
       icon: "dollarBlue",
     },
     {
-      name: "TOTAL SPENT",
-      amount: user?.totalSpent || 0,
-      icon: "dollarRed",
+      name: "TOTAL Refers",
+      amount: user?.refers || 0,
+      icon: "refers",
     },
   ];
 
@@ -73,7 +73,7 @@ export default function AccountHistory() {
             <Image
               src={`/${item.icon}.svg`}
               priority={true}
-              width={40}
+              width={35}
               height={40}
               className="fill-red-700"
               alt={item.name}
@@ -83,8 +83,8 @@ export default function AccountHistory() {
               <h3 className="text-base font-medium uppercase  text-gray-500 sm:text-sm">
                 {item.name}
               </h3>
-              <h5 className="text-2xl font-medium  text-gray-700 sm:text-sm">
-                ₦{item.amount}
+              <h5 className="text-center text-2xl font-medium text-gray-700 sm:text-sm">
+                {item.amount}
               </h5>
             </div>
           </div>

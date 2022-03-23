@@ -8,6 +8,7 @@ export type AuthUser = {
   uid: string;
   displayName: string | null;
   name?: string;
+  refers?: string;
   pin?: number;
   phoneNumber?: number;
   walletBalance?: number;
