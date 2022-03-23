@@ -13,7 +13,7 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
   const { values, user } = req.body;
-  const { network, phoneNumber, amount, pin } = values;
+  const { exam, email, amount, pin } = values;
   const { uid } = user;
 
   const getTransaction = <t extends string>(message: t, status: t) => {
@@ -21,11 +21,12 @@ export default async function handler(
       uid,
       message,
       status,
-      network,
+      exam,
+      email,
       amount,
-      type: network + " Airtime Payment",
-      name: "Airtime ",
-      to: phoneNumber,
+      type: "Exam Payment",
+      name: exam,
+      to: email,
       date: FieldValue.serverTimestamp(),
     };
   };

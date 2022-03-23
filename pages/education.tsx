@@ -54,11 +54,12 @@ export default function Education() {
     const isValidBalanceAndPIN = validateBalanceAndPIN(setError, values, user);
     if (!isValidBalanceAndPIN) return;
     setLoading(true);
+    console.log(values);
 
     try {
       const { data } = await axios({
         method: "post",
-        url: "/api/buyAirtime",
+        url: "/api/buyExam",
         data: { values, user },
       });
       console.log(data);
