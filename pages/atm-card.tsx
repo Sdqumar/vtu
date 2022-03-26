@@ -22,6 +22,7 @@ const ATMCard: NextPage = () => {
     email: user!.email,
     name: user!.name!,
     uid: user!.uid!,
+    number: user!.phoneNumber!,
   };
 
   const {

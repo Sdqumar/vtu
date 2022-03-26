@@ -24,7 +24,10 @@ const COLUMNS = [
   },
   {
     Header: "Status",
-    accessor: "status",
+    accessor: (row: { status: string }) =>
+      row.status == "SUCCESSFUL_TRANSACTION" || "delivered" || "charge.success"
+        ? "delivered"
+        : "failed",
   },
 ];
 {
@@ -42,7 +45,6 @@ export const Table = ({ data: tableData }: { data: DocumentData[] }) => {
     getTableBodyProps,
     headerGroups,
     page,
-    rows,
     nextPage,
     previousPage,
     canNextPage,

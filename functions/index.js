@@ -8,28 +8,41 @@ exports.paymentWebhook = functions.https.onRequest(async (req, res) => {
   res.set("Access-Control-Allow-Origin", "*");
   const body = req.body;
   const eventType = body.eventType;
+
+  const eventData = body.eventData;
+  const metaData = eventData.metaData;
+  const userId = metaData.uid;
+
   try {
-    await admin.firestore().collection("payment").add(body);
+    const data = {
+      name: "wallet fund",
+      date: admin.firestore.FieldValue.serverTimestamp(),
+      to: metaData.number,
+      amount: metaData.amount,
+      type: "wallet fund",
+      uid: metaData.uid,
+      message: eventType,
+      status: eventType,
+    };
+    await admin.firestore().collection("transactions").add(data);
 
     if (eventType === "SUCCESSFUL_TRANSACTION") {
-      const eventData = body.eventData.metaData;
-      const userId = eventData.uid;
-
       admin
         .firestore()
         .collection("users")
         .doc(userId)
         .update({
           walletBalance: admin.firestore.FieldValue.increment(
-            Number(eventData.amount)
+            Number(metaData.amount)
           ),
           totalFunded: admin.firestore.FieldValue.increment(
-            Number(eventData.amount)
+            Number(metaData.amount)
           ),
         });
     }
     res.end();
   } catch (error) {
+    console.log(error);
     res.status(400).json(error);
   }
 });
@@ -43,7 +56,19 @@ exports.payStackWebhook = functions.https.onRequest(async (req, res) => {
       .digest("hex");
     if (hash == req.headers["x-paystack-signature"]) {
       const body = req.body;
-      await admin.firestore().collection("payment").add(body);
+
+      const data = {
+        name: "wallet fund",
+        date: admin.firestore.FieldValue.serverTimestamp(),
+        to: body.data.metadata.number,
+        uid: body.data.metadata.uid,
+        amount: body.data.metadata.amount,
+        type: "wallet fund",
+        message: body.event,
+        status: body.event,
+      };
+
+      await admin.firestore().collection("transactions").add(data);
 
       if (body.event === "charge.success") {
         const data = body.data.metadata;
