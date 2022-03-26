@@ -20,7 +20,7 @@ const Transactions: NextPage = () => {
     <div className="">
       <h3 className="my-10 mx-10 text-3xl font-medium">Transactions</h3>
 
-      <main>{!isLoading && <Table data={data!} />}</main>
+      <main>{!isLoading && data?.length! > 0 && <Table data={data!} />}</main>
     </div>
   );
 };

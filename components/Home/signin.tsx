@@ -42,7 +42,7 @@ const SignIn = () => {
       userContext?.setUser({ email, displayName, uid });
       setAlert("success");
       setLoading(false);
-      setTimeout(() => router.push("/dashboard"), 2000);
+      setTimeout(() => router.push("/dashboard"), 1000);
     } catch (error) {
       console.log(error);
       setAlert("error");
