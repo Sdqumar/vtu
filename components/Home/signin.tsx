@@ -30,6 +30,7 @@ const SignIn = () => {
     displayName: string;
     pin?: number;
   };
+
   const submitForm = async () => {
     setLoading(true);
     const values = getValues();
@@ -48,6 +49,7 @@ const SignIn = () => {
       setLoading(false);
     }
   };
+
   if (alert) {
     setTimeout(() => setAlert(null), 2000);
   }

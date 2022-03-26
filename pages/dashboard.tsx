@@ -5,16 +5,20 @@ import Services from "../components/dashboard/Services";
 
 const Dashboard: NextPage = () => {
   const userContext = useUser();
-  const user = userContext?.user;
+  const user = userContext?.user!;
 
   return (
-    <main className="mx-auto max-w-3xl lg:mx-16 ">
-      <section className="mt-14  text-center text-3xl font-bold capitalize text-gray-800 md:ml-0 md:text-left">
-        Hello, {user?.name}
-      </section>
-      <AccountHistory />
-      <Services />
-    </main>
+    user && (
+      <main className="mx-auto max-w-3xl lg:mx-16 ">
+        {user && (
+          <section className="mt-14  text-center text-3xl font-bold capitalize text-gray-800 md:ml-0 md:text-left">
+            Hello, {user?.name || user?.displayName}
+          </section>
+        )}
+        <AccountHistory />
+        <Services />
+      </main>
+    )
   );
 };
 

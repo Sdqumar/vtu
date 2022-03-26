@@ -25,7 +25,7 @@ export default function AccountHistory() {
   const account = [
     {
       name: "Wallet Balance",
-      amount: "₦" + user?.walletBalance || 0,
+      amount: ("₦" + user?.walletBalance && user?.walletBalance) || 0,
       icon: "dollarGreen",
     },
     {
