@@ -110,9 +110,9 @@ const Sidebar = () => {
                 <h4 className="px-5 text-lg font-semibold capitalize text-white">
                   {user?.displayName}
                 </h4>
-                {user?.walletBalance && (
+                {user?.walletBalance! > 0 && (
                   <span className="px-5 text-yellow-200">
-                    ₦ {user?.walletBalance}
+                    ₦ {user?.walletBalance || ""}
                   </span>
                 )}
               </div>
