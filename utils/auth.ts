@@ -32,15 +32,16 @@ export const signUp = async (values: form) => {
     displayName: firstName,
   });
   let customer = {
-    name: `${firstName} ${lastName}`,
     email,
+    firstName,
+    lastName,
+    phoneNumber,
   };
-  const customerData = await fetch("/api/createUserAccount", {
+  const customerData = await fetch("/api/createAccount", {
     method: "POST",
     body: JSON.stringify(customer),
   });
-  let data = await customerData.json();
-  const accountNumber = data.result.responseBody.accounts[0].accountNumber;
+  let { accountNumber } = await customerData.json();
 
   await sendEmailVerification(user);
   await setDoc(doc(db, "users", user.uid), {
