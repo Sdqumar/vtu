@@ -13,7 +13,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  const { values, user } = req.body;
+  const { values, user, planCode } = req.body;
   const { network, phoneNumber, amount, pin, bundle } = values;
   const { uid } = user;
   const request_id = uuidv4();
@@ -54,7 +54,7 @@ export default async function handler(
         token: process.env.ALAGUSIY_API,
         mobile: phoneNumber,
         network,
-        plan_code: "",
+        plan_code: planCode,
         request_id,
       },
     });
@@ -72,6 +72,8 @@ export default async function handler(
 
     res.status(200).json({ message: "Transaction Successful" });
   } catch (error) {
+    console.log(error);
+
     const transaction = getTransaction("Failed Transaction ", "failed");
     await transactionRef.add(transaction);
 

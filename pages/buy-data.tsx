@@ -57,6 +57,12 @@ export default function BuyData() {
   }, [watchBundle]);
 
   const submitForm = async (values: form) => {
+    const plan = bundle.find((plan) => {
+      return Number(plan.price.slice(1)) == values.amount;
+    });
+
+    const planCode = plan?.planCode;
+
     const isValidNumber = validatePhoneNumber(setError, values);
     if (!isValidNumber) return;
 
@@ -68,7 +74,7 @@ export default function BuyData() {
       await axios({
         method: "post",
         url: "/api/buyData",
-        data: { values: values, user },
+        data: { values, user, planCode },
       });
       setAlert("success");
       setLoading(false);
