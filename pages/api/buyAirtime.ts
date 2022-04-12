@@ -17,6 +17,7 @@ export default async function handler(
   const { network, phoneNumber, amount, pin } = values;
   const { uid } = user;
   const request_id = uuidv4();
+
   const getTransaction = (message: string, status: string) => {
     return {
       uid,
@@ -46,7 +47,7 @@ export default async function handler(
       throw new Error("insufficent funds");
     }
 
-    const result = await axios({
+    const APITransaction = await axios({
       method: "post",
       url: "https://alagusiy.com/api/airtime",
       data: {
@@ -58,7 +59,7 @@ export default async function handler(
       },
     });
 
-    if (result.data.code !== 200) {
+    if (APITransaction.data.code !== 200) {
       throw new Error("insufficent account funds");
     }
 

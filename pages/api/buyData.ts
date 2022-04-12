@@ -2,6 +2,7 @@ import axios from "axios";
 import { FieldValue } from "firebase-admin/firestore";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { firestore } from "../../lib/firebaseNode";
+const { v4: uuidv4 } = require("uuid");
 
 type Data = {
   message?: string;
@@ -15,6 +16,7 @@ export default async function handler(
   const { values, user } = req.body;
   const { network, phoneNumber, amount, pin, bundle } = values;
   const { uid } = user;
+  const request_id = uuidv4();
 
   const getTransaction = <t extends string>(message: t, status: t) => {
     return {
@@ -23,6 +25,7 @@ export default async function handler(
       status,
       network,
       amount,
+      request_id,
       type: "Data Payment",
       name: `${network} ${bundle}`,
       to: phoneNumber,
@@ -44,6 +47,21 @@ export default async function handler(
       throw new Error("insufficent funds");
     }
 
+    const APITransaction = await axios({
+      method: "post",
+      url: "https://alagusiy.com/api/data",
+      data: {
+        token: process.env.ALAGUSIY_API,
+        mobile: phoneNumber,
+        network,
+        plan_code: "",
+        request_id,
+      },
+    });
+
+    if (APITransaction.data.code !== 200) {
+      throw new Error("insufficent account funds");
+    }
     const transaction = getTransaction("Transaction Successful", "delivered");
 
     await transactionRef.add(transaction);
