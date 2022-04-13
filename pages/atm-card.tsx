@@ -40,7 +40,7 @@ const ATMCard: NextPage = () => {
       customerEmail: customer.email,
       apiKey: "MK_TEST_AWZX1QJ3CJ",
       contractCode: "3936455328",
-      paymentDescription: "EasyTopUp ATM Fund",
+      paymentDescription: "QuadroRecharge ATM Fund",
       isTestMode: true,
       metadata: {
         ...customer,

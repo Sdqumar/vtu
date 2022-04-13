@@ -9,8 +9,8 @@ const Home: NextPage = () => {
 
   return (
     <div className="to-primary mx-auto w-full bg-gradient-to-r from-green-400 font-semibold">
-      <nav className="flex w-full justify-between bg-black p-5 py-6 text-xl text-white md:text-4xl">
-        EASYTOPUP
+      <nav className="flex w-full justify-between bg-black p-5 py-6 text-xl uppercase text-white md:text-4xl">
+        quadrorecharge
         {userContext?.user?.displayName && (
           <Link href="/dashboard" passHref>
             <a>
