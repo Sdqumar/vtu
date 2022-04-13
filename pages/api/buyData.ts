@@ -53,13 +53,14 @@ export default async function handler(
       data: {
         token: process.env.ALAGUSIY_API,
         mobile: phoneNumber,
-        network,
+        network: network.toUpperCase(),
         plan_code: planCode,
         request_id,
       },
     });
+    console.log(APITransaction.data);
 
-    if (APITransaction.data.code !== 200) {
+    if (APITransaction.data.code !== "200") {
       throw new Error("insufficent account funds");
     }
     const transaction = getTransaction("Transaction Successful", "delivered");
