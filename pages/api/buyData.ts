@@ -63,7 +63,7 @@ export default async function handler(
     if (APITransaction.data.code !== "200") {
       throw new Error("insufficent account funds");
     }
-    const transaction = getTransaction("Transaction Successful", "delivered");
+    const transaction = getTransaction("Transaction Successful", "Delivered");
 
     await transactionRef.add(transaction);
     await userRef.update({
@@ -75,19 +75,9 @@ export default async function handler(
   } catch (error) {
     console.log(error);
 
-    const transaction = getTransaction("Failed Transaction ", "failed");
+    const transaction = getTransaction("Failed Transaction ", "Failed");
     await transactionRef.add(transaction);
 
     res.status(400).send({ error });
   }
-
-  // axios({
-  //   method: "post",
-  //   url: "https://www.superjaraapi.com/api/topup/",
-  //   headers: {
-  //     Authorization: `Token ${process.env.SUPERJARAAPIa}`,
-  //     "Content-Type": "application/json",
-  //   },
-  //   data: data,
-  // })
 }

@@ -27,7 +27,7 @@ export default async function handler(
       amount,
       request_id,
       type: " Airtime Payment",
-      name: network + " Airtime ",
+      name: network + " " + amount + " Airtime ",
       to: phoneNumber,
       date: FieldValue.serverTimestamp(),
     };
@@ -63,7 +63,7 @@ export default async function handler(
       throw new Error("insufficent account funds");
     }
 
-    const transaction = getTransaction("Transaction Successful", "delivered");
+    const transaction = getTransaction("Transaction Successful", "Delivered");
 
     await transactionRef.add(transaction);
     await userRef.update({
@@ -75,7 +75,7 @@ export default async function handler(
   } catch (error) {
     console.log(error);
 
-    const transaction = getTransaction("Failed Transactions ", "failed");
+    const transaction = getTransaction("Failed Transactions ", "Failed");
     await transactionRef.add(transaction);
 
     res.status(400).send({ error });
