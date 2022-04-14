@@ -1,7 +1,11 @@
-export default function Spinner() {
+type props = {
+  size?: number;
+  color?: string;
+};
+export default function Spinner({ size = 5, color = "white" }: props) {
   return (
     <svg
-      className="-ml-1 mr-3 h-5 w-5 animate-spin text-white"
+      className={`text-${color}-500 -ml-1 mr-3 h-${size} w-${size} animate-spin`}
       fill="none"
       viewBox="0 0 24 24"
     >

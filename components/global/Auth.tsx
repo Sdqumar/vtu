@@ -4,6 +4,7 @@ import { useUser } from "../context/userContext";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import firebase from "../../lib/firebaseConfig";
 import { getUserData } from "./utils";
+import Spinner from "./sipnner";
 type Authprops = {
   children: ReactNode;
 };
@@ -31,6 +32,7 @@ function Auth({ children }: Authprops) {
         setverify(true);
         setloading(false);
       } else {
+        setverify(false);
         setloading(false);
       }
     });
@@ -40,13 +42,26 @@ function Auth({ children }: Authprops) {
     getUser();
   }, [user]);
 
+  const spinner = () => (
+    <div className=" mt-60 flex items-center justify-center align-middle">
+      <Spinner color="green" size={10} />
+    </div>
+  );
+  if (verify && !loading && router.pathname == "/") {
+    router.push("/dashboard");
+  }
+  //logout user
   if (!verify && !loading && router.pathname !== "/") {
     router.push("/");
   }
-  return (user && verify) || router.pathname === "/" ? (
+
+  if (!user && !verify && !loading && router.pathname == "/") {
+    return <>{children}</>;
+  }
+  return user && verify && !loading && router.pathname !== "/" ? (
     <>{children}</>
   ) : (
-    <h1>loading....</h1>
+    <h1>{spinner()}</h1>
   );
 }
 
