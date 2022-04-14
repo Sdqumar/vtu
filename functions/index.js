@@ -49,7 +49,8 @@ exports.paymentWebhook = functions.https.onRequest(async (req, res) => {
 
 exports.payStackWebhook = functions.https.onRequest(async (req, res) => {
   try {
-    const secret = "sk_test_480638cae57f4e6754e0fa512ed2de5c34a5f1a6";
+    const secret = process.env.PAYSTACK_SECRET_KEY;
+
     const hash = crypto
       .createHmac("sha512", secret)
       .update(JSON.stringify(req.body))
@@ -60,7 +61,7 @@ exports.payStackWebhook = functions.https.onRequest(async (req, res) => {
       const data = {
         name: "wallet fund",
         date: admin.firestore.FieldValue.serverTimestamp(),
-        to: body.data.metadata.number,
+        number: body.data.metadata.number,
         uid: body.data.metadata.uid,
         amount: body.data.metadata.amount,
         type: "wallet fund",

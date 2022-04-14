@@ -9,21 +9,22 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  //   const config =
-
   await axios({
-    method: "get",
-    url: "https://sandbox.vtpass.com/api/service-variations?serviceID=dstv",
-    headers: {
-      Authorization: `Basic ${process.env.SUPERJARAAPI}`,
-      "Content-Type": "application/json",
+    method: "POST",
+    data: {
+      amount: 1000,
+      email: "sdqumar09@gmail.com",
     },
+    url: "https://uecom.000webhostapp.com/vtu/payment-api/paystack.php",
   })
     .then(function (response) {
+      console.log(response.data);
+      console.log(response);
+
       res.status(200).json(response.data);
     })
     .catch(function (error) {
       console.log(error);
-      res.status(400).json(error.response.data);
+      // res.status(400).json(error.response.data);
     });
 }
