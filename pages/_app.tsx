@@ -24,7 +24,7 @@ function MyApp({ Component, pageProps }: AppProps) {
               <Sidebar />
               {router.pathname !== "/" && (
                 // @ts-ignore
-                <WhatsAppWidget phoneNo="07013038554" />
+                <WhatsAppWidget phoneNo="+2347013038554" />
               )}
               <Component {...pageProps} />
             </div>
