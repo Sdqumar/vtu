@@ -17,6 +17,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             <div className="flex">
               <Sidebar />
               <Whatsapp />
+
               <Component {...pageProps} />
             </div>
           </Auth>
