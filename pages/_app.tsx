@@ -17,8 +17,10 @@ function MyApp({ Component, pageProps }: AppProps) {
             <div className="flex">
               <Sidebar />
               <Whatsapp />
-
-              <Component {...pageProps} />
+              <div className="flex flex-col">
+                <div className=" fixed z-10 h-12 w-full bg-white bg-opacity-60 backdrop-blur-lg backdrop-filter"></div>
+                <Component {...pageProps} />
+              </div>
             </div>
           </Auth>
         </UserProvider>

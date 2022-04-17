@@ -63,14 +63,14 @@ const Sidebar = () => {
   }
   return (
     <div
-      className={`fixed z-10 mr-4 h-full ${
+      className={`fixed z-20 mr-4 h-full ${
         isOpen && "bg-white"
       } transition-all md:relative`}
       ref={menuRef}
     >
-      <div className="cursor-pointer ">
+      <div className=" cursor-pointer">
         <svg
-          className="m-3 h-8 w-8 md:hidden"
+          className=" m-3 h-8 w-8 md:hidden"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
