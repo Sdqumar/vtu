@@ -3,6 +3,7 @@ import { FieldValue } from "firebase-admin/firestore";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { firestore } from "../../lib/firebaseNode";
 import { withSentry } from "@sentry/nextjs";
+import { Logtail } from "@logtail/node";
 const { v4: uuidv4 } = require("uuid");
 
 type Data = {
@@ -57,6 +58,17 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       },
     });
     console.log(APITransaction.data);
+    const logtail = new Logtail("<your-source-token>");
+
+    logtail.info("simple log message");
+    logtail.warn("warning with additional information", {
+      resource: {
+        type: "store-item",
+        id: 123456,
+        inStock: false,
+      },
+    });
+    logtail.error(APITransaction.data);
 
     if (APITransaction.data.code !== "200") {
       throw new Error("insufficent account funds");
