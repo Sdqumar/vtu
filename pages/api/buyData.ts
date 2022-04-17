@@ -2,6 +2,7 @@ import axios from "axios";
 import { FieldValue } from "firebase-admin/firestore";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { firestore } from "../../lib/firebaseNode";
+import { withSentry } from "@sentry/nextjs";
 const { v4: uuidv4 } = require("uuid");
 
 type Data = {
@@ -9,10 +10,7 @@ type Data = {
   error?: any;
 };
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<Data>
-) {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { values, user, planCode } = req.body;
   const { network, phoneNumber, amount, pin, bundle } = values;
   const { uid } = user;
@@ -49,7 +47,7 @@ export default async function handler(
 
     const APITransaction = await axios({
       method: "post",
-      url: "https://alagusiy.com/api/data",
+      url: "https://alagusiy.com/pi/data",
       data: {
         token: process.env.ALAGUSIY_API,
         mobile: phoneNumber,
@@ -80,4 +78,5 @@ export default async function handler(
 
     res.status(400).send({ error });
   }
-}
+};
+export default withSentry(handler);

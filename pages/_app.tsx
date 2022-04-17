@@ -7,11 +7,24 @@ import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
 import { useState } from "react";
 import Whatsapp from "../components/global/Whatapp";
 import { useRouter } from "next/router";
+import * as Sentry from "@sentry/react";
+import { Integrations } from "@sentry/tracing";
 
+// process.env.NODE_ENV === "production" &&
+Sentry.init({
+  dsn: "https://ec937c138c08447eb129e201d5ca1f55@o996794.ingest.sentry.io/5955307",
+  integrations: [new Integrations.BrowserTracing()],
+
+  // Set tracesSampleRate to 1.0 to capture 100%
+  // of transactions for performance monitoring.
+  // We recommend adjusting this value in production
+  tracesSampleRate: 1.0,
+});
 function MyApp({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(() => new QueryClient());
   const router = useRouter();
   const isHomepage = router.pathname === "/";
+
   return (
     <QueryClientProvider client={queryClient}>
       <Hydrate state={pageProps.dehydratedState}>

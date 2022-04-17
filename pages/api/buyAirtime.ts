@@ -2,6 +2,7 @@ import axios from "axios";
 import { FieldValue } from "firebase-admin/firestore";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { firestore } from "../../lib/firebaseNode";
+import { withSentry } from "@sentry/nextjs";
 const { v4: uuidv4 } = require("uuid");
 
 type Data = {
@@ -9,10 +10,7 @@ type Data = {
   error?: any;
 };
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<Data>
-) {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { values, user } = req.body;
   const { network, phoneNumber, amount, pin } = values;
   const { uid } = user;
@@ -58,6 +56,7 @@ export default async function handler(
         request_id,
       },
     });
+    console.log(APITransaction.data);
 
     if (APITransaction.data.code != "200") {
       throw new Error("insufficent account funds");
@@ -80,4 +79,5 @@ export default async function handler(
 
     res.status(400).send({ error });
   }
-}
+};
+export default withSentry(handler);
