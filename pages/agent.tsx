@@ -25,7 +25,14 @@ const Agent: NextPage = () => {
         make transactions you earn. It will also be in your earnings balance
         which you can withdraw anytime to your bank
       </p>
-      <button className="w-fit">Activate Agent Now (2000 Naira)</button>
+      <button
+        onClick={() => {
+          throw new Error("Sentry Frontend Error");
+        }}
+        className="w-fit"
+      >
+        Activate Agent Now (2000 Naira)
+      </button>
     </div>
   );
 };
