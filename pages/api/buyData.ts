@@ -16,6 +16,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { network, phoneNumber, amount, pin, bundle } = values;
   const { uid } = user;
   const request_id = uuidv4();
+  console.log(values);
 
   const getTransaction = <t extends string>(message: t, status: t) => {
     return {
@@ -48,7 +49,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     const APITransaction = await axios({
       method: "post",
-      url: "https://alagusiy.com/pi/data",
+      url: "https://alagusiy.com/api/data",
       data: {
         token: process.env.ALAGUSIY_API,
         mobile: phoneNumber,
@@ -83,7 +84,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     res.status(200).json({ message: "Transaction Successful" });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
 
     const transaction = getTransaction("Failed Transaction ", "Failed");
     await transactionRef.add(transaction);
