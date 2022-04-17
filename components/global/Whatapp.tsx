@@ -5,7 +5,7 @@ export default function Whatsapp() {
   const router = useRouter();
 
   return (
-    <div className="fixed right-1 bottom-6 text-2xl">
+    <div className="fixed right-1 bottom-6 z-10 text-2xl">
       {router.pathname !== "/" && (
         <a
           href="https://wa.me/+2347013038554"
