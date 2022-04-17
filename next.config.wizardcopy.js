@@ -2,11 +2,15 @@
 // with Sentry.
 // https://nextjs.org/docs/api-reference/next.config.js/introduction
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/
+/** @type {import('next').NextConfig} */
 
-const { withSentryConfig } = require('@sentry/nextjs');
+const nextConfig = {
+  reactStrictMode: true,
+};
+const { withSentryConfig } = require("@sentry/nextjs");
 
 const moduleExports = {
-  // Your existing module.exports
+  nextConfig,
 };
 
 const sentryWebpackPluginOptions = {
