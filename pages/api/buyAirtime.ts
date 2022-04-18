@@ -25,7 +25,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       amount,
       request_id,
       type: " Airtime Payment",
-      name: network + " " + amount + " Airtime ",
+      name: network + " ₦" + amount + " Airtime ",
       to: phoneNumber,
       date: FieldValue.serverTimestamp(),
     };
