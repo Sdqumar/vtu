@@ -4,8 +4,9 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { firestore } from "../../lib/firebaseNode";
 import { withSentry } from "@sentry/nextjs";
 import { Logtail } from "@logtail/node";
-const { v4: uuidv4 } = require("uuid");
+const logger = require("pino")();
 
+const { v4: uuidv4 } = require("uuid");
 type Data = {
   message?: string;
   error?: any;
@@ -16,7 +17,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { network, phoneNumber, amount, pin, bundle } = values;
   const { uid } = user;
   const request_id = uuidv4();
-  console.log(values, uid);
+  logger.info({ ...values, id: uid });
 
   const getTransaction = <t extends string>(message: t, status: t) => {
     return {
@@ -58,11 +59,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         request_id,
       },
     });
-    console.log(APITransaction.data);
+    logger(APITransaction.data);
     const logtail = new Logtail(process.env.LOGTAIL_SOURCE_TOKEN!);
 
     logtail.info("simple log message");
-    logtail.warn("warning with additional information", {
+    logtail.error("warning with additional information", {
       resource: {
         type: "store-item",
         id: 123456,
