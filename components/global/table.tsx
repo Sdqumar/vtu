@@ -6,7 +6,7 @@ import { format } from "date-fns";
 const COLUMNS = [
   {
     Header: "Name",
-    accessor: "name",
+    accessor: (row: any) => row.name.toUpperCase(),
   },
   {
     Header: "Date",
@@ -24,10 +24,12 @@ const COLUMNS = [
   },
   {
     Header: "Status",
-    accessor: (row: { status: string }) =>
-      row.status == "SUCCESSFUL_TRANSACTION" || "delivered" || "charge.success"
-        ? "delivered"
-        : "failed",
+    accessor: (row: { status: string }) => {
+      if (row.status === "charge.success") {
+        return "Funded";
+      }
+      return row.status;
+    },
   },
 ];
 {
@@ -66,7 +68,7 @@ export const Table = ({ data: tableData }: { data: DocumentData[] }) => {
   const { pageIndex, pageSize } = state;
 
   return (
-    <div className="mx-10   w-full ">
+    <div className="mx-10  mb-8  w-full">
       <select
         className="w-32"
         value={pageSize}
