@@ -20,7 +20,8 @@ type inputProp = {
     | "Email"
     | "Password"
     | "Phone number"
-    | "PIN";
+    | "PIN"
+    | "Please Enter your Emaill Address";
   required?: boolean;
   errors: any;
   type?: string;
