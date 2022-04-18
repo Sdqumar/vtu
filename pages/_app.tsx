@@ -4,11 +4,12 @@ import Sidebar from "../components/global/sidebar";
 import UserProvider from "../components/context/userContext";
 import Auth from "../components/global/Auth";
 import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Whatsapp from "../components/global/Whatapp";
 import { useRouter } from "next/router";
 import * as Sentry from "@sentry/react";
 import { Integrations } from "@sentry/tracing";
+import { signout } from "../utils/auth";
 
 // process.env.NODE_ENV === "production" &&
 Sentry.init({
@@ -24,6 +25,25 @@ function MyApp({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(() => new QueryClient());
   const router = useRouter();
   const isHomepage = router.pathname === "/";
+
+  const logoutTimerIdRef = useRef(0);
+
+  useEffect(() => {
+    const autoLogout = () => {
+      if (document.visibilityState === "hidden") {
+        const timeOutId = window.setTimeout(signout, 5 * 60 * 1000);
+        logoutTimerIdRef.current = timeOutId;
+      } else {
+        window.clearTimeout(logoutTimerIdRef.current);
+      }
+    };
+
+    document.addEventListener("visibilitychange", autoLogout);
+
+    return () => {
+      document.removeEventListener("visibilitychange", autoLogout);
+    };
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
