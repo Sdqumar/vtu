@@ -4,20 +4,21 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { firestore } from "../../lib/firebaseNode";
 import { withSentry } from "@sentry/nextjs";
 import { Logtail } from "@logtail/node";
-const logger = require("pino")();
-
+import logger from "../../logger/logger";
 const { v4: uuidv4 } = require("uuid");
 type Data = {
   message?: string;
   error?: any;
 };
 
+// create pino-logflare console stream for serverless functions and send function for browser logs
+
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { values, user, planCode } = req.body;
   const { network, phoneNumber, amount, pin, bundle } = values;
   const { uid } = user;
   const request_id = uuidv4();
-  logger.info({ ...values, id: uid });
+  logger.info({ ...values, id: uid }, "buy data info");
 
   const getTransaction = <t extends string>(message: t, status: t) => {
     return {
@@ -59,7 +60,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         request_id,
       },
     });
-    logger(APITransaction.data);
+    console.log(APITransaction.data);
+    logger.info(JSON.stringify(APITransaction.data), "APITransaction info");
     const logtail = new Logtail(process.env.LOGTAIL_SOURCE_TOKEN!);
 
     logtail.info("simple log message");
