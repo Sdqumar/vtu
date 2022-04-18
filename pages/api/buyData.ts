@@ -16,7 +16,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { network, phoneNumber, amount, pin, bundle } = values;
   const { uid } = user;
   const request_id = uuidv4();
-  console.log(values);
+  console.log(values, uid);
 
   const getTransaction = <t extends string>(message: t, status: t) => {
     return {
@@ -59,7 +59,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       },
     });
     console.log(APITransaction.data);
-    const logtail = new Logtail("<your-source-token>");
+    const logtail = new Logtail(process.env.LOGTAIL_SOURCE_TOKEN!);
 
     logtail.info("simple log message");
     logtail.warn("warning with additional information", {
