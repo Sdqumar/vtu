@@ -3,24 +3,29 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect } from "react";
 import { useUser } from "../context/userContext";
-import { getUserData } from "../global/utils";
+import { useDocument } from "react-firebase-hooks/firestore";
+import { doc, getFirestore } from "firebase/firestore";
+import firebase from "../../lib/firebaseConfig";
 
 export default function AccountHistory() {
   const userContext = useUser();
   const user = userContext?.user!;
   const setUser = userContext!.setUser;
 
+  const [value, loading] = useDocument(
+    doc(getFirestore(firebase), "users", user.uid)
+  );
+
   useEffect(() => {
     (async () => {
-      // @ts-ignore
-      const { walletBalance, totalFunded, totalSpent } = await getUserData(
-        user!.uid
-      );
-
-      // @ts-ignore
-      setUser({ ...user, walletBalance, totalFunded, totalSpent });
+      if (!loading) {
+        // @ts-ignore
+        const { walletBalance, totalFunded, totalSpent } = value?.data();
+        // @ts-ignore
+        setUser({ ...user, walletBalance, totalFunded, totalSpent });
+      }
     })();
-  }, []);
+  }, [value]);
 
   const account = [
     {

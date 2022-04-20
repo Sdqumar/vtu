@@ -1,47 +1,41 @@
 import React, { ReactNode, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useUser } from "../context/userContext";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 import firebase from "../../lib/firebaseConfig";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { getUserData } from "./utils";
 import Spinner from "./sipnner";
+
 type Authprops = {
   children: ReactNode;
 };
 
 function Auth({ children }: Authprops) {
   const userContext = useUser();
-  const user = userContext?.user;
   const setUser = userContext!.setUser;
 
-  const [loading, setloading] = useState(true);
   const [verify, setverify] = useState(false);
   const router = useRouter();
+  const auth = getAuth(firebase);
+  const [user, loading, error] = useAuthState(auth);
 
   const getUser = async () => {
-    const auth = getAuth(firebase);
-    onAuthStateChanged(auth, async (currentUser) => {
-      if (currentUser) {
-        const { email, displayName, uid } = currentUser;
-        const userData = await getUserData(uid);
-
-        if (!user?.displayName) {
-          typeof email === "string" &&
-            setUser({ email, displayName, uid, ...userData });
-        }
-        setverify(true);
-        setloading(false);
-      } else {
-        setverify(false);
-        setloading(false);
+    if (user) {
+      const { email, displayName, uid } = user;
+      const userData = await getUserData(uid);
+      if (typeof email === "string") {
+        setUser({ email, displayName, uid, ...userData });
       }
-    });
+      setverify(true);
+    } else {
+      setverify(false);
+    }
   };
 
   useEffect(() => {
     getUser();
   }, [user]);
-
   const spinner = () => (
     <div className=" mt-60 flex items-center justify-center align-middle">
       <Spinner color="green" size={10} />
