@@ -5,6 +5,7 @@ import Auth from "../components/global/Auth";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import Head from "next/head";
+import SessionTimeout from "../components/global/SessionTimeout";
 
 const Whatsapp = dynamic(() => import("../components/global/Whatapp"));
 const Sidebar = dynamic(() => import("../components/global/sidebar"));
@@ -24,7 +25,9 @@ function MyApp({ Component, pageProps }: AppProps) {
           )}
           <Head>
             <link rel="icon" href="/favicon.png" />
+            <meta name="sdsd" />
           </Head>
+          <SessionTimeout />
           <Component {...pageProps} />
         </div>
       </Auth>

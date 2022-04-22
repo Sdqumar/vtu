@@ -6,7 +6,6 @@ import firebase from "../../lib/firebaseConfig";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { getUserData } from "./utils";
 import Spinner from "./sipnner";
-
 type Authprops = {
   children: ReactNode;
 };
