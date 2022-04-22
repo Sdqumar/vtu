@@ -41,21 +41,14 @@ function Auth({ children }: Authprops) {
       <Spinner color="green" size={10} />
     </div>
   );
-  if (verify && !loading && router.pathname == "/") {
-    router.push("/dashboard");
-  }
-  //logout user
-  if (!verify && !loading && router.pathname !== "/") {
+
+  if (!user && !verify && !loading && router.pathname !== "/") {
     router.push("/");
   }
-
-  if (!user && !verify && !loading && router.pathname == "/") {
-    return <>{children}</>;
-  }
-  return user && verify && !loading && router.pathname !== "/" ? (
+  return (user && verify) || router.pathname === "/" ? (
     <>{children}</>
   ) : (
-    <h1>{spinner()}</h1>
+    <>{spinner()}</>
   );
 }
 
