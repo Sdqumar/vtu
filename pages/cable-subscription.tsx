@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useUser } from "../components/context/userContext";
 import { useQuery } from "react-query";
+import toast, { Toaster } from "react-hot-toast";
 
 type form = {
   provider?: string;

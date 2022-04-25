@@ -4,14 +4,13 @@ import { useState } from "react";
 import Button from "../components/global/Button";
 import Select from "../components/global/select";
 import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
 import { useUser } from "../components/context/userContext";
 import {
   validateBalanceAndPIN,
   validatePhoneNumber,
 } from "../components/global/utils";
 import { useRouter } from "next/router";
-import Success from "../components/global/alertSuccess";
-import Error from "../components/global/alertError";
 
 type form = {
   network?: string;
@@ -22,7 +21,6 @@ type form = {
 
 export default function AirtimeTopUp() {
   const [loading, setLoading] = useState(false);
-  const [alert, setAlert] = useState<null | "success" | "error">(null);
 
   const userContext = useUser();
   const user = userContext?.user!;
@@ -47,13 +45,13 @@ export default function AirtimeTopUp() {
         url: "/api/buyAirtime",
         data: { values, user },
       });
-      setAlert("success");
+      toast.success("Transaction Successful!");
       setLoading(false);
       setTimeout(() => {
         router.push("/dashboard");
-      }, 1000);
+      }, 3000);
     } catch (error) {
-      setAlert("error");
+      toast.error("Transaction Error!");
       console.log(error);
       setLoading(false);
     }
@@ -61,8 +59,7 @@ export default function AirtimeTopUp() {
 
   return (
     <div className=" mb-40 mt-10 md:ml-20  ">
-      {alert === "success" && <Success text="Transaction Successful" />}
-      {alert === "error" && <Error text=" Transaction Error" />}
+      <Toaster />
       <section className="my-5 ml-4 text-3xl  font-bold text-gray-800">
         Buy Airtime
       </section>

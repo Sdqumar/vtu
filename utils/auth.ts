@@ -50,6 +50,7 @@ export const signUp = async (values: form) => {
     firstName,
     lastName,
     phoneNumber,
+    walletBalance: 0,
     accountNumber,
     pin,
   });

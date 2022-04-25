@@ -8,7 +8,8 @@ import { useUser } from "../components/context/userContext";
 import Select from "../components/global/select";
 import Success from "../components/global/alertSuccess";
 import Error from "../components/global/alertError";
-import Router, { useRouter } from "next/router";
+import toast, { Toaster } from "react-hot-toast";
+import { useRouter } from "next/router";
 import {
   validateBalanceAndPIN,
   validatePhoneNumber,
@@ -76,13 +77,13 @@ export default function BuyData() {
         url: "/api/buyData",
         data: { values, user, planCode },
       });
-      setAlert("success");
+      toast.success("Transaction Successful!");
       setLoading(false);
       setTimeout(() => {
         router.push("/dashboard");
       }, 1000);
     } catch (error) {
-      setAlert("error");
+      toast.error("Transaction Error!");
       console.log(error);
       setLoading(false);
     }
@@ -90,8 +91,7 @@ export default function BuyData() {
 
   return (
     <div className=" mb-40 mt-10 md:ml-20">
-      {alert === "success" && <Success text="Transaction Successful" />}
-      {alert === "error" && <Error text=" Transaction Error" />}
+      <Toaster />
       <section className="my-5 ml-4 text-3xl font-bold text-gray-800">
         Buy Data
       </section>
