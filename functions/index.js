@@ -50,46 +50,50 @@ exports.paymentWebhook = functions.https.onRequest(async (req, res) => {
 exports.payStackWebhook = functions.https.onRequest(async (req, res) => {
   try {
     const secret = process.env.PAYSTACK_SECRET_KEY;
-
+    console.log(JSON.stringify(req.body));
     const hash = crypto
       .createHmac("sha512", secret)
       .update(JSON.stringify(req.body))
       .digest("hex");
-    if (hash == req.headers["x-paystack-signature"]) {
-      const body = req.body;
+    console.log(JSON.stringify(hash == req.headers["x-paystack-signature"]));
+    // if (hash == req.headers["x-paystack-signature"]) {
 
-      const data = {
-        name: "wallet fund",
-        date: admin.firestore.FieldValue.serverTimestamp(),
-        number: body.data.metadata.number,
-        uid: body.data.metadata.uid,
-        amount: body.data.metadata.amount,
-        type: "wallet fund",
-        message: body.event,
-        status: body.event,
-      };
+    const body = req.body;
+    await admin.firestore().collection("payment").add(body);
+    const user = await admin.auth().getUserByEmail(body.data.customer.email);
 
-      await admin.firestore().collection("transactions").add(data);
+    const data = {
+      name: "wallet fund",
+      date: admin.firestore.FieldValue.serverTimestamp(),
+      uid: user.uid.toString(),
+      amount: body.data.amount / 100,
+      type: "wallet fund",
+      message: body.event,
+      status: body.data.status,
+    };
 
-      if (body.event === "charge.success") {
-        const data = body.data.metadata;
+    await admin.firestore().collection("transactions").add(data);
 
-        admin
-          .firestore()
-          .collection("users")
-          .doc(data.uid)
-          .update({
-            walletBalance: admin.firestore.FieldValue.increment(
-              Number(data.amount)
-            ),
-            totalFunded: admin.firestore.FieldValue.increment(
-              Number(data.amount)
-            ),
-          });
-      }
+    if (body.event === "charge.success") {
+      const data = body.data.metadata;
+
+      admin
+        .firestore()
+        .collection("users")
+        .doc(data.uid)
+        .update({
+          walletBalance: admin.firestore.FieldValue.increment(
+            Number(data.amount)
+          ),
+          totalFunded: admin.firestore.FieldValue.increment(
+            Number(data.amount)
+          ),
+        });
     }
+    // }
     res.send(200);
   } catch (error) {
+    console.log(error);
     res.send("error");
   }
 });
