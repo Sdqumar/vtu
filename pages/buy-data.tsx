@@ -40,7 +40,7 @@ export default function BuyData() {
     watch,
   } = useForm<form>({});
 
-  const network = ["Airtel", "9mobile", "GLO"];
+  const network = ["MTN","Airtel", "9mobile", "GLO"];
   const watchNetwork = watch("network", "MTN");
   const watchBundle = watch(
     "bundle",
