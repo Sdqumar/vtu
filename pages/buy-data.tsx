@@ -6,8 +6,6 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useUser } from "../components/context/userContext";
 import Select from "../components/global/select";
-import Success from "../components/global/alertSuccess";
-import Error from "../components/global/alertError";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/router";
 import {
@@ -25,7 +23,6 @@ type form = {
 
 export default function BuyData() {
   const [loading, setLoading] = useState(false);
-  const [alert, setAlert] = useState<null | "success" | "error">(null);
   const [bundle, setBundle] = useState(prices[0].prices);
 
   const userContext = useUser();
@@ -40,8 +37,8 @@ export default function BuyData() {
     watch,
   } = useForm<form>({});
 
-  const network = ["MTN","Airtel", "9mobile", "GLO"];
-  const watchNetwork = watch("network", "MTN");
+  const network = ["MTN GIFTING", "MTN SME", "AIRTEL", "9MOBILE", "GLO"];
+  const watchNetwork = watch("network", "MTN GIFTING");
   const watchBundle = watch(
     "bundle",
     `${bundle[0].size} - ${bundle[0].price} - ${bundle[0].duration}`

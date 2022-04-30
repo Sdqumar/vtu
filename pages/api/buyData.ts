@@ -38,6 +38,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (userData.walletBalance < amount) {
       throw new Error("insufficent funds");
     }
+    let networkId = network;
+    if (networkId === "MTN SME") {
+      networkId = "MTN";
+    }
+    if (networkId === "MTN GIFTING") {
+      networkId = "GIFTING";
+    }
 
     const APITransaction = await axios({
       method: "post",
@@ -47,7 +54,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         mobile: phoneNumber,
         network: network.toUpperCase(),
         plan_code: planCode,
-        id: "gifting",
         request_id,
       },
     });

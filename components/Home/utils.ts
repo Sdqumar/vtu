@@ -1,7 +1,7 @@
 export const prices = [
   {
     img: "/mtn.png",
-    network: "MTN",
+    network: "MTN SME",
     prices: [
       {
         size: "500.0MB",
@@ -35,15 +35,63 @@ export const prices = [
       },
       {
         size: "10.0GB",
-        price: "₦2050",
+        price: "₦2550",
         duration: "30 days",
-        planCode: 2550,
+        planCode: 10000,
+      },
+    ],
+  },
+  {
+    img: "/mtn.png",
+    network: "MTN GIFTING",
+    prices: [
+      {
+        size: "500.0MB",
+        price: "₦140",
+        duration: "30 days",
+        planCode: 500,
+      },
+      {
+        size: "1.0GB",
+        price: "₦260",
+        duration: "30 days",
+        planCode: 1000,
+      },
+      {
+        size: "2.0GB",
+        price: "₦520",
+        duration: "30 days",
+        planCode: 2000,
+      },
+      {
+        size: "3.0GB",
+        price: "₦780",
+        duration: "30 days",
+        planCode: 3000,
+      },
+      {
+        size: "5.0GB",
+        price: "₦1300",
+        duration: "30 days",
+        planCode: 5000,
+      },
+      {
+        size: "10.0GB",
+        price: "₦2600",
+        duration: "30 days",
+        planCode: 10000,
+      },
+      {
+        size: "15.0GB",
+        price: "₦3900",
+        duration: "30 days",
+        planCode: 15000,
       },
     ],
   },
   {
     img: "/airtel.png",
-    network: "Airtel",
+    network: "AIRTEL",
     prices: [
       {
         size: "100.0MB",
@@ -85,7 +133,7 @@ export const prices = [
   },
   {
     img: "/9mobile.png",
-    network: "9mobile",
+    network: "9MOBILE",
     prices: [
       {
         size: "750.0MB",
