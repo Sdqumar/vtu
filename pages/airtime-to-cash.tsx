@@ -12,7 +12,6 @@ type form = {
   network?: string;
   phoneNumber?: number;
   amount?: number;
-  pin?: number;
 };
 
 export default function AirtimeCash() {
@@ -33,13 +32,6 @@ export default function AirtimeCash() {
     const isValidNumber = validatePhoneNumber(setError, values);
     if (!isValidNumber) return;
 
-    if (values.pin !== user.pin) {
-      setError("pin", {
-        type: "wrongpin",
-        message: "Incorrect Pin!",
-      });
-      return false;
-    }
     setLoading(true);
     try {
       const { data } = await axios({
@@ -152,13 +144,7 @@ export default function AirtimeCash() {
             maxLength={11}
             errors={errors}
           />
-          <Input
-            register={register}
-            name="pin"
-            label="PIN"
-            type="password"
-            errors={errors}
-          />
+
           <Button label="continue" loading={loading} />
         </form>
       </main>

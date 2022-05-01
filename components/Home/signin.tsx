@@ -27,7 +27,6 @@ const SignIn = () => {
     email: string;
     uid: string;
     displayName: string;
-    pin?: number;
   };
 
   const submitForm = async () => {

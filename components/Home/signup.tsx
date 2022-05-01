@@ -78,14 +78,7 @@ const SignUp = () => {
         type="password"
         errors={errors}
       />
-      <Input
-        register={register}
-        name="pin"
-        label="PIN"
-        type="password"
-        maxLength={4}
-        errors={errors}
-      />
+
       <Button label="Sign Up" loading={loading} style="bg-black" />
     </form>
   );

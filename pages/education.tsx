@@ -5,7 +5,7 @@ import Select from "../components/global/select";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useUser } from "../components/context/userContext";
-import { validateBalanceAndPIN } from "../components/global/utils";
+import { validateBalance } from "../components/global/utils";
 import { useRouter } from "next/router";
 import Success from "../components/global/alertSuccess";
 import Error from "../components/global/alertError";
@@ -13,7 +13,6 @@ import Error from "../components/global/alertError";
 type form = {
   exam?: string;
   email?: string;
-  pin?: number;
   amount?: number;
 };
 
@@ -51,8 +50,8 @@ export default function Education() {
   }, [watchExam]);
 
   const submitForm = async (values: form) => {
-    const isValidBalanceAndPIN = validateBalanceAndPIN(setError, values, user);
-    if (!isValidBalanceAndPIN) return;
+    const isValidBalance = validateBalance(setError, values, user);
+    if (!isValidBalance) return;
     setLoading(true);
 
     try {
@@ -110,13 +109,6 @@ export default function Education() {
             errors={errors}
           />
 
-          <Input
-            register={register}
-            name="pin"
-            label="PIN"
-            type="password"
-            errors={errors}
-          />
           <Button label="continue" loading={loading} />
         </form>
       </main>

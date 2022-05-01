@@ -16,11 +16,10 @@ export type form = {
   email: string;
   password: string;
   phoneNumber: number;
-  pin: number;
 };
 
 export const signUp = async (values: form) => {
-  const { email, password, firstName, lastName, phoneNumber, pin } = values;
+  const { email, password, firstName, lastName, phoneNumber } = values;
   const db = getFirestore(firebase);
   const userCredential = await createUserWithEmailAndPassword(
     auth,
@@ -52,7 +51,6 @@ export const signUp = async (values: form) => {
     phoneNumber,
     walletBalance: 0,
     accountNumber,
-    pin,
   });
 };
 

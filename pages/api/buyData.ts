@@ -6,7 +6,7 @@ const { v4: uuidv4 } = require("uuid");
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { values, user, planCode } = req.body;
-  const { network, phoneNumber, amount, pin, bundle } = values;
+  const { network, phoneNumber, amount, bundle } = values;
   const { uid } = user;
   const request_id = uuidv4();
 
@@ -32,9 +32,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     let user = await userRef.get();
     let userData = user.data()!;
 
-    if (userData.pin !== pin) {
-      throw new Error("incorrect pin");
-    }
     if (userData.walletBalance < amount) {
       throw new Error("insufficent funds");
     }

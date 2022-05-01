@@ -5,13 +5,11 @@ import Success from "../global/alertSuccess";
 import Button from "../global/Button";
 import Input from "../global/registerInput";
 import { form } from "./utils";
-import { useUser } from "../context/userContext";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 
 const SignIn = () => {
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState<null | string>(null);
-  const userContext = useUser();
 
   const router = useRouter();
   const {
@@ -20,13 +18,6 @@ const SignIn = () => {
     getValues,
     formState: { errors },
   } = useForm<form>();
-
-  type user = {
-    email: string;
-    uid: string;
-    displayName: string;
-    pin?: number;
-  };
 
   const submitForm = async () => {
     setLoading(true);

@@ -5,14 +5,9 @@ import { firestore } from "../../lib/firebaseNode";
 import { withSentry } from "@sentry/nextjs";
 const { v4: uuidv4 } = require("uuid");
 
-type Data = {
-  message?: string;
-  error?: any;
-};
-
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { values, user } = req.body;
-  const { network, phoneNumber, amount, pin } = values;
+  const { network, phoneNumber, amount } = values;
   const { uid } = user;
   const request_id = uuidv4();
 
@@ -38,9 +33,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     let user = await userRef.get();
     let userData = user.data()!;
 
-    if (userData.pin !== pin) {
-      throw new Error("incorrect pin");
-    }
     if (userData.walletBalance < amount) {
       throw new Error("insufficent funds");
     }

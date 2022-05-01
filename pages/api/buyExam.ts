@@ -13,7 +13,7 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
   const { values, user } = req.body;
-  const { exam, email, amount, pin } = values;
+  const { exam, email, amount } = values;
   const { uid } = user;
 
   const getTransaction = <t extends string>(message: t, status: t) => {
@@ -38,9 +38,6 @@ export default async function handler(
     let user = await userRef.get();
     let userData = user.data()!;
 
-    if (userData.pin !== pin) {
-      throw new Error("incorrect pin");
-    }
     if (userData.walletBalance < amount) {
       throw new Error("insufficent funds");
     }

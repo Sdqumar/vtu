@@ -69,70 +69,13 @@ export default function Account() {
             errors={errors}
             disabled={!edit}
           />
-          {edit && (
-            <Input
-              register={register}
-              name="pin"
-              label="PIN"
-              type="number"
-              maxLength={4}
-              errors={errors}
-            />
-          )}
+
           <h3
             onClick={handleUpdate}
             className="bg-primary mx-auto w-full cursor-pointer rounded-md p-2 text-center font-medium text-white"
           >
             {edit ? "Update" : "Edit"}
           </h3>
-        </form>
-      </main>
-      <UpdatePIN />
-    </div>
-  );
-}
-export function UpdatePIN() {
-  const [loading, setLoading] = useState(false);
-
-  type form = {
-    oldpin?: number;
-    pin?: number;
-  };
-
-  const {
-    register,
-    getValues,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<form>();
-
-  const submitForm = (values: form) => {};
-
-  return (
-    <div className="   ">
-      <main className="flex  flex-wrap">
-        <form
-          onSubmit={handleSubmit((formValues) => submitForm(formValues))}
-          className="w-96 rounded-md p-8 shadow-lg transition-all duration-700"
-        >
-          <section className="mb-5 text-xl  font-bold text-gray-800 ">
-            Transaction PIN
-          </section>
-          <Input
-            register={register}
-            name="oldpin"
-            label="Old PIN"
-            type="number"
-            errors={errors}
-          />
-          <Input
-            register={register}
-            name="pin"
-            label="New PIN"
-            type="number"
-            errors={errors}
-          />
-          <Button label="continue" loading={loading} />
         </form>
       </main>
     </div>

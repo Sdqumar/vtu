@@ -246,6 +246,5 @@ export type form = {
   email: string;
   password: string;
   phoneNumber: number;
-  pin: number;
   maxLength?: "string";
 };

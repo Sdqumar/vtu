@@ -6,23 +6,13 @@ type form = {
   email?: string;
   phoneNumber?: number;
   amount?: number;
-  pin?: number;
   meterNo?: number;
   cardNumber?: number;
-  oldpin?: number;
 };
 
 type inputProp = {
   register: UseFormRegister<form>;
-  name:
-    | "phoneNumber"
-    | "amount"
-    | "pin"
-    | "oldpin"
-    | "name"
-    | "email"
-    | "meterNo"
-    | "cardNumber";
+  name: "phoneNumber" | "amount" | "name" | "email" | "meterNo" | "cardNumber";
   label: string;
   required?: boolean;
   errors: any;

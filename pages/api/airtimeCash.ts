@@ -13,7 +13,7 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
   const { values, user } = req.body;
-  const { network, phoneNumber, amount, pin } = values;
+  const { network, phoneNumber, amount } = values;
   const { uid } = user;
 
   const getTransaction = <t extends string>(message: t, status: t) => {
@@ -36,10 +36,6 @@ export default async function handler(
   try {
     let user = await userRef.get();
     let userData = user.data()!;
-
-    if (userData.pin !== pin) {
-      throw new Error("incorrect pin");
-    }
 
     const transaction = getTransaction("Request Sent", "pending");
 

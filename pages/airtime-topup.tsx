@@ -7,7 +7,7 @@ import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { useUser } from "../components/context/userContext";
 import {
-  validateBalanceAndPIN,
+  validateBalance,
   validatePhoneNumber,
 } from "../components/global/utils";
 import { useRouter } from "next/router";
@@ -16,7 +16,6 @@ type form = {
   network?: string;
   phoneNumber?: number;
   amount?: number;
-  pin?: number;
 };
 
 export default function AirtimeTopUp() {
@@ -32,12 +31,12 @@ export default function AirtimeTopUp() {
     setError,
     formState: { errors },
   } = useForm<form>();
-  const network = ["MTN", "Airtel", "9mobile", "GLO"];
+  const network = ["MTN", "AIRTEL", "9MOBILE", "GLO"];
   const submitForm = async (values: form) => {
     const isValidNumber = validatePhoneNumber(setError, values);
     if (!isValidNumber) return;
-    const isValidBalanceAndPIN = validateBalanceAndPIN(setError, values, user);
-    if (!isValidBalanceAndPIN) return;
+    const isValidBalance = validateBalance(setError, values, user);
+    if (!isValidBalance) return;
     setLoading(true);
     try {
       await axios({
@@ -90,14 +89,7 @@ export default function AirtimeTopUp() {
             type="number"
             errors={errors}
           />
-          <Input
-            register={register}
-            name="pin"
-            label="PIN"
-            maxLength={4}
-            type="password"
-            errors={errors}
-          />
+
           <Button label="continue" loading={loading} />
         </form>
       </main>

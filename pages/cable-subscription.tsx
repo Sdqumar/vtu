@@ -12,7 +12,6 @@ type form = {
   provider?: string;
   plan?: string;
   cardNumber?: number;
-  pin?: number;
   amount?: number;
 };
 
@@ -65,9 +64,6 @@ export default function CableSubscription() {
   const submitForm = async (values: form) => {
     console.log(values);
 
-    // const isValidBalanceAndPIN = validateBalanceAndPIN(setError, values, user);
-    // if (!isValidBalanceAndPIN) return;
-    // setLoading(true);
     try {
       const { data } = await axios({
         method: "post",
@@ -119,13 +115,6 @@ export default function CableSubscription() {
             errors={errors}
           />
 
-          <Input
-            register={register}
-            name="pin"
-            label="PIN"
-            type="password"
-            errors={errors}
-          />
           <Button label="continue" loading={loading} />
         </form>
       </main>

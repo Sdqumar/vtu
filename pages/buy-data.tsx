@@ -9,7 +9,7 @@ import Select from "../components/global/select";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/router";
 import {
-  validateBalanceAndPIN,
+  validateBalance,
   validatePhoneNumber,
 } from "../components/global/utils";
 
@@ -17,7 +17,6 @@ type form = {
   network?: string;
   phoneNumber?: number;
   amount?: number;
-  pin?: number;
   bundle?: string;
 };
 
@@ -64,8 +63,8 @@ export default function BuyData() {
     const isValidNumber = validatePhoneNumber(setError, values);
     if (!isValidNumber) return;
 
-    const isValidBalanceAndPIN = validateBalanceAndPIN(setError, values, user);
-    if (!isValidBalanceAndPIN) return;
+    const isValidBalance = validateBalance(setError, values, user);
+    if (!isValidBalance) return;
     setLoading(true);
 
     try {
@@ -131,14 +130,6 @@ export default function BuyData() {
             errors={errors}
           />
 
-          <Input
-            register={register}
-            name="pin"
-            label="PIN"
-            type="password"
-            maxLength={4}
-            errors={errors}
-          />
           <Button label="continue" loading={loading} />
         </form>
       </main>

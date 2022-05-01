@@ -2,7 +2,7 @@ import Input from "../components/global/input";
 import { useState } from "react";
 import Button from "../components/global/Button";
 import { useForm } from "react-hook-form";
-import { validateBalanceAndPIN } from "../components/global/utils";
+import { validateBalance } from "../components/global/utils";
 import { useUser } from "../components/context/userContext";
 import axios from "axios";
 import { useRouter } from "next/router";
@@ -11,7 +11,6 @@ import Error from "../components/global/alertError";
 
 type form = {
   amount?: number;
-  pin?: number;
 };
 
 export default function BonusWallet() {
@@ -40,13 +39,7 @@ export default function BonusWallet() {
       });
       return;
     }
-    if (values.pin !== user.pin) {
-      setError("pin", {
-        type: "wrongpin",
-        message: "Incorrect Pin!",
-      });
-      return false;
-    }
+
     setLoading(true);
     try {
       const { data } = await axios({
@@ -87,13 +80,7 @@ export default function BonusWallet() {
             type="number"
             errors={errors}
           />
-          <Input
-            register={register}
-            name="pin"
-            label="PIN"
-            type="password"
-            errors={errors}
-          />
+
           <Button label="continue" loading={loading} />
         </form>
       </main>

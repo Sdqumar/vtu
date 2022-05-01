@@ -8,19 +8,17 @@ type signup = {
   email: string;
   password: string;
   phoneNumber: number;
-  pin: number;
 };
 
 type inputProp = {
   register: UseFormRegister<signup>;
-  name: "firstName" | "lastName" | "email" | "password" | "phoneNumber" | "pin";
+  name: "firstName" | "lastName" | "email" | "password" | "phoneNumber";
   label:
     | "First name"
     | "Last name"
     | "Email"
     | "Password"
     | "Phone number"
-    | "PIN"
     | "Please Enter your Emaill Address";
   required?: boolean;
   errors: any;
@@ -45,11 +43,6 @@ export default function Input({
   return (
     <div className="relative my-2">
       <label className="">{label}</label>
-      {name === "pin" && (
-        <div className="absolute top-[3px] left-10 text-sm text-yellow-400">
-          (Your 4 digit PIN to secure your account)
-        </div>
-      )}
       <div>
         <input
           {...register(name, { required: required })}
@@ -57,7 +50,7 @@ export default function Input({
           {...rest}
           className={` ${style} ${errors[name] && "border-red-600"}`}
         />
-        {(name === "password" || name === "pin") && Type === "password" && (
+        {name === "password" && Type === "password" && (
           <svg
             onClick={() => setType("text")}
             className="absolute right-3 top-12 h-5 w-5 cursor-pointer fill-black"
@@ -71,7 +64,7 @@ export default function Input({
             />
           </svg>
         )}
-        {(name === "password" || name === "pin") && Type === "text" && (
+        {name === "password" && Type === "text" && (
           <svg
             onClick={() => setType("password")}
             className="absolute right-3 top-12 h-6 w-6 cursor-pointer text-black"

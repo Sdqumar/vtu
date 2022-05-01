@@ -10,7 +10,6 @@ type form = {
   company?: string;
   meterNo?: number;
   amount?: number;
-  pin?: number;
 };
 
 export default function ElectricityBills() {
@@ -87,13 +86,7 @@ export default function ElectricityBills() {
             type="number"
             errors={errors}
           />
-          <Input
-            register={register}
-            name="pin"
-            label="PIN"
-            type="password"
-            errors={errors}
-          />
+
           <Button label="continue" loading={loading} />
         </form>
       </main>

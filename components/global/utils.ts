@@ -48,7 +48,7 @@ export const validatePhoneNumber = (
 
   let isValidNumber;
 
-  if (values.network === "Airtel") {
+  if (values.network === "AIRTEL") {
     isValidNumber = AirtelPrefixes.includes(numberPrefix!);
   }
 
@@ -74,34 +74,28 @@ export const validatePhoneNumber = (
   if (!isValidNumber) {
     setError("phoneNumber", {
       type: "number",
-      message: `Incorrect ${values.network} phone number!`,
+      message: `Incorrect ${
+        values.network === "MTN GIFTING" || values.network === "MTN SME"
+          ? "MTN"
+          : values.network
+      } phone number!`,
     });
     return false;
   }
   return isValidNumber;
 };
 
-type BalanceAndPIN = {
-  pin?: number;
+type Balance = {
   amount?: number;
 };
 type user = {
-  pin?: number | undefined;
   walletBalance?: number | undefined;
 };
-export const validateBalanceAndPIN = (
-  setError: UseFormSetError<BalanceAndPIN>,
-  values: BalanceAndPIN,
+export const validateBalance = (
+  setError: UseFormSetError<Balance>,
+  values: Balance,
   user: user
 ) => {
-  if (values.pin !== user.pin) {
-    setError("pin", {
-      type: "wrongpin",
-      message: "Incorrect Pin!",
-    });
-    return false;
-  }
-
   if (values.amount! < 0) {
     setError("amount", {
       type: "amount",
