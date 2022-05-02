@@ -27,6 +27,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   const userRef = firestore.collection("users").doc(uid);
   const transactionRef = firestore.collection("transactions");
+  const transactionError = firestore.collection("transactionError");
 
   try {
     let user = await userRef.get();
@@ -54,13 +55,20 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         request_id,
       },
     });
-    console.log(APITransaction);
-    console.log(APITransaction.data);
+    // console.log(APITransaction);
+    // console.log(APITransaction.data);
+    console.log(APITransaction.data.code);
 
+    const transaction = getTransaction("Transaction Successful", "Delivered");
     if (APITransaction.data.code !== "200") {
+      await transactionError.add({
+        ...transaction,
+        error: APITransaction.data,
+        planCode,
+      });
+
       throw new Error("insufficent account funds");
     }
-    const transaction = getTransaction("Transaction Successful", "Delivered");
     await transactionRef.add(transaction);
     await userRef.update({
       walletBalance: FieldValue.increment(-Number(amount)),
