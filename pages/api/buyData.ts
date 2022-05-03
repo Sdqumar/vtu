@@ -9,6 +9,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { network, phoneNumber, amount, bundle } = values;
   const { uid } = user;
   const request_id = uuidv4();
+  
+   let networkId = network;
+    if (networkId === "MTN SME") {
+      networkId = "MTN";
+    }
+    if (networkId === "MTN GIFTING") {
+      networkId = "GIFTING";
+    }
 
   const getTransaction = <t extends string>(message: t, status: t) => {
     return {
@@ -16,6 +24,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       message,
       status,
       network,
+      networkId,
       amount,
       request_id,
       type: "Data Payment",
@@ -36,14 +45,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (userData.walletBalance < amount) {
       throw new Error("insufficent funds");
     }
-    let networkId = network;
-    if (networkId === "MTN SME") {
-      networkId = "MTN";
-    }
-    if (networkId === "MTN GIFTING") {
-      networkId = "GIFTING";
-    }
-
+ 
     const APITransaction = await axios({
       method: "post",
       url: "https://alagusiy.com/api/data",
