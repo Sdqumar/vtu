@@ -77,7 +77,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       },
     });
     await transactionRef.add(transaction);
-    res.status(400).send({ error });
+    res.status(400).send(error.response?.data?.error[0]);
   }
 };
 export default handler;

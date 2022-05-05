@@ -63,7 +63,6 @@ export default function BuyData() {
     });
     const networkId = network?.networkID;
     const planCode = plan?.planCode;
-    console.log(values, planCode);
 
     const isValidNumber = validatePhoneNumber(setError, values);
     if (!isValidNumber) return;
@@ -83,9 +82,8 @@ export default function BuyData() {
       setTimeout(() => {
         router.push("/dashboard");
       }, 1000);
-    } catch (error) {
-      toast.error("Transaction Error!");
-      console.log(error);
+    } catch (error: any) {
+      toast.error(error.response.data);
       setLoading(false);
     }
   };
