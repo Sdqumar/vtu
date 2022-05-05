@@ -2,96 +2,106 @@ export const prices = [
   {
     img: "/mtn.png",
     network: "MTN SME",
+    networkID: 1,
     prices: [
       {
         size: "500.0MB",
         price: "₦140",
         duration: "30 days",
-        planCode: 500,
+        planCode: 6,
       },
       {
         size: "1.0GB",
         price: "₦255",
         duration: "30 days",
-        planCode: 1000,
+        planCode: 7,
       },
       {
         size: "2.0GB",
         price: "₦510",
         duration: "30 days",
-        planCode: 2000,
+        planCode: 8,
       },
-      {
-        size: "3.0GB",
-        price: "₦765",
-        duration: "30 days",
-        planCode: 3000,
-      },
+
       {
         size: "5.0GB",
         price: "₦1275",
         duration: "30 days",
-        planCode: 5000,
+        planCode: 11,
       },
       {
         size: "10.0GB",
         price: "₦2550",
         duration: "30 days",
-        planCode: 10000,
+        planCode: 220,
       },
     ],
   },
   {
     img: "/mtn.png",
     network: "MTN GIFTING",
+    networkID: 1,
     prices: [
       {
         size: "500.0MB",
         price: "₦140",
         duration: "30 days",
-        planCode: 500,
+        planCode: 216,
       },
       {
         size: "1.0GB",
         price: "₦260",
         duration: "30 days",
-        planCode: 1000,
+        planCode: 217,
       },
       {
         size: "2.0GB",
         price: "₦520",
         duration: "30 days",
-        planCode: 2000,
+        planCode: 209,
       },
       {
         size: "3.0GB",
         price: "₦780",
         duration: "30 days",
-        planCode: 3000,
+        planCode: 210,
       },
       {
         size: "5.0GB",
         price: "₦1300",
         duration: "30 days",
-        planCode: 5000,
+        planCode: 211,
       },
       {
         size: "10.0GB",
         price: "₦2600",
         duration: "30 days",
-        planCode: 10000,
+        planCode: 43,
       },
       {
         size: "15.0GB",
         price: "₦3900",
         duration: "30 days",
-        planCode: 15000,
+        planCode: 52,
+      },
+      {
+        size: "20.0GB",
+        price: "₦5200",
+        duration: "30 days",
+        planCode: 50,
+      },
+      {
+        size: "40.0GB",
+        price: "₦10400",
+        duration: "30 days",
+        planCode: 51,
       },
     ],
   },
   {
     img: "/airtel.png",
     network: "AIRTEL",
+    networkID: 4,
     prices: [
       {
         size: "100.0MB",
@@ -133,6 +143,7 @@ export const prices = [
   },
   {
     img: "/9mobile.png",
+    networkID: 3,
     network: "9MOBILE",
     prices: [
       {
@@ -194,6 +205,7 @@ export const prices = [
   {
     img: "/glo.png",
     network: "GLO",
+    networkID: 2,
     prices: [
       {
         size: "1.0GB",

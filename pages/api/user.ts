@@ -10,18 +10,51 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  auth
-    .getUserByEmail("sdqumar09@gmail.com")
-    .then((userRecord) => {
-      // See the UserRecord reference doc for the contents of userRecord.
-      console.log(userRecord);
+  //   const config = {
+  //     method: "get",
+  //     url: "https://www.superjaraapi.com/api/user/",
+  //     headers: {
+  //       Authorization: `Token ${process.env.SUPERJARA_API}`,
+  //       "Content-Type": "application/json",
+  //     },
+  //   };
 
-      console.log(`Successfully fetched user data: ${userRecord.toJSON()}`);
-    })
-    .catch((error) => {
-      console.log("Error fetching user data:", error);
+  //   axios(config)
+  //     .then(function (response) {
+  //       console.log(JSON.stringify(response.data));
+  //       res.send(response.data);
+  //     })
+  //     .catch(function (error) {
+  //       console.log(error);
+  //     });
+
+  const data = {
+    // network: networkId, //query "/api/get/network/"  to get all available networks, and their ID
+    network: 1, //query "/api/get/network/"  to get all available networks, and their ID
+    // mobile_number: phoneNumber,
+    mobile_number: "08143104693",
+    plan: 220, //query "/api/network/ Plans" endpoint to get all available data plans
+    Ported_number: true,
+  };
+  try {
+    const APITransaction = await axios({
+      method: "post",
+      url: "https://www.superjaraapi.com/api/data/",
+      headers: {
+        Authorization: `Token ${process.env.SUPERJARA_API}`,
+        "Content-Type": "application/json",
+      },
+      data: data,
     });
-  res.status(200);
+    // console.log(APITransaction);
+    console.log(APITransaction.data);
+    res.status(200).end();
+  } catch (error: any) {
+    console.log(error?.response.status);
+    console.log(error?.response.data);
+    res.status(200).end();
+  }
+
   // await axios({
   //   method: "POST",
   //   data: {

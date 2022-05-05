@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import SessionTimeout from "../components/global/SessionTimeout";
-
+// import "flowbite";
 const Whatsapp = dynamic(() => import("../components/global/Whatapp"));
 const Sidebar = dynamic(() => import("../components/global/sidebar"));
 

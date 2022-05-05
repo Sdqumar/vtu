@@ -5,18 +5,10 @@ import { firestore } from "../../lib/firebaseNode";
 const { v4: uuidv4 } = require("uuid");
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { values, user, planCode } = req.body;
+  const { values, user, planCode, networkId } = req.body;
   const { network, phoneNumber, amount, bundle } = values;
   const { uid } = user;
   const request_id = uuidv4();
-  
-   let networkId = network;
-    if (networkId === "MTN SME") {
-      networkId = "MTN";
-    }
-    if (networkId === "MTN GIFTING") {
-      networkId = "GIFTING";
-    }
 
   const getTransaction = <t extends string>(message: t, status: t) => {
     return {
@@ -45,41 +37,45 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (userData.walletBalance < amount) {
       throw new Error("insufficent funds");
     }
- 
+
+    const data = {
+      network: networkId,
+      mobile_number: phoneNumber,
+      plan: planCode,
+      Ported_number: true,
+    };
+
     const APITransaction = await axios({
       method: "post",
-      url: "https://alagusiy.com/api/data",
-      data: {
-        token: process.env.ALAGUSIY_API,
-        mobile: phoneNumber,
-        network: networkId,
-        plan_code: planCode,
-        request_id,
+      url: "https://www.superjaraapi.com/api/data/",
+      headers: {
+        Authorization: `Token ${process.env.SUPERJARA_API}`,
+        "Content-Type": "application/json",
       },
+      data: data,
     });
-    // console.log(APITransaction);
-    // console.log(APITransaction.data);
-    console.log(APITransaction.data.code);
+    console.log(APITransaction.data);
 
     const transaction = getTransaction("Transaction Successful", "Delivered");
-    if (APITransaction.data.code !== "200") {
-      await transactionError.add({
-        ...transaction,
-        error: APITransaction.data,
-        planCode,
-      });
 
-      throw new Error("insufficent account funds");
-    }
     await transactionRef.add(transaction);
     await userRef.update({
       walletBalance: FieldValue.increment(-Number(amount)),
       totalSpent: FieldValue.increment(Number(amount)),
     });
     res.status(200).json({ message: "Transaction Successful" });
-  } catch (error) {
-    console.log(error);
+  } catch (error: any) {
+    console.log(error.response?.data?.error[0]);
+    console.log(error.response.status);
+
     const transaction = getTransaction("Failed Transaction ", "Failed");
+    await transactionError.add({
+      ...transaction,
+      error: {
+        message: error.response.data.error[0],
+        status: error.response.status,
+      },
+    });
     await transactionRef.add(transaction);
     res.status(400).send({ error });
   }

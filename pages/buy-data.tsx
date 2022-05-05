@@ -54,11 +54,16 @@ export default function BuyData() {
   }, [watchBundle]);
 
   const submitForm = async (values: form) => {
+    const network = prices.find((network) => {
+      return network.network == values.network;
+    });
+
     const plan = bundle.find((plan) => {
       return Number(plan.price.slice(1)) == values.amount;
     });
-
+    const networkId = network?.networkID;
     const planCode = plan?.planCode;
+    console.log(values, planCode);
 
     const isValidNumber = validatePhoneNumber(setError, values);
     if (!isValidNumber) return;
@@ -71,7 +76,7 @@ export default function BuyData() {
       await axios({
         method: "post",
         url: "/api/buyData",
-        data: { values, user, planCode },
+        data: { values, user, planCode, networkId },
       });
       toast.success("Transaction Successful!");
       setLoading(false);
