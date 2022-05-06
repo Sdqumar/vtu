@@ -36,7 +36,7 @@ export default function BuyData() {
     watch,
   } = useForm<form>({});
 
-  const network = [ "MTN SME", "AIRTEL", "9MOBILE", "GLO"];
+  const network = ["MTN GIFTING", "MTN SME", "AIRTEL", "9MOBILE", "GLO"];
   const watchNetwork = watch("network", "MTN GIFTING");
   const watchBundle = watch(
     "bundle",
