@@ -31,18 +31,27 @@ export default function AirtimeTopUp() {
     setError,
     formState: { errors },
   } = useForm<form>();
-  const network = ["MTN", "AIRTEL", "9MOBILE", "GLO"];
+  const network = [
+    { name: "MTN", id: 1 },
+    { name: "AIRTEL", id: 4 },
+    { name: "9MOBILE", id: 3 },
+    { name: "GLO", id: 2 },
+  ];
   const submitForm = async (values: form) => {
     const isValidNumber = validatePhoneNumber(setError, values);
     if (!isValidNumber) return;
     const isValidBalance = validateBalance(setError, values, user);
     if (!isValidBalance) return;
+    let networkId = network.find((network) => {
+      return network.name == values.network;
+    });
+
     setLoading(true);
     try {
       await axios({
         method: "post",
         url: "/api/buyAirtime",
-        data: { values, user },
+        data: { values, user, networkId: networkId?.id },
       });
       toast.success("Transaction Successful!");
       setLoading(false);
@@ -70,7 +79,7 @@ export default function AirtimeTopUp() {
           <Select
             register={register}
             name="network"
-            data={network}
+            data={network.map((network) => network.name)}
             label="Choose Network"
             errors={errors}
           />

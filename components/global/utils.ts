@@ -60,7 +60,11 @@ export const validatePhoneNumber = (
     isValidNumber = EtisaltPrefixes.includes(numberPrefix!);
   }
 
-  if (values.network === "MTN GIFTING" || values.network === "MTN SME") {
+  if (
+    values.network === "MTN GIFTING" ||
+    values.network === "MTN SME" ||
+    values.network === "MTN"
+  ) {
     isValidNumber = MTNPrefixes.includes(numberPrefix!);
   }
   if (values.phoneNumber?.toString().length !== 11) {
