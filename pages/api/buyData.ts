@@ -52,8 +52,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       const data = {
         token: process.env.ALAGUSIY_API,
         mobile: phoneNumber,
-        // network: networkName,
-        network: "MTN",
+        network: networkName,
         plan_code: planCode,
         request_id,
       };
