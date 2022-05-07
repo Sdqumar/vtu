@@ -5,10 +5,18 @@ import { firestore } from "../../lib/firebaseNode";
 const { v4: uuidv4 } = require("uuid");
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { values, user, planCode, networkId } = req.body;
+  const { values, user, planCode } = req.body;
   const { network, phoneNumber, amount, bundle } = values;
   const { uid } = user;
   const request_id = uuidv4();
+
+  let networkId = network;
+  if (networkId === "MTN SME") {
+    networkId = "MTN";
+  }
+  if (networkId === "MTN GIFTING") {
+    networkId = "GIFTING";
+  }
 
   const getTransaction = <t extends string>(message: t, status: t) => {
     return {
@@ -37,27 +45,34 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (userData.walletBalance < amount) {
       throw new Error("insufficent funds");
     }
-
     const data = {
+      token: process.env.ALAGUSIY_API,
+      mobile: phoneNumber,
       network: networkId,
-      mobile_number: phoneNumber,
-      plan: planCode,
-      Ported_number: true,
+      plan_code: planCode,
+      request_id,
     };
+    console.log(data);
 
     const APITransaction = await axios({
       method: "post",
-      url: "https://www.superjaraapi.com/api/data/",
-      headers: {
-        Authorization: `Token ${process.env.SUPERJARA_API}`,
-        "Content-Type": "application/json",
-      },
-      data: data,
+      url: "https://alagusiy.com/api/data",
+      data,
     });
+    // console.log(APITransaction);
+    // console.log(APITransaction.data);
     console.log(APITransaction.data);
 
     const transaction = getTransaction("Transaction Successful", "Delivered");
+    if (APITransaction.data.code !== "200") {
+      await transactionError.add({
+        ...transaction,
+        error: APITransaction.data,
+        planCode,
+      });
 
+      throw new Error("insufficent account funds");
+    }
     await transactionRef.add(transaction);
     await userRef.update({
       walletBalance: FieldValue.increment(-Number(amount)),
@@ -65,19 +80,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     });
     res.status(200).json({ message: "Transaction Successful" });
   } catch (error: any) {
-    console.log(error.response?.data?.error[0]);
-    console.log(error.response.status);
-
+    console.log(error);
     const transaction = getTransaction("Failed Transaction ", "Failed");
-    await transactionError.add({
-      ...transaction,
-      error: {
-        message: error.response.data.error[0],
-        status: error.response.status,
-      },
-    });
     await transactionRef.add(transaction);
-    res.status(400).send(error.response?.data?.error[0]);
+    res.status(400).send({ error });
   }
 };
 export default handler;

@@ -36,8 +36,8 @@ export default function BuyData() {
     watch,
   } = useForm<form>({});
 
-  const network = [ "MTN SME", "AIRTEL", "9MOBILE", "GLO"];
-  const watchNetwork = watch("network", "MTN GIFTING");
+  const network = ["MTN SME", "AIRTEL", "9MOBILE", "GLO"];
+  const watchNetwork = watch("network", "MTN SME");
   const watchBundle = watch(
     "bundle",
     `${bundle[0].size} - ${bundle[0].price} - ${bundle[0].duration}`
@@ -54,14 +54,10 @@ export default function BuyData() {
   }, [watchBundle]);
 
   const submitForm = async (values: form) => {
-    const network = prices.find((network) => {
-      return network.network == values.network;
-    });
-
     const plan = bundle.find((plan) => {
       return Number(plan.price.slice(1)) == values.amount;
     });
-    const networkId = network?.networkID;
+
     const planCode = plan?.planCode;
 
     const isValidNumber = validatePhoneNumber(setError, values);
@@ -75,15 +71,16 @@ export default function BuyData() {
       await axios({
         method: "post",
         url: "/api/buyData",
-        data: { values, user, planCode, networkId },
+        data: { values, user, planCode },
       });
       toast.success("Transaction Successful!");
       setLoading(false);
       setTimeout(() => {
         router.push("/dashboard");
       }, 1000);
-    } catch (error: any) {
-      toast.error(error.response.data);
+    } catch (error) {
+      toast.error("Transaction Error!");
+      console.log(error);
       setLoading(false);
     }
   };
