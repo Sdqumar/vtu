@@ -17,6 +17,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (networkId === "MTN GIFTING") {
     networkId = "GIFTING";
   }
+  console.log(networkId);
 
   const getTransaction = <t extends string>(message: t, status: t) => {
     return {
@@ -45,34 +46,58 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (userData.walletBalance < amount) {
       throw new Error("insufficent funds");
     }
-    const data = {
-      token: process.env.ALAGUSIY_API,
-      mobile: phoneNumber,
-      network: networkId,
-      plan_code: planCode,
-      request_id,
-    };
-    console.log(data);
+    let APITransaction;
+    if (networkId === "AIRTEL") {
+      const data = {
+        network: 4,
+        mobile_number: phoneNumber,
+        plan: planCode,
+        Ported_number: true,
+      };
+      console.log(data);
 
-    const APITransaction = await axios({
-      method: "post",
-      url: "https://alagusiy.com/api/data",
-      data,
-    });
-    // console.log(APITransaction);
-    // console.log(APITransaction.data);
+      APITransaction = await axios({
+        method: "post",
+        url: "https://www.superjaraapi.com/api/data/",
+        headers: {
+          Authorization: `Token ${process.env.SUPERJARA_API}`,
+          "Content-Type": "application/json",
+        },
+        data,
+      });
+    } else {
+      const data = {
+        token: process.env.ALAGUSIY_API,
+        mobile: phoneNumber,
+        network: networkId,
+        plan_code: planCode,
+        request_id,
+      };
+      console.log(data);
+
+      APITransaction = await axios({
+        method: "post",
+        url: "https://alagusiy.com/api/data",
+        data,
+      });
+
+      if (APITransaction.data.code !== "200") {
+        const transaction = getTransaction("Transaction Failed", "Failed");
+
+        await transactionError.add({
+          ...transaction,
+          error: APITransaction.data,
+          planCode,
+        });
+
+        throw new Error("insufficent account funds");
+      }
+    }
+
     console.log(APITransaction.data);
 
     const transaction = getTransaction("Transaction Successful", "Delivered");
-    if (APITransaction.data.code !== "200") {
-      await transactionError.add({
-        ...transaction,
-        error: APITransaction.data,
-        planCode,
-      });
 
-      throw new Error("insufficent account funds");
-    }
     await transactionRef.add(transaction);
     await userRef.update({
       walletBalance: FieldValue.increment(-Number(amount)),

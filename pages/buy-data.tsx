@@ -68,7 +68,6 @@ export default function BuyData() {
     });
 
     const planCode = plan?.planCode;
-    console.log(planCode);
 
     const isValidNumber = validatePhoneNumber(setError, values);
     if (!isValidNumber) return;
