@@ -23,6 +23,7 @@ type form = {
 export default function BuyData() {
   const [loading, setLoading] = useState(false);
   const [bundle, setBundle] = useState(prices[0].prices);
+  const [amount, setAmount] = useState(0);
 
   const userContext = useUser();
   const user = userContext?.user!;
@@ -44,12 +45,20 @@ export default function BuyData() {
   );
 
   useEffect(() => {
-    const bundle = prices.find((item) => item.network === watchNetwork);
-    setBundle(bundle!.prices);
-  }, [watchNetwork]);
+    let bundles = prices.find((item) => item.network === watchNetwork);
+    let bundle = bundles!.prices;
+    setBundle(bundle);
+    setValue(
+      "bundle",
+      `${bundle[0].size} - ${bundle[0].price} - ${bundle[0].duration}`
+    );
+
+    const amount = bundles!.prices[0].price.slice(1);
+    setValue("amount", Number(amount));
+  }, [watchNetwork, bundle]);
 
   useEffect(() => {
-    const amount = watchBundle?.split("-")[1].slice(2);
+    const amount = watchBundle?.split("-")[1]?.slice(2);
     setValue("amount", Number(amount));
   }, [watchBundle]);
 
