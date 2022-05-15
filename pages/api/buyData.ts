@@ -54,7 +54,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         plan: planCode,
         Ported_number: true,
       };
-      console.log(data);
 
       APITransaction = await axios({
         method: "post",
@@ -73,7 +72,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         plan_code: planCode,
         request_id,
       };
-      console.log(data);
 
       APITransaction = await axios({
         method: "post",
@@ -83,6 +81,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
       if (APITransaction.data.code !== "200") {
         const transaction = getTransaction("Transaction Failed", "Failed");
+        console.log(APITransaction.data);
+        console.log(APITransaction.config);
 
         await transactionError.add({
           ...transaction,
@@ -95,6 +95,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     console.log(APITransaction.data);
+    console.log(APITransaction.config);
 
     const transaction = getTransaction("Transaction Successful", "Delivered");
 
@@ -106,6 +107,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     res.status(200).json({ message: "Transaction Successful" });
   } catch (error: any) {
     console.log(error);
+    console.log(error.response);
+    // console.log(error.toJSON());
     const transaction = getTransaction("Failed Transaction ", "Failed");
     await transactionRef.add(transaction);
     res.status(400).send({ error });
