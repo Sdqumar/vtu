@@ -46,7 +46,7 @@ export default function Services() {
           key={item.name.replace(" ", "_")}
         >
           <a>
-            <div className="hover:text-primary my-3 flex h-60 w-60 cursor-pointer flex-col items-center justify-center bg-white shadow-md transition-all hover:shadow-xl md:h-40 md:w-[11.5rem]">
+            <div className="hover:text-primary my-3 mx-1 flex h-40 w-40 cursor-pointer flex-col items-center justify-center bg-white shadow-md transition-all hover:shadow-xl md:mx-0  md:w-[11.5rem]">
               <Image
                 src={`/${item.img}.png`}
                 priority={true}

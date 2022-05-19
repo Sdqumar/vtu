@@ -9,7 +9,7 @@ import SessionTimeout from "../components/global/SessionTimeout";
 // import "flowbite";
 const Whatsapp = dynamic(() => import("../components/global/Whatapp"));
 const Sidebar = dynamic(() => import("../components/global/sidebar"));
-
+import CssBaseline from "@mui/material/CssBaseline";
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const isHomepage = router.pathname === "/";
@@ -17,6 +17,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <UserProvider>
       <Auth>
+        <CssBaseline />
         <div className="flex">
           <Sidebar />
           <Whatsapp />
