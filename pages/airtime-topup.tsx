@@ -98,8 +98,8 @@ export default function AirtimeTopUp() {
             Dear {user.displayName}
           </h2>
           <h4 className="pt-4 text-sm">
-            You're about to buy {values?.network} ₦{values?.amount} Airtime to{" "}
-            {values?.phoneNumber}
+            You&apos;re about to buy {values?.network} ₦{values?.amount} Airtime
+            to {values?.phoneNumber}
           </h4>
           <div className="m-auto mb-5 flex">
             <Button

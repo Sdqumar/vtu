@@ -124,7 +124,7 @@ export default function BuyData() {
             Dear {user.displayName}
           </h2>
           <h4 className="pt-4 text-sm">
-            You're about to buy {values?.network}{" "}
+            You&apos;re about to buy {values?.network}{" "}
             {values?.bundle?.split(" -")[0]}
             {values?.bundle?.split(" -")[1]} to {values?.phoneNumber}
           </h4>
