@@ -5,6 +5,8 @@ import Button from "../components/global/Button";
 import Select from "../components/global/select";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
+import { Dialog } from "@mui/material";
+
 import { useUser } from "../components/context/userContext";
 import {
   validateBalance,
@@ -24,10 +26,13 @@ export default function AirtimeTopUp() {
   const userContext = useUser();
   const user = userContext?.user!;
   const router = useRouter();
+  const [open, setOpen] = useState(false);
+  const [values, setValues] = useState<form>();
 
   const {
     handleSubmit,
     register,
+    getValues,
     setError,
     formState: { errors },
   } = useForm<form>();
@@ -37,13 +42,10 @@ export default function AirtimeTopUp() {
     { name: "9MOBILE", id: 3 },
     { name: "GLO", id: 2 },
   ];
-  const submitForm = async (values: form) => {
-    const isValidNumber = validatePhoneNumber(setError, values);
-    if (!isValidNumber) return;
-    const isValidBalance = validateBalance(setError, values, user);
-    if (!isValidBalance) return;
+
+  const handleTransaction = async () => {
     let networkId = network.find((network) => {
-      return network.name == values.network;
+      return network.name == values?.network;
     });
 
     setLoading(true);
@@ -64,10 +66,52 @@ export default function AirtimeTopUp() {
       setLoading(false);
     }
   };
+  const submitForm = async (values: form) => {
+    const isValidNumber = validatePhoneNumber(setError, values);
+    if (!isValidNumber) return;
+    const isValidBalance = validateBalance(setError, values, user);
+    if (!isValidBalance) return;
+    setOpen(true);
+    setValues(getValues());
+  };
 
   return (
     <div className=" mb-40 mt-10 md:ml-20  ">
       <Toaster />
+      <Dialog onClose={() => setOpen(false)} open={open}>
+        <div className="p-5">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-15 m-auto h-10 text-red-400"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M20.618 5.984A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016zM12 9v2m0 4h.01"
+            />
+          </svg>
+          <h2 className="mt-4 text-center text-2xl font-bold uppercase">
+            Dear {user.displayName}
+          </h2>
+          <h4 className="pt-4 text-sm">
+            You're about to buy {values?.network} ₦{values?.amount} Airtime to{" "}
+            {values?.phoneNumber}
+          </h4>
+          <div className="m-auto mb-5 flex">
+            <Button
+              label="cancel"
+              style="bg-red-700 mr-5"
+              onClick={() => setOpen(false)}
+              disabled={loading}
+            />
+            <Button label="ok" onClick={handleTransaction} loading={loading} />
+          </div>
+        </div>
+      </Dialog>
       <section className="my-5 ml-4 text-3xl  font-bold text-gray-800">
         Buy Airtime
       </section>
