@@ -7,7 +7,6 @@ import axios from "axios";
 import { useUser } from "../components/context/userContext";
 import Select from "../components/global/select";
 import toast, { Toaster } from "react-hot-toast";
-import { useRouter } from "next/router";
 import {
   validateBalance,
   validatePhoneNumber,
@@ -32,7 +31,6 @@ export default function BuyData() {
   const userContext = useUser();
   const user = userContext?.user!;
 
-  const router = useRouter();
   const {
     register,
     setError,
@@ -197,7 +195,7 @@ export default function BuyData() {
       )}
 
       {isSuccess && (
-        <div className="flex h-full w-96 flex-col justify-center p-8  md:justify-start ">
+        <div className="mx-4 flex  w-96 flex-col  justify-start ">
           <h4
             className=" mb-5 cursor-pointer rounded-lg border bg-gray-100 p-2 py-3 px-3 text-center text-xl font-medium hover:bg-green-100"
             onClick={handleCloseSuccess}
@@ -212,6 +210,18 @@ export default function BuyData() {
           </h4>
         </div>
       )}
+
+      <div className="mx-4 mt-10 w-96 ">
+        <h2 className="bg-[#fff0c2]  p-4 text-[#1f1d18]">MTN [SME] *461*4#</h2>
+        <h2 className="bg-[#fff0c2]  p-4 text-[#1f1d18]">
+          MTN [Gifting] *131*4# or *460*260#
+        </h2>
+        <h2 className="bg-[#c3e6cb]  p-4 text-[#155724]">
+          9phone [Gifting] *228#
+        </h2>
+        <h2 className="bg-[#f5c6cb]  p-4 text-[#721c24]">Airtel *140#</h2>
+        <h2 className="bg-[#c3e6cb]  p-4 text-[#155724]">Glo *127*0#.</h2>
+      </div>
     </div>
   );
 }

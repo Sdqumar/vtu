@@ -12,7 +12,6 @@ import {
   validateBalance,
   validatePhoneNumber,
 } from "../components/global/utils";
-import { useRouter } from "next/router";
 import Link from "next/link";
 
 type form = {
@@ -26,7 +25,6 @@ export default function AirtimeTopUp() {
 
   const userContext = useUser();
   const user = userContext?.user!;
-  const router = useRouter();
   const [open, setOpen] = useState(false);
   const [values, setValues] = useState<form>();
   const [isSuccess, setIsSuccess] = useState(false);
@@ -156,7 +154,7 @@ export default function AirtimeTopUp() {
       )}
 
       {isSuccess && (
-        <div className="flex h-full w-96 flex-col justify-center p-8  md:justify-start ">
+        <div className="mx-4  flex w-96 flex-col justify-center p-8  md:justify-start ">
           <h4
             onClick={handleCloseSuccess}
             className=" mb-5 cursor-pointer rounded-lg border bg-gray-100 p-2 py-3 px-3 text-center text-xl font-medium hover:bg-green-100"
@@ -171,6 +169,22 @@ export default function AirtimeTopUp() {
           </h4>
         </div>
       )}
+
+      <div className="w-90 mx-4 mt-10 ">
+        <h2 className="bg-[#fff0c2]  p-4  text-[#1f1d18]">
+          MTN Airtime VTU *556#
+        </h2>
+
+        <h2 className="bg-[#c3e6cb]  p-4 text-[#155724]">
+          9phone Airtime VTU *232#
+        </h2>
+        <h2 className="bg-[#f5c6cb] p-4 text-[#721c24]">
+          Airtel Airtime VTU *123#
+        </h2>
+        <h2 className="bg-[#c3e6cb]  p-4 text-[#155724]">
+          Glo Airtime VTU #124#.
+        </h2>
+      </div>
     </div>
   );
 }
