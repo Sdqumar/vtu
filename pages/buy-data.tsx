@@ -13,6 +13,7 @@ import {
   validatePhoneNumber,
 } from "../components/global/utils";
 import { Dialog } from "@mui/material";
+import Link from "next/link";
 
 type form = {
   network?: string;
@@ -25,6 +26,7 @@ export default function BuyData() {
   const [loading, setLoading] = useState(false);
   const [bundle, setBundle] = useState(prices[0].prices);
   const [open, setOpen] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   const [values, setValues] = useState<form>();
 
   const userContext = useUser();
@@ -36,6 +38,7 @@ export default function BuyData() {
     setError,
     setValue,
     getValues,
+    reset,
     formState: { errors },
     handleSubmit,
     watch,
@@ -49,16 +52,20 @@ export default function BuyData() {
   );
 
   useEffect(() => {
-    let bundles = prices.find((item) => item.network === watchNetwork);
-    let bundle = bundles!.prices;
-    setBundle(bundle);
-    setValue(
-      "bundle",
-      `${bundle[0].size} - ${bundle[0].price} - ${bundle[0].duration}`
-    );
+    if (!isSuccess) {
+      let bundles = prices.find((item) => item.network === watchNetwork);
+      let bundle = bundles?.prices;
+      if (bundle) {
+        setBundle(bundle);
 
-    const amount = bundles!.prices[0].price.slice(1);
-    setValue("amount", Number(amount));
+        setValue(
+          "bundle",
+          `${bundle[0].size} - ${bundle[0].price} - ${bundle[0].duration}`
+        );
+        const amount = bundles!.prices[0].price.slice(1);
+        setValue("amount", Number(amount));
+      }
+    }
   }, [watchNetwork, bundle]);
 
   useEffect(() => {
@@ -82,9 +89,8 @@ export default function BuyData() {
       });
       toast.success("Transaction Successful!");
       setLoading(false);
-      setTimeout(() => {
-        router.push("/dashboard");
-      }, 1000);
+      setOpen(false);
+      setIsSuccess(true);
     } catch (error) {
       toast.error("Transaction Error!");
       console.log(error);
@@ -100,7 +106,10 @@ export default function BuyData() {
     setOpen(true);
     setValues(getValues());
   };
-
+  const handleCloseSuccess = () => {
+    reset();
+    setIsSuccess(false);
+  };
   return (
     <div className=" mb-40 mt-10 md:ml-20">
       <Toaster />
@@ -142,48 +151,67 @@ export default function BuyData() {
       <section className="my-5 ml-4 text-3xl font-bold text-gray-800">
         Buy Data
       </section>
-      <main className="flex flex-wrap">
-        <form
-          onSubmit={handleSubmit((formValues) => submitForm(formValues))}
-          className="w-96 rounded-md p-8 shadow-lg transition-all duration-700"
-        >
-          <Select
-            register={register}
-            name="network"
-            data={network}
-            label="Network"
-            errors={errors}
-          />
+      {!isSuccess && (
+        <main className="flex flex-wrap">
+          <form
+            onSubmit={handleSubmit((formValues) => submitForm(formValues))}
+            className="w-96 rounded-md p-8 shadow-lg transition-all duration-700"
+          >
+            <Select
+              register={register}
+              name="network"
+              data={network}
+              label="Network"
+              errors={errors}
+            />
 
-          <Select
-            register={register}
-            name="bundle"
-            data={bundle.map(
-              (item) => `${item.size} - ${item.price} - ${item.duration}`
-            )}
-            label="Data bundle"
-            errors={errors}
-          />
-          <Input
-            register={register}
-            name="amount"
-            label="Amount"
-            type="number"
-            errors={errors}
-            disabled
-          />
+            <Select
+              register={register}
+              name="bundle"
+              data={bundle.map(
+                (item) => `${item.size} - ${item.price} - ${item.duration}`
+              )}
+              label="Data bundle"
+              errors={errors}
+            />
+            <Input
+              register={register}
+              name="amount"
+              label="Amount"
+              type="number"
+              errors={errors}
+              disabled
+            />
 
-          <Input
-            register={register}
-            name="phoneNumber"
-            label="Phone Number"
-            maxLength={11}
-            errors={errors}
-          />
+            <Input
+              register={register}
+              name="phoneNumber"
+              label="Phone Number"
+              maxLength={11}
+              errors={errors}
+            />
 
-          <Button label="continue" />
-        </form>
-      </main>
+            <Button label="continue" />
+          </form>
+        </main>
+      )}
+
+      {isSuccess && (
+        <div className="flex h-full w-96 flex-col justify-center p-8  md:justify-start ">
+          <h4
+            className=" mb-5 cursor-pointer rounded-lg border bg-gray-100 p-2 py-3 px-3 text-center text-xl font-medium hover:bg-green-100"
+            onClick={handleCloseSuccess}
+          >
+            Buy Data
+          </h4>
+          <h4 className=" mb-5 cursor-pointer rounded-lg border bg-gray-100 p-2 py-3 px-3 text-center text-xl font-medium hover:bg-green-100">
+            <Link href="/transactions">Check Transaction</Link>
+          </h4>
+          <h4 className=" mb-2 cursor-pointer rounded-lg border bg-gray-100 p-2 py-3 px-3 text-center text-xl font-medium hover:bg-green-100">
+            <Link href="/dashboard">Return To Dashboard</Link>
+          </h4>
+        </div>
+      )}
     </div>
   );
 }

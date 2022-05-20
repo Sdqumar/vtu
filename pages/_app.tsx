@@ -27,7 +27,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             <link rel="icon" href="/favicon.png" />
             <title>Quadrorecharge</title>
           </Head>
-          <SessionTimeout />
+          {/* <SessionTimeout /> */}
           <Component {...pageProps} />
         </div>
       </Auth>

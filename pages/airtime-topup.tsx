@@ -13,6 +13,7 @@ import {
   validatePhoneNumber,
 } from "../components/global/utils";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 type form = {
   network?: string;
@@ -28,12 +29,14 @@ export default function AirtimeTopUp() {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [values, setValues] = useState<form>();
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const {
     handleSubmit,
     register,
     getValues,
     setError,
+    reset,
     formState: { errors },
   } = useForm<form>();
   const network = [
@@ -57,9 +60,8 @@ export default function AirtimeTopUp() {
       });
       toast.success("Transaction Successful!");
       setLoading(false);
-      setTimeout(() => {
-        router.push("/dashboard");
-      }, 3000);
+      setOpen(false);
+      setIsSuccess(true);
     } catch (error) {
       toast.error("Transaction Error!");
       console.log(error);
@@ -75,6 +77,10 @@ export default function AirtimeTopUp() {
     setValues(getValues());
   };
 
+  const handleCloseSuccess = () => {
+    reset();
+    setIsSuccess(false);
+  };
   return (
     <div className=" mb-40 mt-10 md:ml-20  ">
       <Toaster />
@@ -115,37 +121,56 @@ export default function AirtimeTopUp() {
       <section className="my-5 ml-4 text-3xl  font-bold text-gray-800">
         Buy Airtime
       </section>
-      <main className="flex  flex-wrap">
-        <form
-          onSubmit={handleSubmit((formValues) => submitForm(formValues))}
-          className="w-96 rounded-md p-8 shadow-lg transition-all duration-700"
-        >
-          <Select
-            register={register}
-            name="network"
-            data={network.map((network) => network.name)}
-            label="Choose Network"
-            errors={errors}
-          />
-          <Input
-            register={register}
-            name="phoneNumber"
-            label="Phone Number"
-            maxLength={11}
-            errors={errors}
-          />
+      {!isSuccess && (
+        <main className="flex  flex-wrap">
+          <form
+            onSubmit={handleSubmit((formValues) => submitForm(formValues))}
+            className="w-96 rounded-md p-8 shadow-lg transition-all duration-700"
+          >
+            <Select
+              register={register}
+              name="network"
+              data={network.map((network) => network.name)}
+              label="Choose Network"
+              errors={errors}
+            />
+            <Input
+              register={register}
+              name="phoneNumber"
+              label="Phone Number"
+              maxLength={11}
+              errors={errors}
+            />
 
-          <Input
-            register={register}
-            name="amount"
-            label="Amount"
-            type="number"
-            errors={errors}
-          />
+            <Input
+              register={register}
+              name="amount"
+              label="Amount"
+              type="number"
+              errors={errors}
+            />
 
-          <Button label="continue" loading={loading} />
-        </form>
-      </main>
+            <Button label="continue" loading={loading} />
+          </form>
+        </main>
+      )}
+
+      {isSuccess && (
+        <div className="flex h-full w-96 flex-col justify-center p-8  md:justify-start ">
+          <h4
+            onClick={handleCloseSuccess}
+            className=" mb-5 cursor-pointer rounded-lg border bg-gray-100 p-2 py-3 px-3 text-center text-xl font-medium hover:bg-green-100"
+          >
+            Buy Airtime
+          </h4>
+          <h4 className=" mb-5 cursor-pointer rounded-lg border bg-gray-100 p-2 py-3 px-3 text-center text-xl font-medium hover:bg-green-100">
+            <Link href="/transactions">Check Transaction</Link>
+          </h4>
+          <h4 className=" mb-2 cursor-pointer rounded-lg border bg-gray-100 p-2 py-3 px-3 text-center text-xl font-medium hover:bg-green-100">
+            <Link href="/dashboard">Return To Dashboard</Link>
+          </h4>
+        </div>
+      )}
     </div>
   );
 }
