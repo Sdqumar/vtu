@@ -24,6 +24,7 @@ export const validatePhoneNumber = (
     "0704",
     "0706",
     "0906",
+    "0916",
     "0702",
     "0814",
     "0810",
