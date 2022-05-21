@@ -6,7 +6,7 @@ import { format } from "date-fns";
 const COLUMNS = [
   {
     Header: "Name",
-    accessor: (row: any) => row.name.toUpperCase(),
+    accessor: (row: any) => row.description?.toUpperCase(),
   },
   {
     Header: "Date",
@@ -17,6 +17,18 @@ const COLUMNS = [
   {
     Header: "TO",
     accessor: "to",
+  },
+  {
+    Header: "Reference",
+    accessor: "request_id",
+  },
+  {
+    Header: "Old Bal",
+    accessor: (row: any) => row?.prevBalance.toLocaleString("en-US"),
+  },
+  {
+    Header: "New Bal",
+    accessor: (row: any) => row?.newBalance.toLocaleString("en-US"),
   },
   {
     Header: "Amount",
@@ -85,7 +97,7 @@ export const Table = ({ data: tableData }: { data: DocumentData[] }) => {
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
-                <th className="py-4" {...column.getHeaderProps()}>
+                <th className=" pl-2" {...column.getHeaderProps()}>
                   {column.render("Header")}
                 </th>
               ))}
@@ -99,7 +111,10 @@ export const Table = ({ data: tableData }: { data: DocumentData[] }) => {
               <tr className="border-y" {...row.getRowProps()}>
                 {row.cells.map((cell) => {
                   return (
-                    <td className="px-10 py-8" {...cell.getCellProps()}>
+                    <td
+                      className="w-20 py-4 pl-2 text-center text-sm "
+                      {...cell.getCellProps()}
+                    >
                       {cell.render("Cell")}
                     </td>
                   );

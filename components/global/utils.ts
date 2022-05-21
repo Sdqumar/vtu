@@ -57,7 +57,7 @@ export const validatePhoneNumber = (
     isValidNumber = GloPrefixes.includes(numberPrefix!);
   }
 
-  if (values.network === "9mobile") {
+  if (values.network === "9MOBILE") {
     isValidNumber = EtisaltPrefixes.includes(numberPrefix!);
   }
 

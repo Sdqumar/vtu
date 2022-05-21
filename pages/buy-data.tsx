@@ -42,7 +42,7 @@ export default function BuyData() {
     watch,
   } = useForm<form>({});
 
-  const network = ["MTN SME", "AIRTEL"];
+  const network = ["MTN SME", "MTN GIFTING", "AIRTEL", "GLO", "9MOBILE"];
   const watchNetwork = watch("network", "MTN SME");
   const watchBundle = watch(
     "bundle",
@@ -72,6 +72,11 @@ export default function BuyData() {
   }, [watchBundle]);
 
   const handleTransaction = async () => {
+    const network = prices.find((network) => {
+      return network.network == values?.network;
+    });
+    const networkId = network?.networkID;
+
     const plan = bundle.find((plan) => {
       return Number(plan.price.slice(1)) == values?.amount;
     });
@@ -83,7 +88,7 @@ export default function BuyData() {
       await axios({
         method: "post",
         url: "/api/buyData",
-        data: { values, user, planCode },
+        data: { values, user, planCode, networkId },
       });
       toast.success("Transaction Successful!");
       setLoading(false);
@@ -91,8 +96,8 @@ export default function BuyData() {
       setIsSuccess(true);
     } catch (error) {
       toast.error("Transaction Error!");
-      console.log(error);
       setLoading(false);
+      setOpen(false);
     }
   };
 
@@ -217,7 +222,7 @@ export default function BuyData() {
           MTN [Gifting] *131*4# or *460*260#
         </h2>
         <h2 className="bg-[#c3e6cb]  p-4 text-[#155724]">
-          9phone [Gifting] *228#
+          9mobile [Gifting] *228#
         </h2>
         <h2 className="bg-[#f5c6cb]  p-4 text-[#721c24]">Airtel *140#</h2>
         <h2 className="bg-[#c3e6cb]  p-4 text-[#155724]">Glo *127*0#.</h2>

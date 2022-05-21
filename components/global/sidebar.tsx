@@ -112,7 +112,7 @@ const Sidebar = () => {
                 </h4>
                 {user?.walletBalance! > 0 && (
                   <span className="px-5 text-yellow-200">
-                    ₦ {user?.walletBalance || ""}
+                    ₦ {user?.walletBalance?.toLocaleString("en-US") || ""}
                   </span>
                 )}
               </div>

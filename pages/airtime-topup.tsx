@@ -64,6 +64,7 @@ export default function AirtimeTopUp() {
       toast.error("Transaction Error!");
       console.log(error);
       setLoading(false);
+      setOpen(false);
     }
   };
   const submitForm = async (values: form) => {
@@ -176,7 +177,7 @@ export default function AirtimeTopUp() {
         </h2>
 
         <h2 className="bg-[#c3e6cb]  p-4 text-[#155724]">
-          9phone Airtime VTU *232#
+          9mobile Airtime VTU *232#
         </h2>
         <h2 className="bg-[#f5c6cb] p-4 text-[#721c24]">
           Airtel Airtime VTU *123#

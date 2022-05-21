@@ -89,7 +89,7 @@ export default function AccountHistory() {
                 {item.name}
               </h3>
               <h5 className="text-center text-2xl font-medium text-gray-700 sm:text-sm">
-                {item.amount}
+                {item.amount.toLocaleString("en-US")}
               </h5>
             </div>
           </div>

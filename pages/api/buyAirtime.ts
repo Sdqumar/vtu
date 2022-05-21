@@ -11,22 +11,30 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { uid } = user;
   const request_id = uuidv4();
 
-  const getTransaction = (message: string, status: string) => {
+  const userRef = firestore.collection("users").doc(uid);
+  let userRecord = await userRef.get();
+  let userData = userRecord.data()!;
+  const getTransaction = (
+    message: string,
+    status: string,
+    newBalance: number
+  ) => {
     return {
       uid,
       message,
       status,
       network,
+      prevBalance: userData.walletBalance,
+      newBalance,
       amount,
       request_id,
       type: " Airtime Payment",
-      name: network + " ₦" + amount + " Airtime ",
+      description: network + " ₦" + amount + " Airtime ",
       to: phoneNumber,
       date: FieldValue.serverTimestamp(),
     };
   };
 
-  const userRef = firestore.collection("users").doc(uid);
   const transactionRef = firestore.collection("transactions");
 
   try {
@@ -53,8 +61,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (APITransaction.data.code != "200") {
       throw new Error("insufficent account funds");
     }
-
-    const transaction = getTransaction("Transaction Successful", "Delivered");
+    const newBalance = Number(userData.walletBalance) - Number(amount);
+    const transaction = getTransaction(
+      "Transaction Successful",
+      "Delivered",
+      newBalance
+    );
 
     await transactionRef.add(transaction);
     await userRef.update({
@@ -65,8 +77,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     res.status(200).json({ message: "Transaction Successful" });
   } catch (error) {
     console.log(error);
+    const newBalance = Number(userData.walletBalance);
 
-    const transaction = getTransaction("Failed Transactions ", "Failed");
+    const transaction = getTransaction(
+      "Failed Transactions ",
+      "Failed",
+      newBalance
+    );
     await transactionRef.add(transaction);
 
     res.status(400).send({ error });

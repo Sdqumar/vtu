@@ -5,21 +5,31 @@ import { firestore } from "../../lib/firebaseNode";
 const { v4: uuidv4 } = require("uuid");
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { values, user, planCode } = req.body;
+  const { values, user, planCode, networkId } = req.body;
   const { network, phoneNumber, amount, bundle } = values;
   const { uid } = user;
   const request_id = uuidv4();
 
-  let networkId = network;
-  if (networkId === "MTN SME") {
-    networkId = "MTN";
+  let networkName = network;
+  if (networkName === "MTN SME") {
+    networkName = "MTN";
   }
-  if (networkId === "MTN GIFTING") {
-    networkId = "GIFTING";
+  if (networkName === "MTN GIFTING") {
+    networkName = "GIFTING";
   }
-  console.log(networkId);
 
-  const getTransaction = <t extends string>(message: t, status: t) => {
+  const userRef = firestore.collection("users").doc(uid);
+  const transactionRef = firestore.collection("transactions");
+  const transactionError = firestore.collection("transactionError");
+
+  let userRecord = await userRef.get();
+  let userData = userRecord.data()!;
+
+  const getTransaction = (
+    message: string,
+    status: string,
+    newBalance: number
+  ) => {
     return {
       uid,
       message,
@@ -27,29 +37,72 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       network,
       networkId,
       amount,
+      prevBalance: userData.walletBalance,
+      newBalance,
       request_id,
       type: "Data Payment",
-      name: `${network} ${bundle}`,
+      description: `${network} ${bundle}`,
       to: phoneNumber,
       date: FieldValue.serverTimestamp(),
     };
   };
 
-  const userRef = firestore.collection("users").doc(uid);
-  const transactionRef = firestore.collection("transactions");
-  const transactionError = firestore.collection("transactionError");
+  const completeTransaction = async () => {
+    const newBalance = Number(userData.walletBalance) - Number(amount);
+
+    const transaction = getTransaction(
+      "Transaction Successful",
+      "Delivered",
+      newBalance
+    );
+
+    await transactionRef.add(transaction);
+    await userRef.update({
+      walletBalance: FieldValue.increment(-Number(amount)),
+      totalSpent: FieldValue.increment(Number(amount)),
+    });
+    res.status(200).json({ message: "Transaction Successful" });
+  };
 
   try {
-    let user = await userRef.get();
-    let userData = user.data()!;
-
     if (userData.walletBalance < amount) {
       throw new Error("insufficent funds");
     }
+
     let APITransaction;
-    if (networkId === "AIRTEL") {
+
+    if (networkName === "MTN" || networkName === "9MOBILE") {
       const data = {
-        network: 4,
+        token: process.env.ALAGUSIY_API,
+        mobile: phoneNumber,
+        network: networkName,
+        plan_code: planCode,
+        request_id,
+      };
+
+      APITransaction = await axios({
+        method: "post",
+        url: "https://alagusiy.com/api/data",
+        data,
+      });
+
+      if (APITransaction.data.code !== "200") {
+        const errorResponse = {
+          url: APITransaction.config.url,
+          dataSent: JSON.parse(APITransaction.config.data),
+          erorrMessage: APITransaction.data,
+          date: FieldValue.serverTimestamp(),
+        };
+
+        await transactionError.add(errorResponse);
+
+        throw new Error("error occured");
+      } else {
+        completeTransaction();
+      }
+    } else {
+      const data = {
+        network: networkId,
         mobile_number: phoneNumber,
         plan: planCode,
         Ported_number: true,
@@ -64,53 +117,29 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         },
         data,
       });
-    } else {
-      const data = {
-        token: process.env.ALAGUSIY_API,
-        mobile: phoneNumber,
-        network: networkId,
-        plan_code: planCode,
-        request_id,
+      completeTransaction();
+    }
+  } catch (error: any) {
+    if (networkName !== "MTN" || networkName !== "9MOBILE") {
+      const errorResponse = {
+        dataSent: error.response.config.data,
+        url: error.response.config.url,
+        erorrMessage: error.response.data.error[0],
+        date: FieldValue.serverTimestamp(),
+        network,
       };
-
-      APITransaction = await axios({
-        method: "post",
-        url: "https://alagusiy.com/api/data",
-        data,
-      });
-
-      if (APITransaction.data.code !== "200") {
-        const transaction = getTransaction("Transaction Failed", "Failed");
-        console.log(APITransaction.data);
-        console.log(APITransaction.config);
-
-        await transactionError.add({
-          ...transaction,
-          error: APITransaction.data,
-          planCode,
-        });
-
-        throw new Error("insufficent account funds");
-      }
+      await transactionError.add(errorResponse);
     }
 
-    console.log(APITransaction.data);
-    console.log(APITransaction.config);
-
-    const transaction = getTransaction("Transaction Successful", "Delivered");
-
+    const newBalance = userData.walletBalance;
+    const transaction = getTransaction(
+      "Failed Transaction ",
+      "Failed",
+      newBalance
+    );
     await transactionRef.add(transaction);
-    await userRef.update({
-      walletBalance: FieldValue.increment(-Number(amount)),
-      totalSpent: FieldValue.increment(Number(amount)),
-    });
-    res.status(200).json({ message: "Transaction Successful" });
-  } catch (error: any) {
     console.log(error);
-    console.log(error.response);
-    // console.log(error.toJSON());
-    const transaction = getTransaction("Failed Transaction ", "Failed");
-    await transactionRef.add(transaction);
+
     res.status(400).send({ error });
   }
 };
