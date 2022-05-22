@@ -20,7 +20,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   const userRef = firestore.collection("users").doc(uid);
   const transactionRef = firestore.collection("transactions");
-  const transactionError = firestore.collection("transactionError");
+  const transactionResponse = firestore.collection("transactionResponse");
 
   let userRecord = await userRef.get();
   let userData = userRecord.data()!;
@@ -86,16 +86,19 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         data,
       });
 
+      console.log(APITransaction.config.data);
+      console.log(APITransaction.config.url);
+      console.log(APITransaction.data);
+      const transacResponse = {
+        url: APITransaction.config.url,
+        dataSent: JSON.parse(APITransaction.config.data),
+        Message: APITransaction.data,
+        date: FieldValue.serverTimestamp(),
+      };
+
+      await transactionResponse.add(transacResponse);
+
       if (APITransaction.data.code !== "200") {
-        const errorResponse = {
-          url: APITransaction.config.url,
-          dataSent: JSON.parse(APITransaction.config.data),
-          erorrMessage: APITransaction.data,
-          date: FieldValue.serverTimestamp(),
-        };
-
-        await transactionError.add(errorResponse);
-
         throw new Error("error occured");
       } else {
         completeTransaction();
@@ -117,6 +120,18 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         },
         data,
       });
+
+      console.log(APITransaction.config);
+      console.log(APITransaction.data);
+
+      const transacResponse = {
+        url: APITransaction.config.url,
+        dataSent: JSON.parse(APITransaction.config.data),
+        Message: APITransaction.data,
+        date: FieldValue.serverTimestamp(),
+      };
+
+      await transactionResponse.add(transacResponse);
       completeTransaction();
     }
   } catch (error: any) {
@@ -128,7 +143,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         date: FieldValue.serverTimestamp(),
         network,
       };
-      await transactionError.add(errorResponse);
+      await transactionResponse.add(errorResponse);
     }
 
     const newBalance = userData.walletBalance;
