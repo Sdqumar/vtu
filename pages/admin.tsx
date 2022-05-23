@@ -1,4 +1,4 @@
-import { collection, getFirestore } from "firebase/firestore";
+import { collection, doc, getFirestore } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useCollection } from "react-firebase-hooks/firestore";
@@ -19,7 +19,11 @@ function Admin() {
   const [value, loading] = useCollection(
     collection(getFirestore(firebase), "users")
   );
-  const users = value?.docs.map((doc) => doc.data());
+  const users = value?.docs.map((doc) => {
+    return { ...doc.data(), id: doc.id };
+  });
+  //   console.log(users);
+
   return (
     !loading && (
       <div className="mt-20 ml-5">

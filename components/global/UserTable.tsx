@@ -1,6 +1,7 @@
 import { useTable, useFilters, usePagination, Column } from "react-table";
 import React, { useMemo } from "react";
 import { DocumentData } from "firebase/firestore";
+import Link from "next/link";
 
 const COLUMNS = [
   {
@@ -14,6 +15,10 @@ const COLUMNS = [
   {
     Header: "Balance",
     accessor: "walletBalance",
+  },
+  {
+    Header: "User ID",
+    accessor: "id",
   },
 ];
 {
@@ -80,17 +85,21 @@ export const UserTable = ({ data: tableData }: { data: DocumentData[] }) => {
           {page.map((row) => {
             prepareRow(row);
             return (
-              <tr className="border-y" {...row.getRowProps()}>
-                {row.cells.map((cell) => {
-                  return (
-                    <td
-                      className="w-20 py-4 pl-2 text-center text-sm "
-                      {...cell.getCellProps()}
-                    >
-                      {cell.render("Cell")}
-                    </td>
-                  );
-                })}
+              <tr className="cursor-pointer border-y" {...row.getRowProps()}>
+                <Link href={`user/${row.values.id}`} passHref>
+                  <a>
+                    {row.cells.map((cell) => {
+                      return (
+                        <td
+                          className="w-20 py-4 pl-2 text-center text-sm "
+                          {...cell.getCellProps()}
+                        >
+                          {cell.render("Cell")}
+                        </td>
+                      );
+                    })}
+                  </a>
+                </Link>
               </tr>
             );
           })}
