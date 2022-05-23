@@ -1,6 +1,5 @@
 import Input from "../components/global/input";
 import { useState } from "react";
-import Button from "../components/global/Button";
 import { useForm } from "react-hook-form";
 import { useUser } from "../components/context/userContext";
 

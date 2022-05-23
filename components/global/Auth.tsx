@@ -6,6 +6,7 @@ import firebase from "../../lib/firebaseConfig";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { getUserData } from "./utils";
 import Spinner from "./sipnner";
+import { checkAdmin } from "../../utils/auth";
 type Authprops = {
   children: ReactNode;
 };
@@ -23,8 +24,10 @@ function Auth({ children }: Authprops) {
     if (user) {
       const { email, displayName, uid } = user;
       const userData = await getUserData(uid);
+      const isAdmin = (await checkAdmin()) as string;
+
       if (typeof email === "string") {
-        setUser({ email, displayName, uid, ...userData });
+        setUser({ email, displayName, uid, isAdmin: isAdmin, ...userData });
       }
       setverify(true);
     } else {

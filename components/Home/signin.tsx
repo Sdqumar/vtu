@@ -35,6 +35,7 @@ const SignIn = () => {
 
     try {
       const user = await signIn(values);
+
       const { email, displayName, uid } = user.user;
       //@ts-ignore
       userContext?.setUser({ email, displayName, uid });

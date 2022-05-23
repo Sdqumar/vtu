@@ -8,6 +8,7 @@ export const getUserData = async (uid: string) => {
   const docSnap = await getDoc(docRef);
   return docSnap.data();
 };
+
 type phoneNumber = {
   network?: string;
   phoneNumber?: number;

@@ -13,6 +13,7 @@ export type AuthUser = {
   walletBalance?: number;
   totalFunded?: number;
   totalSpent?: number;
+  isAdmin?: string;
   accountNumber?: number;
   earnings?: number;
 };
