@@ -2,7 +2,18 @@ import { useTable, useFilters, usePagination, Column } from "react-table";
 import React, { useMemo } from "react";
 import { DocumentData } from "firebase/firestore";
 import { format } from "date-fns";
+import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
 
+let loading = false;
+const refund = async (uid: string, transactionId: string) => {
+  //     await axios({
+  //     method: "post",
+  //     url: "/api/refund",
+  //     data: { uid, transactionId },
+  //   });
+  //   toast.success("Refund Successful!");
+};
 const COLUMNS = [
   {
     Header: "Name",
@@ -45,10 +56,10 @@ const COLUMNS = [
   },
   {
     Header: "Action",
-    accessor: (row: { status: string }) => {
-      // console.log(row);
+    accessor: (row: { uid: string; id: string }) => {
+      const { uid, id } = row;
 
-      return <button>Refund</button>;
+      return <button onClick={() => refund(uid, id)}>Refund</button>;
     },
   },
 ];
@@ -93,6 +104,8 @@ export const AdminTransactionTable = ({
 
   return (
     <div className="mx-10  mb-8  w-full">
+      <Toaster />
+
       <select
         className="w-32"
         value={pageSize}
