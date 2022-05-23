@@ -63,5 +63,6 @@ export const signout = () => signOut(auth);
 
 export const checkAdmin = async () => {
   const isAdmin = await auth.currentUser?.getIdTokenResult();
+
   return isAdmin!.claims.admin;
 };

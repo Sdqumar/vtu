@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import { useCollection } from "react-firebase-hooks/firestore";
 import { useUser } from "../../components/context/userContext";
 import firebase from "../../lib/firebaseConfig";
-import { Table } from "../../components/global/Table";
 import { AdminTransactionTable } from "../../components/global/AdminTransactionTable";
 
 function Admin() {

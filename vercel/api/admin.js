@@ -7,16 +7,17 @@ const handler = async (req, res) => {
   console.log(email, accesskey);
   try {
     const user = await auth.getUserByEmail(email);
-    console.log(user);
     if (process.env.ACCESSKEY === accesskey) {
-      auth.setCustomUserClaims(user.uid, {
+      await auth.setCustomUserClaims(user.uid, {
         admin: true,
       });
+      console.log(user);
       res.status(200).json(`user as been been given admin access`);
     } else {
       throw new Error();
     }
-  } catch {
+  } catch (error) {
+    console.log(error);
     res.status(400).send("error");
   }
 };

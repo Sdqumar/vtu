@@ -1,18 +1,36 @@
 import { useTable, useFilters, usePagination, Column } from "react-table";
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { DocumentData } from "firebase/firestore";
 import { format } from "date-fns";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
+import Button from "./Button";
+import { useRouter } from "next/router";
 
-let loading = false;
-const refund = async (uid: string, transactionId: string) => {
-  //     await axios({
-  //     method: "post",
-  //     url: "/api/refund",
-  //     data: { uid, transactionId },
-  //   });
-  //   toast.success("Refund Successful!");
+export const Refund = ({ uid, id }: any) => {
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
+  const refund = async (uid: string, transactionId: string) => {
+    setLoading(true);
+    await axios({
+      method: "post",
+      url: "/api/refund",
+      data: { uid, transactionId },
+    });
+    toast.success("Refund Successful!");
+    setLoading(false);
+    router.reload();
+  };
+
+  return (
+    <Button
+      loading={loading}
+      label="Refund"
+      disabled={loading}
+      onClick={() => refund(uid, id)}
+    />
+  );
 };
 const COLUMNS = [
   {
@@ -56,10 +74,9 @@ const COLUMNS = [
   },
   {
     Header: "Action",
-    accessor: (row: { uid: string; id: string }) => {
-      const { uid, id } = row;
-
-      return <button onClick={() => refund(uid, id)}>Refund</button>;
+    accessor: (row: { uid: string; id: string; status: string }) => {
+      const { uid, id, status } = row;
+      return status !== "Refunded" && <Refund uid={uid} id={id} />;
     },
   },
 ];
