@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import { useUser } from "../components/context/userContext";
-import { Table } from "../components/global/table";
+import { Table } from "../components/global/Table";
 import { getFirestore, collection, where, query } from "firebase/firestore";
 import { useCollectionOnce } from "react-firebase-hooks/firestore";
 import firebase from "../lib/firebaseConfig";

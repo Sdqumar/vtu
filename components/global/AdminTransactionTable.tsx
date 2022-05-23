@@ -1,24 +1,55 @@
 import { useTable, useFilters, usePagination, Column } from "react-table";
 import React, { useMemo } from "react";
 import { DocumentData } from "firebase/firestore";
-import Link from "next/link";
+import { format } from "date-fns";
 
 const COLUMNS = [
   {
     Header: "Name",
-    accessor: "name",
+    accessor: (row: any) => row.description?.toUpperCase(),
   },
   {
-    Header: "Email",
-    accessor: "email",
+    Header: "Date",
+    accessor: (row: { date: any }) =>
+      format(row.date.toDate(), "EE, dd MMM hh:mm "),
+  },
+
+  {
+    Header: "TO",
+    accessor: "to",
   },
   {
-    Header: "Balance",
-    accessor: "walletBalance",
+    Header: "Reference",
+    accessor: "request_id",
   },
   {
-    Header: "User ID",
-    accessor: "id",
+    Header: "Old Bal",
+    accessor: (row: any) => row?.prevBalance?.toLocaleString("en-US"),
+  },
+  {
+    Header: "New Bal",
+    accessor: (row: any) => row?.newBalance?.toLocaleString("en-US"),
+  },
+  {
+    Header: "Amount",
+    accessor: "amount",
+  },
+  {
+    Header: "Status",
+    accessor: (row: { status: string }) => {
+      if (row.status === "charge.success") {
+        return "Funded";
+      }
+      return row.status;
+    },
+  },
+  {
+    Header: "Action",
+    accessor: (row: { status: string }) => {
+      // console.log(row);
+
+      return <button>Refund</button>;
+    },
   },
 ];
 {
@@ -28,7 +59,11 @@ const COLUMNS = [
   /* the jsx key is provided in the .get*Props() spreads, but eslint doesn't believe you. I believe you. */
 }
 
-export const UserTable = ({ data: tableData }: { data: DocumentData[] }) => {
+export const AdminTransactionTable = ({
+  data: tableData,
+}: {
+  data: DocumentData[];
+}) => {
   const columns = React.useMemo(() => COLUMNS, []);
   const data = useMemo(() => tableData, []);
   const {
@@ -85,24 +120,17 @@ export const UserTable = ({ data: tableData }: { data: DocumentData[] }) => {
           {page.map((row) => {
             prepareRow(row);
             return (
-              <tr className="cursor-pointer border-y" {...row.getRowProps()}>
-                <Link
-                  href={`user/${row.values.id}?name=${row.values.name}`}
-                  passHref
-                >
-                  <a>
-                    {row.cells.map((cell) => {
-                      return (
-                        <td
-                          className="w-20 py-4 pl-2 text-center text-sm "
-                          {...cell.getCellProps()}
-                        >
-                          {cell.render("Cell")}
-                        </td>
-                      );
-                    })}
-                  </a>
-                </Link>
+              <tr className="border-y" {...row.getRowProps()}>
+                {row.cells.map((cell) => {
+                  return (
+                    <td
+                      className="w-20 py-4 pl-2 text-center text-sm "
+                      {...cell.getCellProps()}
+                    >
+                      {cell.render("Cell")}
+                    </td>
+                  );
+                })}
               </tr>
             );
           })}

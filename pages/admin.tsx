@@ -22,7 +22,6 @@ function Admin() {
   const users = value?.docs.map((doc) => {
     return { ...doc.data(), id: doc.id };
   });
-  //   console.log(users);
 
   return (
     !loading && (

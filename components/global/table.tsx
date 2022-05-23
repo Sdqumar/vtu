@@ -24,11 +24,11 @@ const COLUMNS = [
   },
   {
     Header: "Old Bal",
-    accessor: (row: any) => row?.prevBalance.toLocaleString("en-US"),
+    accessor: (row: any) => row?.prevBalance?.toLocaleString("en-US"),
   },
   {
     Header: "New Bal",
-    accessor: (row: any) => row?.newBalance.toLocaleString("en-US"),
+    accessor: (row: any) => row?.newBalance?.toLocaleString("en-US"),
   },
   {
     Header: "Amount",
