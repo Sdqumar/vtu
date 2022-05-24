@@ -7,10 +7,12 @@ import { form } from "./utils";
 import Error from "../global/alertError";
 import Success from "../global/alertSuccess";
 import { signUp } from "../../utils/auth";
+import { useUser } from "../context/userContext";
 
 const SignUp = () => {
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState<null | string>(null);
+  const userContext = useUser();
 
   const router = useRouter();
   const {

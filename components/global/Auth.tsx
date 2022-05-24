@@ -1,12 +1,10 @@
 import React, { ReactNode, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useUser } from "../context/userContext";
-import { getAuth } from "firebase/auth";
-import firebase from "../../lib/firebaseConfig";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { getUserData } from "./utils";
 import Spinner from "./sipnner";
 import { checkAdmin } from "../../utils/auth";
+import { getCookie } from "cookies-next";
 type Authprops = {
   children: ReactNode;
 };
@@ -16,38 +14,37 @@ function Auth({ children }: Authprops) {
   const setUser = userContext!.setUser;
 
   const [verify, setverify] = useState(false);
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
-  const auth = getAuth(firebase);
-  const [user, loading, error] = useAuthState(auth);
+  const uid = getCookie("uid");
 
   const getUser = async () => {
-    if (user) {
-      const { email, displayName, uid } = user;
-      const userData = await getUserData(uid);
+    if (uid) {
+      const userData = await getUserData(uid as "uid");
       const isAdmin = (await checkAdmin()) as string;
-
-      if (typeof email === "string") {
-        setUser({ email, displayName, uid, isAdmin: isAdmin, ...userData });
-      }
+      // @ts-ignore
+      setUser({ uid, isAdmin: isAdmin, ...userData });
       setverify(true);
+      setLoading(false);
     } else {
       setverify(false);
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     getUser();
-  }, [user]);
+  }, [uid]);
   const spinner = () => (
     <div className=" mt-60 flex items-center justify-center align-middle">
       <Spinner color="green" size={10} />
     </div>
   );
 
-  if (!user && !verify && !loading && router.pathname !== "/") {
+  if (!uid && !verify && !loading && router.pathname !== "/") {
     router.push("/");
   }
-  return (user && verify) || router.pathname === "/" ? (
+  return (uid && verify) || router.pathname === "/" ? (
     <>{children}</>
   ) : (
     <>{spinner()}</>

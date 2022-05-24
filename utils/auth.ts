@@ -9,7 +9,7 @@ import {
 import { doc, setDoc, getFirestore } from "firebase/firestore";
 import firebase from "../lib/firebaseConfig";
 const auth = getAuth(firebase);
-import { setCookies } from "cookies-next";
+import { removeCookies, setCookies } from "cookies-next";
 
 export type form = {
   firstName: string;
@@ -66,7 +66,10 @@ export const signIn = async (values: form) => {
   return user;
 };
 
-export const signout = () => signOut(auth);
+export const signout = () => {
+  removeCookies("uid");
+  signOut(auth);
+};
 
 export const checkAdmin = async () => {
   const isAdmin = await auth.currentUser?.getIdTokenResult();

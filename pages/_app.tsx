@@ -4,12 +4,14 @@ import UserProvider from "../components/context/userContext";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import Head from "next/head";
-import SessionTimeout from "../components/global/SessionTimeout";
+import CssBaseline from "@mui/material/CssBaseline";
 
 const Auth = dynamic(() => import("../components/global/Auth"));
 const Whatsapp = dynamic(() => import("../components/global/Whatapp"));
 const Sidebar = dynamic(() => import("../components/global/sidebar"));
-import CssBaseline from "@mui/material/CssBaseline";
+const SessionTimeout = dynamic(
+  () => import("../components/global/SessionTimeout")
+);
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const isHomepage = router.pathname === "/";
