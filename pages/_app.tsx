@@ -1,11 +1,12 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import UserProvider from "../components/context/userContext";
-import Auth from "../components/global/Auth";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import SessionTimeout from "../components/global/SessionTimeout";
+
+const Auth = dynamic(() => import("../components/global/Auth"));
 const Whatsapp = dynamic(() => import("../components/global/Whatapp"));
 const Sidebar = dynamic(() => import("../components/global/sidebar"));
 import CssBaseline from "@mui/material/CssBaseline";
@@ -27,7 +28,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             <link rel="icon" href="/favicon.png" />
             <title>Quadrorecharge</title>
           </Head>
-          {/* <SessionTimeout /> */}
+          <SessionTimeout />
           <Component {...pageProps} />
         </div>
       </Auth>

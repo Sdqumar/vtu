@@ -24,7 +24,11 @@ const SignUp = () => {
     setLoading(true);
     const values = getValues();
     try {
-      await signUp(values);
+      const user = await signUp(values);
+
+      const { email, displayName, uid } = user;
+      //@ts-ignore
+      userContext?.setUser({ email, displayName, uid });
       setAlert("success");
       setLoading(false);
       setTimeout(() => router.push("/dashboard"), 1000);

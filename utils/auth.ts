@@ -9,6 +9,7 @@ import {
 import { doc, setDoc, getFirestore } from "firebase/firestore";
 import firebase from "../lib/firebaseConfig";
 const auth = getAuth(firebase);
+import { setCookies } from "cookies-next";
 
 export type form = {
   firstName: string;
@@ -52,11 +53,17 @@ export const signUp = async (values: form) => {
     walletBalance: 0,
     accountNumber,
   });
+
+  setCookies("uid", user.uid);
+  return user;
 };
 
-export const signIn = (values: form) => {
+export const signIn = async (values: form) => {
   const { email, password } = values;
-  return signInWithEmailAndPassword(auth, email, password);
+  const user = await signInWithEmailAndPassword(auth, email, password);
+
+  setCookies("uid", user.user.uid);
+  return user;
 };
 
 export const signout = () => signOut(auth);
