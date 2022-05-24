@@ -74,7 +74,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     await chargeUser();
     let APITransaction;
 
-    if (networkName === "MTN" || networkName === "9MOBILE") {
+    if (networkName === "9MOBILE") {
       const data = {
         token: process.env.ALAGUSIY_API,
         mobile: phoneNumber,
@@ -138,7 +138,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       await completeTransaction();
     }
   } catch (error: any) {
-    if (networkName !== "MTN" && networkName != "9MOBILE") {
+    if (networkName != "9MOBILE") {
       const errorResponse = {
         dataSent: error.response.config.data,
         url: error.response.config.url,
@@ -146,6 +146,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         date: FieldValue.serverTimestamp(),
         network,
       };
+
       await transactionResponse.add(errorResponse);
     }
 
@@ -156,7 +157,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       newBalance
     );
     await transactionRef.add(transaction);
-    console.log(error);
 
     res.status(400).send({ error });
   }
