@@ -2,7 +2,7 @@ import axios from "axios";
 import { FieldValue } from "firebase-admin/firestore";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { firestore } from "../../lib/firebaseNode";
-const { v4: uuidv4 } = require("uuid");
+import { v4 as uuidv4 } from "uuid";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { values, user, planCode, networkId } = req.body;
@@ -47,6 +47,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     };
   };
 
+  const chargeUser = async () => {
+    await userRef.update({
+      walletBalance: FieldValue.increment(-Number(amount)),
+      totalSpent: FieldValue.increment(Number(amount)),
+    });
+  };
   const completeTransaction = async () => {
     const newBalance = Number(userData.walletBalance) - Number(amount);
 
@@ -57,10 +63,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     );
 
     await transactionRef.add(transaction);
-    await userRef.update({
-      walletBalance: FieldValue.increment(-Number(amount)),
-      totalSpent: FieldValue.increment(Number(amount)),
-    });
+
     res.status(200).json({ message: "Transaction Successful" });
   };
 
@@ -68,7 +71,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (userData.walletBalance < amount) {
       throw new Error("insufficent funds");
     }
-
+    await chargeUser();
     let APITransaction;
 
     if (networkName === "MTN" || networkName === "9MOBILE") {
@@ -101,7 +104,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       if (APITransaction.data.code !== "200") {
         throw new Error("error occured");
       } else {
-        completeTransaction();
+        await completeTransaction();
       }
     } else {
       const data = {
@@ -132,10 +135,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       };
 
       await transactionResponse.add(transacResponse);
-      completeTransaction();
+      await completeTransaction();
     }
   } catch (error: any) {
-    if (networkName !== "MTN" || networkName !== "9MOBILE") {
+    if (networkName !== "MTN" && networkName != "9MOBILE") {
       const errorResponse = {
         dataSent: error.response.config.data,
         url: error.response.config.url,
