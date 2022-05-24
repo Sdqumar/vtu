@@ -9,6 +9,7 @@ export type AuthUser = {
   displayName: string | null;
   name?: string;
   refers?: string;
+  firstName?: string;
   phoneNumber?: number;
   walletBalance?: number;
   totalFunded?: number;

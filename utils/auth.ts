@@ -10,6 +10,7 @@ import { doc, setDoc, getFirestore } from "firebase/firestore";
 import firebase from "../lib/firebaseConfig";
 const auth = getAuth(firebase);
 import { removeCookies, setCookies } from "cookies-next";
+import { getUserData } from "../components/global/utils";
 
 export type form = {
   firstName: string;
@@ -61,13 +62,15 @@ export const signUp = async (values: form) => {
 export const signIn = async (values: form) => {
   const { email, password } = values;
   const user = await signInWithEmailAndPassword(auth, email, password);
+  const userData = await getUserData(user.user.uid);
+  const isAdmin = (await checkAdmin()) as string;
 
-  setCookies("uid", user.user.uid);
+  setCookies("user", { ...userData, uid: user.user.uid, isAdmin });
   return user;
 };
 
 export const signout = () => {
-  removeCookies("uid");
+  removeCookies("user");
   signOut(auth);
 };
 

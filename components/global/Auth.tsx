@@ -1,9 +1,7 @@
 import React, { ReactNode, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useUser } from "../context/userContext";
-import { getUserData } from "./utils";
 import Spinner from "./sipnner";
-import { checkAdmin } from "../../utils/auth";
 import { getCookie } from "cookies-next";
 type Authprops = {
   children: ReactNode;
@@ -16,16 +14,15 @@ function Auth({ children }: Authprops) {
   const [verify, setverify] = useState(false);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
-  const uid = getCookie("uid");
-
+  let user = getCookie("user") as any;
   const getUser = async () => {
-    if (uid) {
-      const userData = await getUserData(uid as "uid");
-      const isAdmin = (await checkAdmin()) as string;
-      // @ts-ignore
-      setUser({ uid, isAdmin: isAdmin, ...userData });
-      setverify(true);
+    if (user) {
+      user = JSON.parse(user);
       setLoading(false);
+
+      // @ts-ignore
+      setUser({ ...user });
+      setverify(true);
     } else {
       setverify(false);
       setLoading(false);
@@ -34,17 +31,17 @@ function Auth({ children }: Authprops) {
 
   useEffect(() => {
     getUser();
-  }, [uid]);
+  }, [user]);
   const spinner = () => (
     <div className=" mt-60 flex items-center justify-center align-middle">
       <Spinner color="green" size={10} />
     </div>
   );
 
-  if (!uid && !verify && !loading && router.pathname !== "/") {
+  if (!user && !verify && !loading && router.pathname !== "/") {
     router.push("/");
   }
-  return (uid && verify) || router.pathname === "/" ? (
+  return (user && verify) || router.pathname === "/" ? (
     <>{children}</>
   ) : (
     <>{spinner()}</>

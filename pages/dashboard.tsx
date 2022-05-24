@@ -1,4 +1,3 @@
-import type { GetServerSideProps, NextPage } from "next";
 import dynamic from "next/dynamic";
 import { useUser } from "../components/context/userContext";
 
@@ -7,7 +6,7 @@ const AccountHistory = dynamic(
 );
 const Services = dynamic(() => import("../components/dashboard/Services"));
 
-const Dashboard: NextPage = () => {
+const Dashboard = () => {
   const userContext = useUser();
   const user = userContext?.user!;
 
@@ -27,9 +26,3 @@ const Dashboard: NextPage = () => {
 };
 
 export default Dashboard;
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  return {
-    props: {}, // will be passed to the page component as props
-  };
-};

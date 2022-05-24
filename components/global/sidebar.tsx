@@ -40,6 +40,7 @@ const Sidebar = () => {
   const isHome = router.pathname === "/";
   const userContext = useUser();
   const user = userContext?.user;
+
   const handleSignOut = async () => {
     await signout();
 
@@ -108,7 +109,7 @@ const Sidebar = () => {
 
               <div>
                 <h4 className="px-5 text-lg font-semibold capitalize text-white">
-                  {user?.displayName}
+                  {user!.firstName}
                 </h4>
                 {user?.walletBalance! > 0 && (
                   <span className="px-5 text-yellow-200">

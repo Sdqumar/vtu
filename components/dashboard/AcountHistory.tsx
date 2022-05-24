@@ -6,10 +6,11 @@ import { useUser } from "../context/userContext";
 import { useDocument } from "react-firebase-hooks/firestore";
 import { doc, getFirestore } from "firebase/firestore";
 import firebase from "../../lib/firebaseConfig";
+import { setCookies } from "cookies-next";
 
 export default function AccountHistory() {
   const userContext = useUser();
-  const user = userContext?.user!;
+  let user = userContext?.user!;
   const setUser = userContext!.setUser;
 
   const [value, loading] = useDocument(
@@ -22,7 +23,9 @@ export default function AccountHistory() {
         // @ts-ignore
         const { walletBalance, totalFunded, totalSpent } = value?.data();
         // @ts-ignore
-        setUser({ ...user, walletBalance, totalFunded, totalSpent });
+        let userData = { ...user, walletBalance, totalFunded, totalSpent };
+        setUser(userData);
+        setCookies("user", userData);
       }
     })();
   }, [value]);
