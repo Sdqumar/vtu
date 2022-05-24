@@ -3,16 +3,12 @@ import { useEffect, useState } from "react";
 import Button from "../components/global/Button";
 import { prices } from "../components/Home/utils";
 import { useForm } from "react-hook-form";
-import axios from "axios";
 import { useUser } from "../components/context/userContext";
 import Select from "../components/global/select";
 import toast, { Toaster } from "react-hot-toast";
-import {
-  validateBalance,
-  validatePhoneNumber,
-} from "../components/global/utils";
-import { Dialog } from "@mui/material";
+
 import Link from "next/link";
+import { Dialog } from "@mui/material";
 
 type form = {
   network?: string;
@@ -72,6 +68,8 @@ export default function BuyData() {
   }, [watchBundle]);
 
   const handleTransaction = async () => {
+    let axios = require("axios");
+
     const network = prices.find((network) => {
       return network.network == values?.network;
     });
@@ -102,6 +100,10 @@ export default function BuyData() {
   };
 
   const submitForm = async (values: form) => {
+    let { validateBalance, validatePhoneNumber } = await import(
+      "../components/global/utils"
+    );
+
     const isValidNumber = validatePhoneNumber(setError, values!);
     if (!isValidNumber) return;
     const isValidBalance = validateBalance(setError, values!, user);
