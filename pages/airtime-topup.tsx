@@ -100,7 +100,7 @@ export default function AirtimeTopUp() {
             />
           </svg>
           <h2 className="mt-4 text-center text-2xl font-bold uppercase">
-            Dear {user.displayName}
+            Dear {user.firstName}
           </h2>
           <h4 className="pt-4 text-sm">
             You&apos;re about to buy {values?.network} ₦{values?.amount} Airtime
