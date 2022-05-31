@@ -16,7 +16,11 @@ export default function Button({
   disabled,
 }: buttonProps) {
   return (
-    <button onClick={onClick} disabled={loading || disabled} className={style}>
+    <button
+      onClick={onClick}
+      disabled={loading || disabled}
+      className={`${style} w-full`}
+    >
       {loading ? <Spinner /> : label}
     </button>
   );

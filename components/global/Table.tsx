@@ -2,37 +2,24 @@ import { useTable, useFilters, usePagination, Column } from "react-table";
 import React, { useMemo } from "react";
 import { DocumentData } from "firebase/firestore";
 import { format } from "date-fns";
-
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
 const COLUMNS = [
   {
     Header: "Name",
-    accessor: (row: any) => row.description?.toUpperCase(),
-  },
-  {
-    Header: "Date",
-    accessor: (row: { date: any }) =>
-      format(row.date.toDate(), "EE, dd MMM hh:mm "),
+    accessor: (row: any) => (
+      <span className="break-normal">
+        {row.description?.toUpperCase().split("-")[0]}
+      </span>
+    ),
   },
 
   {
     Header: "TO",
     accessor: "to",
-  },
-  {
-    Header: "Reference",
-    accessor: "request_id",
-  },
-  {
-    Header: "Old Bal",
-    accessor: (row: any) => row?.prevBalance?.toLocaleString("en-US"),
-  },
-  {
-    Header: "New Bal",
-    accessor: (row: any) => row?.newBalance?.toLocaleString("en-US"),
-  },
-  {
-    Header: "Amount",
-    accessor: "amount",
   },
   {
     Header: "Status",
@@ -43,6 +30,24 @@ const COLUMNS = [
       return row.status;
     },
   },
+  {
+    Header: "New Bal",
+    accessor: (row: any) => row?.newBalance?.toLocaleString("en-US"),
+  },
+  {
+    Header: "Old Bal",
+    accessor: (row: any) => row?.prevBalance?.toLocaleString("en-US"),
+  },
+
+  {
+    Header: "Amount",
+    accessor: "amount",
+  },
+  {
+    Header: "Date",
+    accessor: (row: { date: any }) =>
+      format(row.date.toDate(), "EE, dd MMM hh:mm "),
+  },
 ];
 {
   /* eslint-disable react/jsx-key */
@@ -51,7 +56,7 @@ const COLUMNS = [
   /* the jsx key is provided in the .get*Props() spreads, but eslint doesn't believe you. I believe you. */
 }
 
-export const Table = ({ data: tableData }: { data: DocumentData[] }) => {
+export const TableCustom = ({ data: tableData }: { data: DocumentData[] }) => {
   const columns = React.useMemo(() => COLUMNS, []);
   const data = useMemo(() => tableData, []);
   const {
@@ -80,50 +85,53 @@ export const Table = ({ data: tableData }: { data: DocumentData[] }) => {
   const { pageIndex, pageSize } = state;
 
   return (
-    <div className="mx-10  mb-8  w-full">
+    <div className="mb-8  overflow-auto md:mx-10">
       <select
-        className="w-32"
+        className="ml-5 w-32"
         value={pageSize}
         onChange={(e) => setPageSize(Number(e.target.value))}
       >
-        {[10, 20, 50].map((pageSize) => (
+        {[5, 10, 20, 50].map((pageSize) => (
           <option key={pageSize} value={pageSize}>
             Show {pageSize}
           </option>
         ))}
       </select>
-      <table className="my-4 rounded-md shadow-lg" {...getTableProps()}>
-        <thead>
+      <Table {...getTableProps()} className="my-4 rounded-md shadow-lg">
+        <TableHead>
           {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
+            <TableRow {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
-                <th className=" pl-2" {...column.getHeaderProps()}>
+                <td
+                  {...column.getHeaderProps()}
+                  className="bg-primary w-fit py-4 pl-2 text-center text-sm text-white"
+                >
                   {column.render("Header")}
-                </th>
+                </td>
               ))}
-            </tr>
+            </TableRow>
           ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
+        </TableHead>
+        <TableBody {...getTableBodyProps()}>
           {page.map((row) => {
             prepareRow(row);
             return (
-              <tr className="border-y" {...row.getRowProps()}>
+              <TableRow className="border-y" {...row.getRowProps()}>
                 {row.cells.map((cell) => {
                   return (
                     <td
-                      className="w-20 py-4 pl-2 text-center text-sm "
+                      className=" whitespace-nowrap break-normal py-4 px-2 text-center text-sm "
                       {...cell.getCellProps()}
                     >
                       {cell.render("Cell")}
                     </td>
                   );
                 })}
-              </tr>
+              </TableRow>
             );
           })}
-        </tbody>
-      </table>
+        </TableBody>
+      </Table>
 
       <div className="flex items-center justify-center ">
         <span>

@@ -9,9 +9,9 @@ import CssBaseline from "@mui/material/CssBaseline";
 const Auth = dynamic(() => import("../components/global/Auth"));
 const Whatsapp = dynamic(() => import("../components/global/Whatapp"));
 const Sidebar = dynamic(() => import("../components/global/sidebar"));
-const SessionTimeout = dynamic(
-  () => import("../components/global/SessionTimeout")
-);
+// const SessionTimeout = dynamic(
+//   () => import("../components/global/SessionTimeout")
+// );
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const isHomepage = router.pathname === "/";
@@ -30,7 +30,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             <link rel="icon" href="/favicon.png" />
             <title>Quadrorecharge</title>
           </Head>
-          <SessionTimeout />
+          {/* <SessionTimeout /> */}
           <Component {...pageProps} />
         </div>
       </Auth>

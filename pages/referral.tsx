@@ -7,7 +7,7 @@ const Agent: Referral = () => {
   const referralID = user?.email.split(".")[0];
 
   return (
-    <div className=" mx-10 my-20 h-fit w-fit items-center justify-center  rounded-md p-5 shadow-md md:w-[50%]">
+    <div className=" mx-10 my-20 h-fit w-full items-center justify-center  rounded-md p-5 shadow-md md:w-[50%]">
       <h2 className="py-2 text-2xl font-medium">Refer Friends and Earn</h2>
       <p>
         Refer friends to us and earn commissions on al their transactions. There

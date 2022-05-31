@@ -8,14 +8,13 @@
     @apply mb-2 block text-lg font-medium;
   }
   input {
-    @apply w-full rounded-md border disabled:bg-transparent border-gray-400 py-2 px-4 placeholder:italic placeholder:text-slate-400 focus:border-2 focus:border-primary focus:outline-none ;
+    @apply focus:border-primary w-full rounded-md border border-gray-400 py-2 px-4 placeholder:italic placeholder:text-slate-400 focus:border-2 focus:outline-none disabled:bg-transparent;
   }
   select {
-    @apply bg-transparent block w-full appearance-none rounded-md border border-gray-400 py-2 px-4 pr-10 placeholder:italic placeholder:text-slate-400 first:italic focus:border-2 focus:border-primary focus:outline-none disabled:italic;
+    @apply focus:border-primary block w-full appearance-none rounded-md border border-gray-400 bg-transparent py-2 px-4 pr-10 placeholder:italic placeholder:text-slate-400 first:italic focus:border-2 focus:outline-none disabled:italic;
   }
- 
 
   button {
-    @apply mt-3 flex w-full justify-center whitespace-nowrap rounded-lg bg-primary px-5 py-2 font-medium text-white duration-700 ease-in-out focus:outline-primary;
+    @apply bg-primary focus:outline-primary mt-3 flex w-fit justify-center whitespace-nowrap rounded-lg px-5 py-2 font-medium text-white duration-700 ease-in-out;
   }
 }
