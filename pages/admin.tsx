@@ -3,8 +3,8 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useCollection } from "react-firebase-hooks/firestore";
 import { useUser } from "../components/context/userContext";
-import { TableCustom } from "../components/global/Table";
-import { UserTable } from "../components/global/UserTable";
+import { TransactionsTable } from "../components/global/TransactionsTable";
+import { UserTable } from "../components/global/UsersTable";
 import firebase from "../lib/firebaseConfig";
 
 function Admin() {
@@ -37,7 +37,7 @@ function Admin() {
           <h1 className="text-4xl">Welcome {user?.name}</h1>
           <main>
             {transactions && (
-              <TableCustom
+              <TransactionsTable
                 data={transactions?.sort((a, b) => b.date - a.date)!}
               />
             )}

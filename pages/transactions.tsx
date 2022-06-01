@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import { useUser } from "../components/context/userContext";
-import { TableCustom } from "../components/global/Table";
+import { TransactionsTable } from "../components/global/TransactionsTable";
 import { getFirestore, collection, where, query } from "firebase/firestore";
 import { useCollectionOnce } from "react-firebase-hooks/firestore";
 import firebase from "../lib/firebaseConfig";
@@ -21,7 +21,7 @@ const Transactions: NextPage = () => {
       <h3 className="my-10 mx-10 text-3xl font-medium">Transactions</h3>
       <main>
         {!loading && data?.length! > 0 && (
-          <TableCustom data={data?.sort((a, b) => b.date - a.date)!} />
+          <TransactionsTable data={data?.sort((a, b) => b.date - a.date)!} />
         )}
       </main>
     </div>
