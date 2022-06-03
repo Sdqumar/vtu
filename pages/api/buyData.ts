@@ -141,11 +141,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (networkName != "9MOBILE") {
       const errorResponse = {
         dataSent: error.response.config.data,
+        status: error.response.status,
+        statusText: error.response.statusText,
         url: error.response.config.url,
-        erorrMessage: error.response.data.error[0],
         date: FieldValue.serverTimestamp(),
         network,
       };
+      console.log(errorResponse);
 
       await transactionResponse.add(errorResponse);
     }
