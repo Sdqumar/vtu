@@ -53,10 +53,12 @@ function Admin() {
         await updateDoc(ref, {
           networks: arrayRemove(network),
         });
+        toast.success(`${network} deactivate`);
       } else {
         await updateDoc(ref, {
           networks: arrayUnion(network),
         });
+        toast.success(`${network} activate`);
       }
       getDataNetwork(user, setUser);
     } catch {
