@@ -7,7 +7,7 @@ import { useUser } from "../components/context/userContext";
 import { TransactionsTable } from "../components/global/TransactionsTable";
 import { UserTable } from "../components/global/UsersTable";
 import firebase from "../lib/firebaseConfig";
-import network from "../utils/dataNetwork.json";
+import network from "./api/dataNetwork.json";
 const networks = ["MTN SME", "MTN GIFTING", "AIRTEL", "GLO", "9MOBILE"];
 import toast, { Toaster } from "react-hot-toast";
 

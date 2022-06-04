@@ -7,21 +7,27 @@ export default async function handler(
 ) {
   try {
     const network: string = req.body.network;
-    const path = process.cwd() + "/utils/dataNetwork.json";
+    const path = process.cwd() + "/pages/api/dataNetwork.json";
+    console.log({ path });
+
     let networksJson = fs.readFileSync(path, "utf-8");
+    console.log({ networksJson });
+
     let networks: string[] = JSON.parse(networksJson);
 
     const available = networks.includes(network);
     console.log(available);
 
     if (available) {
-      const newNeworks = networks.filter((item) => item !== network);
-      console.log(newNeworks);
-      networksJson = JSON.stringify(newNeworks);
+      const newNetworks = networks.filter((item) => item !== network);
+      console.log(newNetworks);
+      networksJson = JSON.stringify(newNetworks);
       fs.writeFileSync(path, networksJson, "utf-8");
       res.status(200).send(`${network} Deactivated`);
     } else {
-      networks.push(network);
+      networks.unshift(network);
+      console.log(networks);
+
       networksJson = JSON.stringify(networks);
       fs.writeFileSync(path, networksJson, "utf-8");
 

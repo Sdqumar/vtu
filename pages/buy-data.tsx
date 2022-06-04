@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { useUser } from "../components/context/userContext";
 import Select from "../components/global/select";
 import toast, { Toaster } from "react-hot-toast";
+import network from "./api/dataNetwork.json";
 
 import Link from "next/link";
 import { Dialog } from "@mui/material";
@@ -38,7 +39,6 @@ export default function BuyData() {
     watch,
   } = useForm<form>({});
 
-  const network = ["MTN GIFTING", "AIRTEL", "GLO", "9MOBILE"];
   const watchNetwork = watch("network", "MTN SME");
   const watchBundle = watch(
     "bundle",
