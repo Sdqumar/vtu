@@ -64,6 +64,7 @@ function Admin() {
               <FormGroup>
                 {networks.map((item) => (
                   <FormControlLabel
+                    key={item}
                     checked={network?.includes(item)}
                     onChange={() => handleChange(item)}
                     control={<Switch defaultChecked />}
