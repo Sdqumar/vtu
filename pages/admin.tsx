@@ -1,5 +1,12 @@
 import { FormControlLabel, FormGroup, Switch } from "@mui/material";
-import { collection, doc, getFirestore } from "firebase/firestore";
+import {
+  arrayRemove,
+  arrayUnion,
+  collection,
+  doc,
+  getFirestore,
+  updateDoc,
+} from "firebase/firestore";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useCollection } from "react-firebase-hooks/firestore";
@@ -7,13 +14,15 @@ import { useUser } from "../components/context/userContext";
 import { TransactionsTable } from "../components/global/TransactionsTable";
 import { UserTable } from "../components/global/UsersTable";
 import firebase from "../lib/firebaseConfig";
-import network from "./api/dataNetwork.json";
 const networks = ["MTN SME", "MTN GIFTING", "AIRTEL", "GLO", "9MOBILE"];
 import toast, { Toaster } from "react-hot-toast";
+import { getDataNetwork } from "../components/global/utils";
 
 function Admin() {
   const userContext = useUser();
-  const user = userContext?.user;
+  const user = userContext?.user!;
+  const setUser = userContext?.setUser!;
+
   const router = useRouter();
   const isAdmin = user?.isAdmin;
   useEffect(() => {
@@ -36,20 +45,27 @@ function Admin() {
   });
 
   const handleChange = async (network: string) => {
-    let axios = require("axios");
+    const available = user?.DataNetworks?.includes(network);
 
     try {
-      const res = await axios({
-        method: "post",
-        url: "/api/makeNetworkAvailable",
-        data: { network },
-      });
-
-      toast.success(res.data);
+      const ref = doc(getFirestore(firebase), "networkData", "networks");
+      if (available) {
+        await updateDoc(ref, {
+          networks: arrayRemove(network),
+        });
+      } else {
+        await updateDoc(ref, {
+          networks: arrayUnion(network),
+        });
+      }
+      getDataNetwork(user, setUser);
     } catch {
       toast.error("Error!");
     }
   };
+  useEffect(() => {
+    if (!user?.DataNetworks) getDataNetwork(user, setUser);
+  }, []);
 
   return (
     !loading && (
@@ -62,15 +78,18 @@ function Admin() {
             <div className="m-8">
               <h2 className="mb-4 text-2xl">Data Networks</h2>
               <FormGroup>
-                {networks.map((item) => (
-                  <FormControlLabel
-                    key={item}
-                    checked={network?.includes(item)}
-                    onChange={() => handleChange(item)}
-                    control={<Switch defaultChecked />}
-                    label={item}
-                  />
-                ))}
+                {user.DataNetworks &&
+                  networks.map((item) => {
+                    return (
+                      <FormControlLabel
+                        key={item}
+                        checked={user!.DataNetworks!.includes(item)}
+                        onChange={() => handleChange(item)}
+                        control={<Switch defaultChecked />}
+                        label={item}
+                      />
+                    );
+                  })}
               </FormGroup>
             </div>
             {transactions && (

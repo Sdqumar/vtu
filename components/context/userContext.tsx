@@ -17,6 +17,7 @@ export type AuthUser = {
   isAdmin?: string;
   accountNumber?: number;
   earnings?: number;
+  DataNetworks?: string[];
 };
 
 type userContext = {

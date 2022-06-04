@@ -6,10 +6,11 @@ import { useForm } from "react-hook-form";
 import { useUser } from "../components/context/userContext";
 import Select from "../components/global/select";
 import toast, { Toaster } from "react-hot-toast";
-import network from "./api/dataNetwork.json";
 
 import Link from "next/link";
 import { Dialog } from "@mui/material";
+import { getDataNetwork } from "../components/global/utils";
+const networks = ["MTN SME", "MTN GIFTING", "AIRTEL", "GLO", "9MOBILE"];
 
 type form = {
   network?: string;
@@ -27,6 +28,10 @@ export default function BuyData() {
 
   const userContext = useUser();
   const user = userContext?.user!;
+  const setUser = userContext?.setUser!;
+  useEffect(() => {
+    if (!user.DataNetworks) getDataNetwork(user, setUser);
+  }, []);
 
   const {
     register,
@@ -38,6 +43,10 @@ export default function BuyData() {
     handleSubmit,
     watch,
   } = useForm<form>({});
+
+  const networkData = networks?.filter((network) =>
+    user.DataNetworks?.includes(network)
+  );
 
   const watchNetwork = watch("network", "MTN SME");
   const watchBundle = watch(
@@ -165,7 +174,7 @@ export default function BuyData() {
             <Select
               register={register}
               name="network"
-              data={network}
+              data={networkData}
               label="Network"
               errors={errors}
             />

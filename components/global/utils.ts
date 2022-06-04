@@ -118,3 +118,10 @@ export const validateBalance = (
   }
   return true;
 };
+
+export const getDataNetwork = async (user: any, setUser: any) => {
+  const ref = doc(getFirestore(firebase), "networkData", "networks");
+  const value = await getDoc(ref);
+  const data = value.data()!.networks;
+  setUser({ ...user, DataNetworks: data });
+};
