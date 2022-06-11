@@ -75,7 +75,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     let APITransaction;
     console.log(networkName);
 
-    if (networkName === "9MOBILE" || networkName === "MTN") {
+    if (networkName === "9MOBILE") {
       const data = {
         token: process.env.ALAGUSIY_API,
         mobile: phoneNumber,

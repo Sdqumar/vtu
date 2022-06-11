@@ -1,87 +1,87 @@
 export const prices = [
-  {
-    img: "/mtn.png",
-    network: "MTN SME",
-    provider: "alagusiy",
-    networkID: 1,
-    prices: [
-      {
-        size: "500.0MB",
-        price: "₦140",
-        duration: "30 days",
-        planCode: 500,
-      },
-      {
-        size: "1.0GB",
-        price: "₦255",
-        duration: "30 days",
-        planCode: 1000,
-      },
-      {
-        size: "2.0GB",
-        price: "₦510",
-        duration: "30 days",
-        planCode: 2000,
-      },
-      {
-        size: "3.0GB",
-        price: "₦765",
-        duration: "30 days",
-        planCode: 3000,
-      },
-      {
-        size: "5.0GB",
-        price: "₦1275",
-        duration: "30 days",
-        planCode: 5000,
-      },
-      {
-        size: "10.0GB",
-        price: "₦2550",
-        duration: "30 days",
-        planCode: 10000,
-      },
-    ],
-  },
   // {
   //   img: "/mtn.png",
   //   network: "MTN SME",
-  //   provider:'superajaapi',
+  //   provider: "alagusiy",
   //   networkID: 1,
   //   prices: [
   //     {
   //       size: "500.0MB",
   //       price: "₦140",
   //       duration: "30 days",
-  //       planCode: 6,
+  //       planCode: 500,
   //     },
   //     {
   //       size: "1.0GB",
   //       price: "₦255",
   //       duration: "30 days",
-  //       planCode: 7,
+  //       planCode: 1000,
   //     },
   //     {
   //       size: "2.0GB",
   //       price: "₦510",
   //       duration: "30 days",
-  //       planCode: 8,
+  //       planCode: 2000,
   //     },
-
+  //     {
+  //       size: "3.0GB",
+  //       price: "₦765",
+  //       duration: "30 days",
+  //       planCode: 3000,
+  //     },
   //     {
   //       size: "5.0GB",
   //       price: "₦1275",
   //       duration: "30 days",
-  //       planCode: 11,
+  //       planCode: 5000,
   //     },
   //     {
   //       size: "10.0GB",
   //       price: "₦2550",
   //       duration: "30 days",
-  //       planCode: 220,
+  //       planCode: 10000,
   //     },
   //   ],
   // },
+  {
+    img: "/mtn.png",
+    network: "MTN SME",
+    provider: "superajaapi",
+    networkID: 1,
+    prices: [
+      {
+        size: "500.0MB",
+        price: "₦140",
+        duration: "30 days",
+        planCode: 6,
+      },
+      {
+        size: "1.0GB",
+        price: "₦255",
+        duration: "30 days",
+        planCode: 7,
+      },
+      {
+        size: "2.0GB",
+        price: "₦510",
+        duration: "30 days",
+        planCode: 8,
+      },
+
+      {
+        size: "5.0GB",
+        price: "₦1275",
+        duration: "30 days",
+        planCode: 11,
+      },
+      {
+        size: "10.0GB",
+        price: "₦2550",
+        duration: "30 days",
+        planCode: 220,
+      },
+    ],
+  },
   {
     img: "/mtn.png",
     network: "MTN GIFTING",
