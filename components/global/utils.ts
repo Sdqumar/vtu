@@ -40,12 +40,13 @@ export const validatePhoneNumber = (
     "0808",
     "0907",
     "0812",
+    "0904",
     "0708",
     "0701",
     "0902",
     "0802",
   ];
-  const GloPrefixes = ["0905", "0805", "0705", "0815", "0807", "0811"];
+  const GloPrefixes = ["0905", "0915", "0805", "0705", "0815", "0807", "0811"];
   const EtisaltPrefixes = ["0909", "0818", "0908", "0809", "0817"];
 
   let isValidNumber;
