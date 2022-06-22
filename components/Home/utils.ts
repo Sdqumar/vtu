@@ -250,58 +250,110 @@ export const prices = [
   {
     img: "/glo.png",
     network: "GLO",
+    provider: "alagusiy",
     networkID: 2,
     prices: [
       {
-        size: "250.0GB",
-        price: "₦370",
-        duration: "30 days",
-        planCode: 231,
-      },
-      {
-        size: "1.0GB",
+        size: "1.5GB",
         price: "₦450",
         duration: "30 days",
-        planCode: 194,
+        planCode: 301,
       },
       {
         size: "2.5GB",
-        price: "₦850",
+        price: "₦870",
         duration: "30 days",
-        planCode: 195,
+        planCode: 302,
       },
+
       {
         size: "4.5GB",
         price: "₦1250",
         duration: "30 days",
-        planCode: 196,
+        planCode: 303,
       },
       {
         size: "7.7GB",
         price: "₦2050",
         duration: "30 days",
-        planCode: 198,
+        planCode: 304,
       },
       {
         size: "10.0GB",
         price: "₦2450",
         duration: "30 days",
-        planCode: 199,
+        planCode: 305,
       },
       {
         size: "13.25GB",
         price: "₦3250",
         duration: "30 days",
-        planCode: 200,
+        planCode: 306,
       },
       {
         size: "18.25GB",
         price: "₦4100",
         duration: "30 days",
-        planCode: 201,
+        planCode: 307,
       },
     ],
   },
+  // {
+  //   img: "/glo.png",
+  //   network: "GLO",
+  //   provider:"superajaapi",
+  //   networkID: 2,
+  //   prices: [
+  //     {
+  //       size: "250.0GB",
+  //       price: "₦370",
+  //       duration: "30 days",
+  //       planCode: 231,
+  //     },
+  //     {
+  //       size: "1.0GB",
+  //       price: "₦450",
+  //       duration: "30 days",
+  //       planCode: 194,
+  //     },
+  //     {
+  //       size: "2.5GB",
+  //       price: "₦850",
+  //       duration: "30 days",
+  //       planCode: 195,
+  //     },
+  //     {
+  //       size: "4.5GB",
+  //       price: "₦1250",
+  //       duration: "30 days",
+  //       planCode: 196,
+  //     },
+  //     {
+  //       size: "7.7GB",
+  //       price: "₦2050",
+  //       duration: "30 days",
+  //       planCode: 198,
+  //     },
+  //     {
+  //       size: "10.0GB",
+  //       price: "₦2450",
+  //       duration: "30 days",
+  //       planCode: 199,
+  //     },
+  //     {
+  //       size: "13.25GB",
+  //       price: "₦3250",
+  //       duration: "30 days",
+  //       planCode: 200,
+  //     },
+  //     {
+  //       size: "18.25GB",
+  //       price: "₦4100",
+  //       duration: "30 days",
+  //       planCode: 201,
+  //     },
+  //   ],
+  // },
 ];
 export type form = {
   firstName: string;

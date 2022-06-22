@@ -75,7 +75,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     let APITransaction;
     console.log(networkName);
 
-    if (networkName === "9MOBILE") {
+    if (networkName === "9MOBILE" || networkName === "GLO") {
       const data = {
         token: process.env.ALAGUSIY_API,
         mobile: phoneNumber,
@@ -139,7 +139,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       await completeTransaction();
     }
   } catch (error: any) {
-    if (networkName != "9MOBILE") {
+    if (networkName != "9MOBILE" || networkName != "GLO") {
       const errorResponse = {
         dataSent: error.response.config.data,
         status: error.response.status,
