@@ -75,91 +75,90 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     let APITransaction;
     console.log(networkName);
 
-    if (networkName === "9MOBILE" || networkName === "GLO") {
-      const data = {
-        token: process.env.ALAGUSIY_API,
-        mobile: phoneNumber,
-        network: networkName,
-        plan_code: planCode,
-        request_id,
-      };
+    // if (networkName === "AIRTEL") {
+    //   const data = {
+    //     network: networkId,
+    //     mobile_number: phoneNumber,
+    //     plan: planCode,
+    //     Ported_number: true,
+    //   };
 
-      APITransaction = await axios({
-        method: "post",
-        url: "https://alagusiy.com/api/data",
-        data,
-      });
+    //   APITransaction = await axios({
+    //     method: "post",
+    //     url: "https://www.superjaraapi.com/api/data/",
+    //     headers: {
+    //       Authorization: `Token ${process.env.SUPERJARA_API}`,
+    //       "Content-Type": "application/json",
+    //     },
+    //     data,
+    //   });
 
-      console.log(APITransaction.config.data);
-      console.log(APITransaction.config.url);
-      console.log(APITransaction.data);
-      const transacResponse = {
-        url: APITransaction.config.url,
-        dataSent: JSON.parse(APITransaction.config.data),
-        Message: APITransaction.data,
-        date: FieldValue.serverTimestamp(),
-      };
+    //   console.log(APITransaction.config);
+    //   console.log(APITransaction.data);
 
-      await transactionResponse.add(transacResponse);
+    //   const transacResponse = {
+    //     url: APITransaction.config.url,
+    //     dataSent: JSON.parse(APITransaction.config.data),
+    //     Message: APITransaction.data,
+    //     date: FieldValue.serverTimestamp(),
+    //   };
 
-      if (APITransaction.data.code !== "200") {
-        throw new Error("error occured");
-      } else {
-        await completeTransaction();
-      }
+    //   await transactionResponse.add(transacResponse);
+    //   await completeTransaction();
+    // } else {
+    const data = {
+      token: process.env.ALAGUSIY_API,
+      mobile: phoneNumber,
+      network: networkName,
+      plan_code: planCode,
+      request_id,
+    };
+
+    APITransaction = await axios({
+      method: "post",
+      url: "https://alagusiy.com/api/data",
+      data,
+    });
+
+    console.log(APITransaction.config.data);
+    console.log(APITransaction.config.url);
+    console.log(APITransaction.data);
+    const transacResponse = {
+      url: APITransaction.config.url,
+      dataSent: JSON.parse(APITransaction.config.data),
+      Message: APITransaction.data,
+      date: FieldValue.serverTimestamp(),
+    };
+
+    await transactionResponse.add(transacResponse);
+
+    if (APITransaction.data.code !== "200") {
+      throw new Error("error occured");
     } else {
-      const data = {
-        network: networkId,
-        mobile_number: phoneNumber,
-        plan: planCode,
-        Ported_number: true,
-      };
-
-      APITransaction = await axios({
-        method: "post",
-        url: "https://www.superjaraapi.com/api/data/",
-        headers: {
-          Authorization: `Token ${process.env.SUPERJARA_API}`,
-          "Content-Type": "application/json",
-        },
-        data,
-      });
-
-      console.log(APITransaction.config);
-      console.log(APITransaction.data);
-
-      const transacResponse = {
-        url: APITransaction.config.url,
-        dataSent: JSON.parse(APITransaction.config.data),
-        Message: APITransaction.data,
-        date: FieldValue.serverTimestamp(),
-      };
-
-      await transactionResponse.add(transacResponse);
       await completeTransaction();
     }
   } catch (error: any) {
-    if (networkName != "9MOBILE" || networkName != "GLO") {
-      const errorResponse = {
-        dataSent: error.response.config.data,
-        status: error.response.status,
-        statusText: error.response.statusText,
-        url: error.response.config.url,
-        date: FieldValue.serverTimestamp(),
-        network,
-      };
-      console.log(errorResponse);
+    // if (networkName != "AIRTEL") {
+    //   const newBalance = userData.walletBalance;
+    //   const transaction = getTransaction(
+    //     "Failed Transaction ",
+    //     "Failed",
+    //     newBalance
+    //   );
+    //   await transactionRef.add(transaction);
+    // }
 
-      await transactionResponse.add(errorResponse);
-    }
+    const errorResponse = {
+      dataSent: error.response.config.data,
+      status: error.response.status,
+      statusText: error.response.statusText,
+      url: error.response.config.url,
+      date: FieldValue.serverTimestamp(),
+      network,
+    };
+    console.log(errorResponse);
 
-    const newBalance = userData.walletBalance;
-    const transaction = getTransaction(
-      "Failed Transaction ",
-      "Failed",
-      newBalance
-    );
-    await transactionRef.add(transaction);
+    await transactionResponse.add(errorResponse);
 
     res.status(400).send({ error });
   }
