@@ -39,20 +39,20 @@ export default function CableSubscription() {
   const watchProviders = watch("provider", "DSTV");
   const watchplan = watch("plan");
 
-  const { data, isLoading } = useQuery("plans", getPlans, {
-    staleTime: Infinity,
-  });
+  // const { data, isLoading } = useQuery("plans", getPlans, {
+  //   staleTime: Infinity,
+  // });
 
-  useEffect(() => {
-    if (data !== undefined && !isLoading) {
-      const [plans] = data?.data?.data?.filter(
-        (item: { serviceID: string }) =>
-          item.serviceID === watchProviders?.toLowerCase()
-      );
-      setList(plans.varations);
-      setValue("plan", plans.varations[0].name);
-    }
-  }, [watchProviders, data]);
+  // useEffect(() => {
+  //   if (data !== undefined && !isLoading) {
+  //     const [plans] = data?.data?.data?.filter(
+  //       (item: { serviceID: string }) =>
+  //         item.serviceID === watchProviders?.toLowerCase()
+  //     );
+  //     setList(plans.varations);
+  //     setValue("plan", plans.varations[0].name);
+  //   }
+  // }, [watchProviders, data]);
 
   useEffect(() => {
     const amount = list?.find(
