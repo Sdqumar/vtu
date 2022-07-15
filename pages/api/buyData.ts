@@ -9,7 +9,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { network, phoneNumber, amount, bundle } = values;
 console.log(values, user, planCode, networkId);
 
-  const { uid } = user;
+console.log(process.env.dontech247_API);
+  
+const { uid } = user;
   const request_id = uuidv4();
 
   let networkName = network;
@@ -26,6 +28,7 @@ console.log(values, user, planCode, networkId);
 
   let userRecord = await userRef.get();
   let userData = userRecord.data()!;
+
 
   const getTransaction = (
     message: string,
@@ -107,6 +110,8 @@ console.log(values, user, planCode, networkId);
     await transactionResponse.add(transacResponse);
     await completeTransaction();
   } catch (error: any) {
+console.log(error);
+
     const newBalance = userData.walletBalance;
     const transaction = getTransaction(
       "Failed Transaction ",
