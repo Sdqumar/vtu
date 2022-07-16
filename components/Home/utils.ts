@@ -57,32 +57,32 @@ export const prices = [
       },
       {
         size: "1.0GB",
-        price: "₦255",
+        price: "₦240",
         duration: "30 days",
         planCode: 7,
       },
       {
         size: "2.0GB",
-        price: "₦510",
+        price: "₦280",
         duration: "30 days",
         planCode: 8,
       },
       {
         size: "3.0GB",
-        price: "₦700",
+        price: "₦720",
         duration: "30 days",
         planCode: 44,
       },
 
       {
         size: "5.0GB",
-        price: "₦1275",
+        price: "₦1200",
         duration: "30 days",
         planCode: 11,
       },
       {
         size: "10.0GB",
-        price: "₦2550",
+        price: "₦2450",
         duration: "30 days",
         planCode: 43,
       },
@@ -102,7 +102,7 @@ export const prices = [
       },
       {
         size: "1.0GB",
-        price: "₦270",
+        price: "₦255",
         duration: "30 days",
         planCode: 220,
       },
@@ -114,7 +114,7 @@ export const prices = [
       },
       {
         size: "3.0GB",
-        price: "₦780",
+        price: "₦770",
         duration: "30 days",
         planCode: 222,
       },

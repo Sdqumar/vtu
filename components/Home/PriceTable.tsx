@@ -1,10 +1,10 @@
 import Image from "next/image";
-import { prices } from "./utils";
+import { homePagePrices } from "./prices";
 
 export const PriceTable = () => {
   return (
     <div className="mt-5 flex w-full flex-wrap items-center justify-center">
-      {prices.map((network, index) => {
+      {homePagePrices.map((network, index) => {
         return (
           network.network !== "MTN GIFTING" && (
             <section

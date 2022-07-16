@@ -9,19 +9,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { network, phoneNumber, amount, bundle } = values;
 console.log(values, user, planCode, networkId);
 
-console.log(process.env.dontech247_API);
   
 const { uid } = user;
   const request_id = uuidv4();
-
-  let networkName = network;
-  if (networkName === "MTN SME") {
-    networkName = "MTN";
-  }
-  if (networkName === "MTN GIFTING") {
-    networkName = "GIFTING";
-  }
-
   const userRef = firestore.collection("users").doc(uid);
   const transactionRef = firestore.collection("transactions");
   const transactionResponse = firestore.collection("transactionResponse");
@@ -78,7 +68,6 @@ const { uid } = user;
     }
     await chargeUser();
     let APITransaction;
-    console.log(networkName);
 
     const data = {
       network: networkId,
@@ -110,7 +99,7 @@ const { uid } = user;
     await transactionResponse.add(transacResponse);
     await completeTransaction();
   } catch (error: any) {
-console.log(error);
+  console.log(error);
 
     const newBalance = userData.walletBalance;
     const transaction = getTransaction(
