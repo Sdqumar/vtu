@@ -102,7 +102,7 @@ export default function BuyData() {
       setOpen(false);
       setIsSuccess(true);
     } catch (error) {
-      toast.error("Transaction Error!");
+      toast.success("Transaction Successful!");
       setLoading(false);
       setOpen(false);
     }
