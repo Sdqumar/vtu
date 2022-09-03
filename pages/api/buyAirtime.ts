@@ -2,11 +2,10 @@ import axios from "axios";
 import { FieldValue } from "firebase-admin/firestore";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { firestore } from "../../lib/firebaseNode";
-import { withSentry } from "@sentry/nextjs";
 const { v4: uuidv4 } = require("uuid");
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { values, user } = req.body;
+  const { values, user, networkId } = req.body;
   const { network, phoneNumber, amount } = values;
   const { uid } = user;
   const request_id = uuidv4();
@@ -44,23 +43,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (userData.walletBalance < amount) {
       throw new Error("insufficent funds");
     }
-
-    const APITransaction = await axios({
-      method: "post",
-      url: "https://alagusiy.com/api/airtime",
-      data: {
-        token: process.env.ALAGUSIY_API,
-        mobile: phoneNumber,
-        network: network.toUpperCase(),
-        amount,
-        request_id,
-      },
-    });
-    console.log(APITransaction.data);
-
-    if (APITransaction.data.code != "200") {
-      throw new Error("insufficent account funds");
-    }
     const newBalance = Number(userData.walletBalance) - Number(amount);
     const transaction = getTransaction(
       "Transaction Successful",
@@ -73,10 +55,26 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       walletBalance: FieldValue.increment(-Number(amount)),
       totalSpent: FieldValue.increment(Number(amount)),
     });
-
+    const APITransaction = await axios({
+      method: "post",
+      url: "https://dontech247.com/api/topup/",
+      headers: {
+        Authorization: `Token ${process.env.dontech247_API}`,
+        "Content-Type": "application/json",
+      },
+      data: {
+        network: networkId.toString(),
+        amount,
+        mobile_number: phoneNumber,
+        Ported_number: true,
+        airtime_type: "VTU",
+      },
+    });
+    console.log(APITransaction.data);
     res.status(200).json({ message: "Transaction Successful" });
-  } catch (error) {
-    console.log(error);
+  } catch (error: any) {
+    console.log(error?.response?.data?.error[0]);
+
     const newBalance = Number(userData.walletBalance);
 
     const transaction = getTransaction(
@@ -86,7 +84,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     );
     await transactionRef.add(transaction);
 
-    res.status(400).send({ error });
+    res.status(400).send({ error: error?.response?.data?.error[0] });
   }
 };
-export default withSentry(handler);
+export default handler;

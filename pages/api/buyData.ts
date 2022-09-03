@@ -7,10 +7,9 @@ import { v4 as uuidv4 } from "uuid";
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { values, user, planCode, networkId } = req.body;
   const { network, phoneNumber, amount, bundle } = values;
-console.log(values, user, planCode, networkId);
+  console.log(values, user, planCode, networkId);
 
-  
-const { uid } = user;
+  const { uid } = user;
   const request_id = uuidv4();
   const userRef = firestore.collection("users").doc(uid);
   const transactionRef = firestore.collection("transactions");
@@ -18,7 +17,6 @@ const { uid } = user;
 
   let userRecord = await userRef.get();
   let userData = userRecord.data()!;
-
 
   const getTransaction = (
     message: string,
@@ -58,8 +56,6 @@ const { uid } = user;
     );
 
     await transactionRef.add(transaction);
-
-    res.status(200).json({ message: "Transaction Successful" });
   };
 
   try {
@@ -67,6 +63,8 @@ const { uid } = user;
       throw new Error("insufficent funds");
     }
     await chargeUser();
+    await completeTransaction();
+
     let APITransaction;
 
     const data = {
@@ -97,9 +95,9 @@ const { uid } = user;
     };
 
     await transactionResponse.add(transacResponse);
-    await completeTransaction();
+    res.status(200).json({ message: "Transaction Successful" });
   } catch (error: any) {
-  console.log(error);
+    console.log(error);
 
     const newBalance = userData.walletBalance;
     const transaction = getTransaction(
