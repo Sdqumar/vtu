@@ -103,13 +103,14 @@ export const validateBalance = (
   values: Balance,
   user: user
 ) => {
-  if (values.amount! < 0) {
+  if (values.amount! < 100) {
     setError("amount", {
       type: "amount",
-      message: "Incorrect amount value!",
+      message: "Minimum Airtime topup is N100",
     });
     return false;
   }
+
   if (values.amount! > user.walletBalance!) {
     setError("amount", {
       type: "amount",
