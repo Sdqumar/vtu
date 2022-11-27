@@ -1,5 +1,4 @@
 export const homePagePrices = [
- 
   {
     img: "/mtn.png",
     network: "MTN SME",

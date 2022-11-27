@@ -47,6 +47,9 @@ export default function Select({
         {...register(name, { required: required })}
         className={errors[name] && "border-red-600"}
       >
+        <option value="" selected disabled hidden>
+          {label}
+        </option>
         {data?.map((item, index) => (
           <option value={item} key={index}>
             {item}
