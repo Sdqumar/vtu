@@ -247,19 +247,19 @@ export const prices = [
     prices: [
       {
         size: "100.0MB",
-        price: "₦50",
+        price: "₦60",
         duration: "7 days",
         planCode: 207,
       },
       {
         size: "300.0MB",
-        price: "₦65",
+        price: "₦125",
         duration: "7 days",
         planCode: 208,
       },
       {
         size: "500.0MB",
-        price: "₦125",
+        price: "₦135",
         duration: "30 days",
         planCode: 209,
       },
